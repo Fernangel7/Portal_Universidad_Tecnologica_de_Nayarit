@@ -1,0 +1,105 @@
+<header class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-sm">
+  <div class="container flex h-16 max-w-7xl items-center">
+    <a href="/" class="mr-6 flex items-center space-x-2">
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" x2="4" y1="22" y2="15"></line></svg>
+        <span class="font-headline text-xl font-bold text-primary">
+          Universidad Tecnológica
+        </span>
+      </div>
+    </a>
+    <div class="hidden flex-1 md:flex">
+      <!-- Desktop Navigation -->
+      <nav>
+        <ul class="flex items-center space-x-1">
+          <% if (typeof navigationLinks !== 'undefined') { %>
+            <% navigationLinks.forEach(item => { %>
+              <li>
+                <% if (item.children && item.children.length > 0) { %>
+                  <!-- Dropdown Menu Item -->
+                  <div class="relative dropdown-menu">
+                    <button class="dropdown-toggle group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
+                      <span><%= item.title %></span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="relative top-[1px] ml-1 h-3 w-3 transition duration-200"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div class="dropdown-content absolute top-full left-0 mt-1.5 hidden w-auto min-w-[400px] origin-top-center rounded-md border bg-popover text-popover-foreground shadow-lg">
+                      <ul class="grid gap-3 p-4 <% if (item.children.length > 5) { %> md:w-[500px] grid-cols-2 <% } %>">
+                        <% item.children.forEach(child => { %>
+                          <li>
+                            <a href="<%= child.href %>" target="<%= child.external ? '_blank' : '_self' %>" rel="<%= child.external ? 'noopener noreferrer' : '' %>" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                              <div class="text-sm font-medium leading-none"><%= child.title %></div>
+                              <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                <%= child.description %>
+                              </p>
+                            </a>
+                          </li>
+                        <% }); %>
+                      </ul>
+                    </div>
+                  </div>
+                <% } else { %>
+                  <!-- Simple Nav Link -->
+                  <a href="<%= item.href || '#' %>" class="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
+                    <%= item.title %>
+                  </a>
+                <% } %>
+              </li>
+            <% }); %>
+          <% } %>
+        </ul>
+      </nav>
+    </div>
+    <div class="flex flex-1 items-center justify-end space-x-4">
+      <div class="hidden md:block">
+        <a href="#" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">
+          Inscripciones Abiertas 
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+      <!-- Mobile Menu Trigger would go here -->
+    </div>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+
+    dropdownMenus.forEach(function (menu) {
+      const toggle = menu.querySelector('.dropdown-toggle');
+      const content = menu.querySelector('.dropdown-content');
+
+      toggle.addEventListener('click', function (event) {
+        event.stopPropagation();
+        // Close other dropdowns
+        document.querySelectorAll('.dropdown-content').forEach(function(otherContent) {
+          if (otherContent !== content) {
+            otherContent.classList.add('hidden');
+          }
+        });
+        // Toggle current dropdown
+        content.classList.toggle('hidden');
+      });
+
+      toggle.addEventListener('mouseenter', function (event) {
+        event.stopPropagation();
+        // Close other dropdowns
+        document.querySelectorAll('.dropdown-content').forEach(function(otherContent) {
+          if (otherContent !== content) {
+            otherContent.classList.add('hidden');
+          }
+        });
+        // Toggle current dropdown
+        content.classList.toggle('hidden');
+      });
+    });
+
+    // Close dropdowns when clicking outside
+    window.addEventListener('click', function () {
+      document.querySelectorAll('.dropdown-content').forEach(function(content) {
+        content.classList.add('hidden');
+      });
+    });
+  });
+</script>

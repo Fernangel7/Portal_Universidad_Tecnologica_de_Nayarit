@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            headline: ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(165 60% 97%)',
+            foreground: 'hsl(171 80% 10%)',
+            card: 'hsl(165 60% 97%)',
+            'card-foreground': 'hsl(171 80% 10%)',
+            popover: 'hsl(165 60% 97%)',
+            'popover-foreground': 'hsl(171 80% 10%)',
+            primary: 'hsl(171 95% 27%)',
+            'primary-foreground': 'hsl(171 25% 95%)',
+            secondary: 'hsl(169 53% 90%)',
+            'secondary-foreground': 'hsl(171 95% 27%)',
+            muted: 'hsl(169 53% 94%)',
+            'muted-foreground': 'hsl(171 40% 30%)',
+            accent: 'hsl(169 53% 41%)',
+            'accent-foreground': 'hsl(171 25% 98%)',
+            destructive: 'hsl(0 84.2% 60.2%)',
+            'destructive-foreground': 'hsl(0 0% 98%)',
+            border: 'hsl(171 20% 88%)',
+            input: 'hsl(171 20% 88%)',
+            ring: 'hsl(171 95% 27%)',
+          },
+          borderRadius: {
+            lg: '0.5rem',
+            md: 'calc(0.5rem - 2px)',
+            sm: 'calc(0.5rem - 4px)',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="font-body antialiased bg-background text-foreground">
+
+  <%- include("./templates/header.ejs", {navigationLinks: [  {    title: 'Inicio',    href: '/',  },  {    title: 'Aspirantes',    children: [      {        title: 'Proceso de Admisión',        href: '#',        external: true,        description: 'Conoce los pasos para unirte a nuestra comunidad.',      },      {        title: 'Oferta Educativa',        href: '/carreras',        description: 'Explora todas las carreras que tenemos para ti.',      },      {        title: 'Vida Estudiantil',        href: '#',        external: true,        description: 'Descubre las actividades y grupos estudiantiles.',      },    ],  },  {    title: 'Alumnos',    children: [      {        title: 'Becas',        href: '/becas',        description: 'Información sobre apoyos y becas disponibles.',      },      {        title: 'Calendario Escolar',        href: '#',        external: true,        description: 'Consulta las fechas importantes del ciclo escolar.',      },      {        title: 'Servicios Escolares',        href: '#',        external: true,        description: 'Trámites y servicios para alumnos.',      },    ],  },  {    title: 'Carreras',    children: [  {    "title": "Ingeniería Civil",    "href": "/carreras/ingenieria-civil",    "description": "Diseña y construye el futuro de la infraestructura."  },  {    "title": "Licenciatura en Mercadotecnia",    "href": "/carreras/licenciatura-en-mercadotecnia",    "description": "Crea estrategias para conectar marcas con personas."  },  {    "title": "Licenciatura en Gastronomía",    "href": "/carreras/licenciatura-en-gastronomia",    "description": "Transforma ingredientes en experiencias culinarias."  },  {    "title": "Tecnologías de la Información",    "href": "/carreras/tecnologias-de-la-informacion",    "description": "Desarrolla soluciones de software y gestiona redes."  },  {    "title": "Ingeniería en Logística Internacional",    "href": "/carreras/ingenieria-en-logistica-internacional",    "description": "Gestiona la cadena de suministro a nivel global."  },  {    "title": "Ingeniería Mecatrónica",    "href": "/carreras/ingenieria-mecatronica",    "description": "Integra mecánica, electrónica y control para la automatización."  },  {    "title": "Mantenimiento Industrial",    "href": "/carreras/mantenimiento-industrial",    "description": "Asegura la operatividad y eficiencia de maquinaria industrial."  },  {    "title": "Seguridad Pública",    "href": "/carreras/seguridad-publica",    "description": "Formación de profesionales para la prevención y gestión de la seguridad."  },  {    "title": "Desarrollo Turístico",    "href": "/carreras/desarrollo-turistico",    "description": "Gestiona y promueve destinos y empresas turísticas."  },  {    "title": "Licenciatura en Administración Empresarial",    "href": "/carreras/licenciatura-en-administracion-empresarial",    "description": "Lidera y gestiona organizaciones hacia el éxito."  },  {    "title": "Ingeniería en Bioelementos",    "href": "/carreras/ingenieria-en-bioelementos",    "description": "Aplica la ingeniería a sistemas biológicos."  },  {    "title": "Tecnologías de la Información área de Inteligencia Artificial",    "href": "/carreras/tecnologias-de-la-informacion-inteligencia-artificial",    "description": "Especialízate en el futuro de la tecnología: la IA."  }],  },  {    title: 'Docentes',    href: '/docentes',  },  {    title: 'Plataformas',    children: [      {        title: 'APP SIGA',        href: '#',        external: true,        description: 'Sistema Integral de Gestión Académica.',      },      {        title: 'SIDOUT',        href: '#',        external: true,        description: 'Plataforma de seguimiento y tutorías.',      },      {        title: 'Plataforma Transparencia UTN',        href: '#',        external: true,        description: 'Portal de transparencia de la universidad.',      },      {        title: 'Enlace P.N.T',        href: '#',        external: true,        description: 'Plataforma Nacional de Transparencia.',      },    ],  },  {    title: 'Vinculación',    children: [      {        title: 'Incubadora de Negocios',        href: '/vinculacion/incubadora-negocios',        description: 'Apoyo para emprendedores y startups.',      },      {        title: 'Extensión Universitaria',        href: '/vinculacion/extension-universitaria',        description: 'Cursos, talleres y eventos para la comunidad.',      },    ],  },  {    title: 'Psicología',    href: '/psicologia',  }]}) %>
+
+
+  <!-- Hero Section -->
+  <section class="relative h-[60vh] min-h-[500px] w-full">
+    <% if (heroImage) { %>
+    <img src="<%= heroImage.imageUrl %>" alt="<%= heroImage.description %>" class="absolute inset-0 w-full h-full object-cover" />
+    <% } %>
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="container relative z-10 mx-auto flex h-full max-w-7xl flex-col items-center justify-center text-center text-white">
+      <h1 class="font-headline text-4xl font-bold md:text-6xl">
+        Construye tu Futuro, Transforma el Mundo
+      </h1>
+      <p class="mt-4 max-w-3xl text-lg text-primary-foreground/90 md:text-xl">
+        Descubre una educación de vanguardia que te prepara para los desafíos del mañana.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="/carreras" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 bg-primary text-primary-foreground hover:bg-primary/90">Nuestras Carreras</a>
+        <a href="#" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 bg-secondary text-secondary-foreground hover:bg-secondary/80">Proceso de Admisión</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Programs Section -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl">
+      <div class="text-center">
+        <h2 class="font-headline text-3xl font-bold tracking-tight sm:text-4xl">Oferta Educativa</h2>
+        <p class="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+          Programas de estudio diseñados para el éxito profesional en un mundo globalizado.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <% if (featuredPrograms) { %>
+        <% featuredPrograms.forEach(function(program) { %>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden transition-shadow hover:shadow-lg">
+          <div class="p-0">
+            <% if (program.programImage) { %>
+            <img src="<%= program.programImage.imageUrl %>" alt="<%= program.programImage.description %>" width="600" height="400" class="h-48 w-full object-cover" />
+            <% } %>
+          </div>
+          <div class="p-6">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight font-headline"><%= program.name %></h3>
+            <p class="mt-2 text-muted-foreground"><%= program.shortDescription %></p>
+            <a href="/carreras/<%= program.slug %>" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium text-primary underline-offset-4 hover:underline mt-4 px-0">
+              Conocer más
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 ml-2">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <% }); %>
+        <% } %>
+      </div>
+      <div class="mt-12 text-center">
+        <a href="/carreras" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 border border-input bg-background hover:bg-accent hover:text-accent-foreground">Ver Todas las Carreras</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- News and Events Section -->
+  <section class="bg-secondary/50 py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl">
+      <div class="text-center">
+        <h2 class="font-headline text-3xl font-bold tracking-tight sm:text-4xl">Noticias y Eventos</h2>
+        <p class="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+          Mantente al día con lo último de nuestra comunidad universitaria.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-8 lg:grid-cols-3">
+        <% if (newsItems) { %>
+        <% newsItems.forEach(function(item) { %>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm flex flex-col">
+          <div class="p-0">
+            <% if (item.image) { %>
+            <img src="<%= item.image.imageUrl %>" alt="<%= item.image.description %>" width="600" height="400" class="h-48 w-full object-cover" />
+            <% } %>
+          </div>
+          <div class="flex flex-1 flex-col p-6">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight font-headline"><%= item.title %></h3>
+            <p class="mt-2 flex-1 text-muted-foreground"><%= item.description %></p>
+            <a href="#" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium text-primary underline-offset-4 hover:underline mt-4 self-start px-0">
+              Leer más
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0.0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 ml-2">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <% }); %>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Campus Life Section -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl">
+      <div class="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+        <div class="relative h-80 w-full overflow-hidden rounded-lg shadow-xl lg:h-96">
+          <% if (campusLifeImage) { %>
+          <img src="<%= campusLifeImage.imageUrl %>" alt="<%= campusLifeImage.description %>" class="absolute inset-0 w-full h-full object-cover" />
+          <% } %>
+        </div>
+        <div>
+          <h2 class="font-headline text-3xl font-bold tracking-tight sm:text-4xl">Vive la Experiencia Universitaria</h2>
+          <p class="mt-4 text-lg text-muted-foreground">
+            Nuestra universidad es más que aulas y libros. Es un lugar para crecer, conectar y descubrir tus pasiones.
+          </p>
+          <div class="mt-8 space-y-6">
+            <!-- ... static content ... -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- include("./templates/footer.ejs") %>
+
+</body>
+
+</html>
