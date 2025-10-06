@@ -1,9 +1,9 @@
-{
+const images = {
   "placeholderImages": [
     {
       "id": "homepage-hero",
       "description": "University campus aerial view",
-      "imageUrl": "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx1bml2ZXJzaXR5JTIwY2FtcHVzfGVufDB8fHx8MTc1OTM5NjM5Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/public/assets/images/ut-nayarit.webp",
       "imageHint": "university campus"
     },
     {
@@ -146,3 +146,5 @@
     }
   ]
 }
+
+module.exports = images

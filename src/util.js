@@ -1,11 +1,9 @@
-import { fileURLToPath } from 'url'
-import { createRequire } from 'node:module'
+function captalize_case (str) {
+    return str.split(' ').map(palabra => {
+    return palabra.charAt(0).toUpperCase() + palabra.slice(1);
+  }).join(' ');
+}
 
-import path from 'node:path'
-import { url } from 'node:inspector'
-
-const __filename = fileURLToPath(import.meta.url)
-export const __dirname = path.dirname(__filename)
-
-const require = createRequire(import.meta.url)
-export const readJSON = (path) => require(path)
+module.exports = {
+    captalize_case
+}
