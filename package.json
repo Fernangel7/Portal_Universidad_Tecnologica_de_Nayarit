@@ -20,8 +20,7 @@
     "ejs": "3.1.10",
     "express": "5.1.0",
     "jsonwebtoken": "9.0.2",
-    "meta": "2.2.25",
-    "url": "0.11.4"
+    "sweetalert2": "11.26.3"
   },
   "devDependencies": {
     "nodemon": "3.1.10"

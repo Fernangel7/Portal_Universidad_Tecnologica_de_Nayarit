@@ -5,7 +5,8 @@ const { website_name, captalize_case } = require("../util")
 
 const navigationLinks = require('../data/navigation')
 const images = require("../data/images")
-const educative_offer = require("../data/educative_offer")
+const featuredPrograms = require("../data/featured_programs")
+const newsItems = require("../data/news_items")
 
 const img = images.placeholderImages
 
@@ -13,8 +14,8 @@ main_routes.get("/", async (req, res) => {
     res.render('home', {
         title: website_name,
         heroImage: { ...img[0] },
-        featuredPrograms: [...educative_offer],
-        newsItems: [ /* ... */],
+        featuredPrograms: [...featuredPrograms],
+        newsItems: [ ...newsItems ],
         campusLifeImage: { ...img[0] },
         ...navigationLinks
     });

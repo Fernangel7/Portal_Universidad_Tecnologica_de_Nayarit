@@ -12,8 +12,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap"
     rel="stylesheet">
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-  <script src="/public/lib/tailwind_3.4.17.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <script src="/public/lib/tailwind_3.4.17.js"></script> -->
   <script>
     tailwind.config = {
       theme: {
@@ -55,8 +55,8 @@
 </head>
 
 <body class="font-body antialiased bg-background text-foreground">
-  
-    <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: "UT Nayarit" }) %>
+  <%- include("./templates/loading.ejs", { delay: 0 }) %>
+    <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: title }) %>
       <!-- Hero Section -->
       <section class="relative h-[60vh] min-h-[500px] w-full">
         <% if (heroImage) { %>
@@ -159,7 +159,12 @@
                     <p class="mt-2 flex-1 text-muted-foreground">
                       <%= item.description %>
                     </p>
-                    <a href="#"
+                    <legend>
+                      <br>
+                      <%= item.type %> published on: <%= item.date %>
+                          <br>Deadline: <%= item.deadline %>
+                    </legend>
+                    <a href="<%= item.link %>"
                       class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium text-primary underline-offset-4 hover:underline mt-4 self-start px-0">
                       Leer más
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0.0 24 24" fill="none"
@@ -202,7 +207,7 @@
         </div>
       </section>
 
-      <%- include("./templates/footer.ejs") %>
+      <%- include("./templates/footer.ejs", {title: title}) %>
 
 </body>
 

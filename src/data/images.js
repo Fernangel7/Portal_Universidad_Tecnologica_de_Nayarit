@@ -8,9 +8,9 @@ const images = {
     },
     {
       "id": "homepage-news-1",
-      "description": "Students collaborating in a lab",
-      "imageUrl": "https://images.unsplash.com/photo-1758685848662-0aad938fd19a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzdHVkZW50cyUyMGxhYnxlbnwwfHx8fDE3NTk0MTI2OTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "students lab"
+      "description": "utn",
+      "imageUrl": "public/assets/images/general/admision_2025_notice.png",
+      "imageHint": "utn admision"
     },
     {
       "id": "homepage-news-2",

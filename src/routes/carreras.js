@@ -1,6 +1,6 @@
 const express = require('express')
 const carreras_routes = express.Router()
-const educative_offer = require("../data/educative_offer")
+const educative_offer = require("../data/educative_offer.js")
 
 carreras_routes.get("/", async (req, res) => {
     res.render("carreras", {
