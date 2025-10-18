@@ -3,7 +3,7 @@ const images = {
     {
       "id": "homepage-hero",
       "description": "University campus aerial view",
-      "imageUrl": "/public/assets/images/ut-nayarit.webp",
+      "imageUrl": "/public/assets/images/general/ut-nayarit.webp",
       "imageHint": "university campus"
     },
     {
@@ -87,7 +87,7 @@ const images = {
     {
       "id": "program-gastronomy",
       "description": "Chef plating a gourmet dish",
-      "imageUrl": "https://images.unsplash.com/photo-1750943083941-0b109b4ec08e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxnb3VybWV0JTIwZGlzaHxlbnwwfHx8fDE3NTk0MjY2MDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/public/assets/images/careers/Lic_Gatronomia.jpg",
       "imageHint": "gourmet dish"
     },
     {
@@ -99,7 +99,7 @@ const images = {
     {
       "id": "program-logistics",
       "description": "Large container ship in a port",
-      "imageUrl": "https://images.unsplash.com/photo-1670121180530-cfcba4438038?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjb250YWluZXIlMjBzaGlwfGVufDB8fHx8MTc1OTQyNjYwMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/public/assets/images/careers/logistica-internacional.jpg",
       "imageHint": "container ship"
     },
     {
@@ -127,9 +127,9 @@ const images = {
       "imageHint": "beach destination"
     },
     {
-      "id": "program-business-admin",
-      "description": "Modern office building skyline",
-      "imageUrl": "https://images.unsplash.com/photo-1657316266645-630133004b5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxvZmZpY2UlMjBza3lsaW5lfGVufDB8fHx8MTc1OTQyNjYwMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "id": "program-admin",
+      "description": "N/A",
+      "imageUrl": "/public/assets/images/careers/licenciado-en-administracion-1024x728.jpg",
       "imageHint": "office skyline"
     },
     {
