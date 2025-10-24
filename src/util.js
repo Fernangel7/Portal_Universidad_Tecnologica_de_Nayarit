@@ -1,4 +1,4 @@
-const website_name = "Universidad Tecnologica de Nayarit";
+const website_name = "Universidad Tecnologica de Nayarit"
 
 function captalize_case (str) {
     return str.split(' ').map(palabra => {

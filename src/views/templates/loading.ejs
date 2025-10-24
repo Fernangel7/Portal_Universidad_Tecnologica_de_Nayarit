@@ -1,6 +1,6 @@
 <style>
     .unique_loading_screen {
-        z-index: 100;
+        z-index: 1000;
         position: fixed;
         top: 0;
         left: 0;
@@ -34,7 +34,7 @@
     }
 </style>
 
-<input type="hidden" name="delay" id="delay" value="<%= delay || 0 %>">
+<input type="hidden" name="delay" id="delay" value="<%= delay %>">
 
 <div class="unique_loading_screen load_no_hid" id="loading_screen"></div>
 

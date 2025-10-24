@@ -1,15 +1,16 @@
-require('dotenv/config')
+require('dotenv').config()
 
 const express = require('express')
 const path = require('node:path')
 
-const main_routes = require('./src/routes/main')
-const carreras_routes = require('./src/routes/carreras')
+const main_routes = require('./routes')
+const carreras_routes = require('./routes/carreras')
+
+const { PORT } = require('./config')
 
 const app = express()
-const PORT = process.env.PORT
 
-app.use('/public', express.static(path.join(__dirname, 'public')))
+app.use('/public', express.static(path.join(__dirname, '..', 'public')))
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
