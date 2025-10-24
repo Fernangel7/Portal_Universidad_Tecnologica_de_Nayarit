@@ -70,6 +70,7 @@
       </div>
 
       <!-- Action Button -->
+      <% if (IscProcess) { %>
       <div class="hidden md:block">
         <a href="#"
           class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">
@@ -81,6 +82,7 @@
           </svg>
         </a>
       </div>
+      <% } %>
 
       <!-- Mobile Menu Trigger -->
       <div id="mobile-trigger-wrapper" class="md:hidden">

@@ -18,7 +18,8 @@ module.exports = class IndexController {
             newsItems: [...newsItems],
             campusLifeImage: { ...img[0] },
             ...navigationLinks,
-            delay: loading_delay
+            delay: loading_delay,
+            IscProcess: require("../config").InscriptionProcess
         });
     }
 
