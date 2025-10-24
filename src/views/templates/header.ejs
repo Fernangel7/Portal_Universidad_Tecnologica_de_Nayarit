@@ -1,0 +1,397 @@
+<header class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-sm container flex justify-center mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 bg-background/100"
+       style="width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);">
+    <!-- Logo -->
+    <a href="/" class="flex items-center space-x-2">
+      <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="h-8 w-8 text-primary">
+        <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path>
+        <path d="M12 7v6"></path>
+        <path d="m15 10-3-3-3 3"></path>
+      </svg> -->
+      <!-- <span class="font-headline text-xl font-bold text-primary"> -->
+        
+      <!-- </span> -->
+      <img src="/public/assets/images/logotypes/logo_utnay.png" alt="logo utnay" class="h-20 w-auto" />
+
+    </a>
+
+    <!-- Right Aligned Section -->
+    <div class="flex items-center space-x-4 bg-background/95">
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex">
+        <nav id="desktop-nav" class="relative">
+          <ul class="flex items-center space-x-1">
+            <% navigationLinks.forEach(item=> { %>
+              <li class="relative nav-item">
+                <% if (item.children && item.children.length> 0) { %>
+                  <button
+                    class="nav-button group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none">
+                    <span>
+                      <%= item.title %>
+                    </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+                      aria-hidden="true">
+                      <path d="m6 9 6 6 6-6"></path>
+                    </svg>
+                  </button>
+                  <div
+                    class="submenu absolute top-full left-0 mt-1.5 hidden w-max min-w-[200px] rounded-md border bg-popover p-1 text-popover-foreground shadow-lg">
+                    <!-- start as single-column grid; JS will switch to two columns only if it would overflow vertically -->
+                    <ul class="submenu-list grid grid-cols-1 gap-1">
+                      <% item.children.forEach(child=> { %>
+                        <li>
+                          <a href="<%= child.href %>"
+                            class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                            <div class="text-sm font-medium leading-none">
+                              <%= child.title %>
+                            </div>
+                            <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              <%= child.description %>
+                            </p>
+                          </a>
+                        </li>
+                        <% }); %>
+                    </ul>
+                  </div>
+                  <% } else { %>
+                    <a href="<%= item.href || '#' %>"
+                      class="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
+                      <%= item.title %>
+                    </a>
+                    <% } %>
+              </li>
+              <% }); %>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Action Button -->
+      <div class="hidden md:block">
+        <a href="#"
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">
+          Inscripciones Abiertas
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4">
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Trigger -->
+      <div id="mobile-trigger-wrapper" class="md:hidden">
+        <button id="mobile-menu-trigger"
+          class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary">
+          <span class="sr-only">Open main menu</span>
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu"
+       class="hidden absolute left-0 top-full w-screen bg-background/95 backdrop-blur-sm border-t border-border/40"
+        style="margin-left:calc(50% - 50vw); max-height:calc(100vh - 4rem); overflow-y:auto; -webkit-overflow-scrolling:touch; z-index:9999;">
+    <div class="space-y-1 px-4 pt-2 pb-3 max-w-7xl mx-auto">
+      <% navigationLinks.forEach(item=> { %>
+        <% if (item.children && item.children.length> 0) { %>
+          <div>
+            <button
+              class="mobile-accordion-trigger flex justify-between w-full rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+              <span>
+                <%= item.title %>
+              </span>
+              <svg class="h-5 w-5 transform transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </button>
+            <div class="mobile-accordion-content hidden pl-4 pt-2 space-y-1">
+              <% item.children.forEach(child=> { %>
+                <a href="<%= child.href %>"
+                  class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                  <%= child.title %>
+                </a>
+                <% }); %>
+            </div>
+          </div>
+          <% } else { %>
+            <a href="<%= item.href || '#' %>"
+              class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+              <%= item.title %>
+            </a>
+            <% } %>
+              <% }); %>
+    </div>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const nav = document.getElementById('desktop-nav');
+    const navItems = Array.from(nav.querySelectorAll('.nav-item'));
+    let closeTimer;
+
+    const closeAllSubmenus = () => {
+      navItems.forEach(item => {
+        const submenu = item.querySelector('.submenu');
+        const button = item.querySelector('.nav-button');
+        if (submenu && submenu.style.display === 'block') {
+          // reset any layout adjustments we made when opening
+          try { resetSubmenuLayout(submenu); } catch (e) { /* ignore */ }
+          submenu.style.display = 'none';
+          button?.removeAttribute('data-state');
+        }
+      });
+    };
+
+    navItems.forEach(item => {
+      const button = item.querySelector('.nav-button');
+      const submenu = item.querySelector('.submenu');
+
+      if (button && submenu) {
+        // --- Desktop Hover Logic ---
+        item.addEventListener('mouseenter', () => {
+          clearTimeout(closeTimer);
+          closeAllSubmenus(); // Close others immediately
+          submenu.style.display = 'block';
+          button.setAttribute('data-state', 'open');
+          adjustSubmenuLayout(submenu);
+        });
+
+        item.addEventListener('mouseleave', () => {
+          closeTimer = setTimeout(() => {
+            submenu.style.display = 'none';
+            button.removeAttribute('data-state');
+          }, 200);
+        });
+
+        // --- Click Logic for both Desktop and potential future touch devices ---
+        button.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpening = submenu.style.display !== 'block';
+          closeAllSubmenus();
+          if (isOpening) {
+            submenu.style.display = 'block';
+            button.setAttribute('data-state', 'open');
+            adjustSubmenuLayout(submenu);
+          }
+        });
+      }
+    });
+
+    // Close menus when clicking outside
+    document.addEventListener('click', (e) => {
+      // desktop: close submenus if clicking outside the desktop nav
+      if (!nav.contains(e.target)) {
+        closeAllSubmenus();
+      }
+
+      // mobile: if mobile menu is open and click is outside both trigger and menu, hide it and collapse accordions
+      if (mobileMenu && mobileMenuTrigger) {
+        if (!mobileMenu.classList.contains('hidden') &&
+            !mobileMenu.contains(e.target) &&
+            !mobileMenuTrigger.contains(e.target)) {
+          mobileMenu.classList.add('hidden');
+          // collapse any expanded mobile items
+          const openContents = mobileMenu.querySelectorAll('.mobile-accordion-content:not(.hidden)');
+          openContents.forEach(open => open.classList.add('hidden'));
+          const openIcons = mobileMenu.querySelectorAll('.mobile-accordion-trigger svg.rotate-180');
+          openIcons.forEach(ic => ic.classList.remove('rotate-180'));
+          try { mobileMenu.scrollTop = 0; } catch (err) {}
+        }
+      }
+    });
+
+    // --- Mobile Menu Logic ---
+    const mobileMenuTrigger = document.getElementById('mobile-menu-trigger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuTrigger && mobileMenu) {
+      // helper to collapse all mobile accordion contents and reset icons
+      function collapseMobileAccordions() {
+        const openContents = mobileMenu.querySelectorAll('.mobile-accordion-content:not(.hidden)');
+        openContents.forEach(open => open.classList.add('hidden'));
+        const openIcons = mobileMenu.querySelectorAll('.mobile-accordion-trigger svg.rotate-180');
+        openIcons.forEach(ic => ic.classList.remove('rotate-180'));
+        // reset scroll so menu opens at top next time
+        try { mobileMenu.scrollTop = 0; } catch (e) { /* ignore */ }
+      }
+
+      mobileMenuTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isHidden = mobileMenu.classList.contains('hidden');
+        // toggle visibility
+        mobileMenu.classList.toggle('hidden', !isHidden);
+        if (!isHidden) {
+          // we just hid the menu -> collapse all internal expanded sections
+          collapseMobileAccordions();
+        }
+      });
+    }
+
+    const accordions = mobileMenu.querySelectorAll('.mobile-accordion-trigger');
+    accordions.forEach(accordion => {
+      accordion.addEventListener('click', () => {
+        const content = accordion.nextElementSibling;
+        const icon = accordion.querySelector('svg');
+
+        // Close any other open mobile accordion contents (if any)
+        const openContents = mobileMenu.querySelectorAll('.mobile-accordion-content:not(.hidden)');
+        openContents.forEach(open => {
+          if (open !== content) {
+            open.classList.add('hidden');
+            // reset the icon of the button preceding the open content
+            const prevBtn = open.previousElementSibling;
+            const prevIcon = prevBtn ? prevBtn.querySelector('svg') : null;
+            if (prevIcon) prevIcon.classList.remove('rotate-180');
+          }
+        });
+
+        // Toggle the clicked accordion
+        const isHidden = content.classList.contains('hidden');
+        if (isHidden) {
+          content.classList.remove('hidden');
+          icon.classList.add('rotate-180');
+        } else {
+          content.classList.add('hidden');
+          icon.classList.remove('rotate-180');
+        }
+      });
+    });
+
+    // --- NEW: switch between desktop/mobile menus at 1300px ---
+    const WIDTH_THRESHOLD = 1300;
+    const desktopWrapper = nav ? nav.parentElement : null; // div with "hidden md:flex"
+    const mobileTriggerWrapper = document.getElementById('mobile-trigger-wrapper');
+
+    function updateMenuMode() {
+      const w = window.innerWidth || document.documentElement.clientWidth;
+      if (w <= WIDTH_THRESHOLD) {
+        // Show mobile UI up to WIDTH_THRESHOLD
+        if (desktopWrapper) {
+          desktopWrapper.classList.add('hidden');
+          desktopWrapper.classList.remove('md:flex');
+        }
+        if (mobileTriggerWrapper) {
+          mobileTriggerWrapper.classList.remove('hidden', 'md:hidden');
+          mobileTriggerWrapper.classList.add('block');
+        }
+        if (mobileMenu) {
+          // allow JS to control visibility; keep menu closed initially
+          mobileMenu.classList.remove('md:hidden');
+          mobileMenu.classList.add('hidden');
+        }
+        closeAllSubmenus();
+      } else {
+        // Restore desktop UI above WIDTH_THRESHOLD
+        if (desktopWrapper) {
+          desktopWrapper.classList.remove('hidden');
+          desktopWrapper.classList.add('md:flex');
+        }
+        if (mobileTriggerWrapper) {
+          mobileTriggerWrapper.classList.add('md:hidden', 'hidden');
+          mobileTriggerWrapper.classList.remove('block');
+        }
+        if (mobileMenu) {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.add('md:hidden');
+          // collapse mobile accordions
+          const openContents = mobileMenu.querySelectorAll('.mobile-accordion-content:not(.hidden)');
+          openContents.forEach(open => open.classList.add('hidden'));
+          const openIcons = mobileMenu.querySelectorAll('.mobile-accordion-trigger svg.rotate-180');
+          openIcons.forEach(ic => ic.classList.remove('rotate-180'));
+          try { mobileMenu.scrollTop = 0; } catch (e) {}
+        }
+      }
+    }
+
+    // initial call and on resize
+    updateMenuMode();
+    window.addEventListener('resize', updateMenuMode);
+
+    // Helper: adjust submenu layout when opened to avoid overflowing viewport height/width.
+    function adjustSubmenuLayout(submenu) {
+      try {
+        const list = submenu.querySelector('.submenu-list');
+        if (!list) return;
+
+        // Reset any previous styles
+        list.classList.remove('two-col-temp');
+        list.style.maxHeight = '';
+        submenu.style.overflowX = '';
+        submenu.style.overflowY = '';
+        submenu.style.maxWidth = '';
+
+        // Measure available viewport space
+        const rect = submenu.getBoundingClientRect();
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+
+        // If submenu would overflow vertically, switch to two columns to compact it.
+        if (rect.bottom > viewportHeight) {
+          list.classList.add('two-col-temp');
+          // Apply CSS via inline style to ensure immediate effect on all viewports
+          list.style.gridTemplateColumns = window.matchMedia('(min-width: 768px)').matches ? 'repeat(2, minmax(0,1fr))' : '';
+
+          // remeasure
+          const rect2 = submenu.getBoundingClientRect();
+          if (rect2.bottom > viewportHeight) {
+            const availableHeight = Math.max(120, viewportHeight - rect2.top - 12);
+            list.style.maxHeight = availableHeight + 'px';
+            submenu.style.overflowY = 'auto';
+          }
+        }
+
+        // If submenu right edge exceeds viewport width, limit its maxWidth and allow horizontal scroll
+        if (rect.right > viewportWidth) {
+          // compute available width from left edge to viewport right
+          const availableWidth = Math.max(160, viewportWidth - rect.left - 12);
+          submenu.style.maxWidth = availableWidth + 'px';
+          // allow horizontal scrolling to see overflowed content
+          submenu.style.overflowX = 'auto';
+        }
+        // Also if content is intrinsically wider than the container, allow horizontal scroll
+        if (submenu.scrollWidth > submenu.clientWidth) {
+          submenu.style.overflowX = 'auto';
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function resetSubmenuLayout(submenu) {
+      try {
+        const list = submenu.querySelector('.submenu-list');
+        if (!list) return;
+        list.classList.remove('two-col-temp');
+        list.style.gridTemplateColumns = '';
+        list.style.maxHeight = '';
+        submenu.style.overflowX = '';
+        submenu.style.overflowY = '';
+        submenu.style.maxWidth = '';
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    // Recalculate open submenu layout on resize
+    window.addEventListener('resize', () => {
+      const openSub = document.querySelector('.submenu[style*="display: block"]');
+      if (openSub) {
+        resetSubmenuLayout(openSub);
+        adjustSubmenuLayout(openSub);
+      }
+    });
+  });
+</script>
