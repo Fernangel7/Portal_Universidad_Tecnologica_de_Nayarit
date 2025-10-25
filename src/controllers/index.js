@@ -20,12 +20,58 @@ module.exports = class IndexController {
             ...navigationLinks,
             delay: loading_delay,
             IscProcess: require("../config").InscriptionProcess
-        });
+        })
     }
 
     static async docentes (req, res) {
-        res.render('docentes', {
-            // Additional data can be passed here
+        await res.render('docentes', {
+            ...navigationLinks
+        })
+    }
+
+    static async IncBussiness (req, res) {
+        await res.render('inc_bussiness', {
+            // To be implemented
+        })
+    }
+
+    static async Ceelex (req, res) {
+        await res.render('inc_bussiness', {
+            // To be implemented
+        })
+    }
+
+    static async Becas (req, res) {
+        await res.redirect('/becas');
+    }
+
+    static async Ececut (req, res) {
+        await res.render('ececut', {
+            // To be implemented
+        });
+    }
+
+    static async PrivacyAdvice (req, res) {
+        await res.render('privacy', {
+            // To be implemented
+        });
+    }
+
+    static async Transparency (req, res) {
+        await res.render('transparency', {
+            // To be implemented
+        });
+    }
+
+    static async Financial (req, res) {
+        await res.render('financial', {
+            // To be implemented
+        });
+    }
+
+    static async QualitySystem (req, res) {
+        await res.render('quality_system', {
+            // To be implemented
         });
     }
 }
