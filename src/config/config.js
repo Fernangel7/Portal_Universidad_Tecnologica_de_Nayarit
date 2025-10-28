@@ -1,5 +1,5 @@
 module.exports = {
     PORT,
-    loading_delay,
+    loading_delay = 500,
     InscriptionProcess = false
 } = process.env

@@ -6,7 +6,7 @@ const path = require('node:path')
 const main_routes = require('./routes')
 const carreras_routes = require('./routes/carreras')
 
-const { PORT } = require('./config')
+const { PORT } = require('./src/config')
 
 const app = express()
 

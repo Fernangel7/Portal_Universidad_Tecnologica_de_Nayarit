@@ -1,10 +1,10 @@
-const navigationLinks = require('../data/navigation')
-const images = require("../data/images")
-const featuredPrograms = require("../data/featured_programs")
-const newsItems = require("../data/news_items")
+const navigationLinks = require('../models/data/navigation')
+const images = require("../models/data/images")
+const featuredPrograms = require("../models/data/featured_programs")
+const newsItems = require("../models/data/news_items")
 
-const { loading_delay } = require("../config")
-const { website_name } = require("../util")
+const { loading_delay } = require("../config/config")
+const { website_name } = require("../utils/util")
 
 const img = images.placeholderImages
 
@@ -19,7 +19,7 @@ module.exports = class IndexController {
             campusLifeImage: { ...img[0] },
             ...navigationLinks,
             delay: loading_delay,
-            IscProcess: require("../config").InscriptionProcess
+            IscProcess: require("../config/config").InscriptionProcess
         })
     }
 
