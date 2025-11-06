@@ -116,7 +116,7 @@ Este proyecto fue construido usando las siguientes tecnologías:
 
 ## 🤝 Creditos
 
-## 👥 Equipo Principal
+### Equipo Principal
 
 * **Jose Angel Bernal Loma** - [github/Fernangel7](https://github.com/Fernangel7)
   * Full Stack Developer
