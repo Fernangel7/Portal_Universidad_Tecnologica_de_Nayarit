@@ -130,7 +130,7 @@ Este proyecto fue construido usando las siguientes tecnologías:
   * UI/UX Designer
   * PoC
     
-* **Victor Miguel Aranda García** - [github/user](https://github.com/user)
+* **Victor Miguel Aranda García** - [github/]()
   * UI/UX Designer
   * PoC
 
