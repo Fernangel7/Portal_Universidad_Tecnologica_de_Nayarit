@@ -2,7 +2,7 @@
   "name": "utnay_website",
   "version": "1.0.0",
   "description": "Sitio web oficial de la Universidad Tecnológica de Nayarit",
-  "main": "app.js",
+  "main": "src/app.js",
   "type": "commonjs",
   "scripts": {
     "start": "node ."
