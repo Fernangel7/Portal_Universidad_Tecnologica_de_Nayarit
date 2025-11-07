@@ -1,4 +1,4 @@
-const images = require('./images');
+const images = require('./images.js');
 const img = images.placeholderImages
 
 const notices_and_events = [

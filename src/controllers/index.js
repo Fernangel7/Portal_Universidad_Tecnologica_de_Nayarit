@@ -1,10 +1,9 @@
-const navigationLinks = require('../models/data/navigation')
-const images = require("../models/data/images")
-const featuredPrograms = require("../models/data/featured_programs")
-const newsItems = require("../models/data/news_items")
+const navigationLinks = require('../data/navigation.js')
+const images = require("../data/images.js")
+const featuredPrograms = require("../data/featured_programs.js")
+const newsItems = require("../data/news_items.js")
 
-const { loading_delay } = require("../config/config-globals")
-const { website_name, InscriptionProcess } = require("../utils/utils-globals")
+const { loading_delay, website_name, InscriptionProcess } = require("../config/config-globals.js")
 
 const img = images.placeholderImages
 
