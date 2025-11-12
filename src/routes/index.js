@@ -2,12 +2,18 @@ const express = require('express');
 
 const cookiesMiddleware = require('../middlewares/cookies')
 
-const IndexController = require('../controllers/index')
+const IndexController = require('../controllers/index');
+const { admin_middleware } = require('../middlewares/admin');
 
 const main_routes = express.Router();
 
 main_routes.get("/", cookiesMiddleware, IndexController.index)
 main_routes.get("/docentes", IndexController.docentes)
+
+main_routes.use((req, res, next) => {
+    res.status(403).render('403', { title: "403 - Acceso denegado" } )
+})
+
 main_routes.get("/incubadora-de-negocios", IndexController.IncBussiness)
 main_routes.get("/ceelex", IndexController.Ceelex)
 main_routes.get("/ececut", IndexController.Ececut)
