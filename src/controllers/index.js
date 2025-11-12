@@ -24,7 +24,9 @@ module.exports = class IndexController {
 
     static async docentes (req, res) {
         await res.render('docentes', {
-            ...navigationLinks
+            title: website_name,
+            ...navigationLinks,
+            IscProcess: InscriptionProcess
         })
     }
 
