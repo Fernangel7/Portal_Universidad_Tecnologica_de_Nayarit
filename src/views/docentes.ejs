@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docentes - Universidad Tecnológica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'body': ['Inter', 'sans-serif'],
+            'headline': ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(165 60% 97%)',
+            foreground: 'hsl(171 80% 10%)',
+            card: {
+              DEFAULT: 'hsl(165 60% 97%)',
+              'foreground': 'hsl(171 80% 10%)',
+            },
+            popover: {
+              DEFAULT: 'hsl(165 60% 97%)',
+              'foreground': 'hsl(171 80% 10%)',
+            },
+            primary: {
+              DEFAULT: 'hsl(171 95% 27%)',
+              'foreground': 'hsl(171 25% 95%)',
+            },
+            secondary: {
+              DEFAULT: 'hsl(169 53% 90%)',
+              'foreground': 'hsl(171 95% 27%)',
+            },
+            muted: {
+              DEFAULT: 'hsl(169 53% 94%)',
+              'foreground': 'hsl(171 40% 30%)',
+            },
+            accent: {
+              DEFAULT: 'hsl(169 53% 41%)',
+              'foreground': 'hsl(171 25% 98%)',
+            },
+            destructive: {
+              DEFAULT: 'hsl(0 84.2% 60.2%)',
+              'foreground': 'hsl(0 0% 98%)',
+            },
+            border: 'hsl(171 20% 88%)',
+            input: 'hsl(171 20% 88%)',
+            ring: 'hsl(171 95% 27%)',
+          },
+          borderRadius: {
+            lg: '0.5rem',
+            md: 'calc(0.5rem - 2px)',
+            sm: 'calc(0.5rem - 4px)',
+          },
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="font-body antialiased">
+  <div class="flex min-h-screen flex-col">
+    <%- include('templates/header.ejs', navigationLinks); %>
+    <main class="flex-1">
+      <!-- Hero Section -->
+      <section class="relative h-80 w-full">
+        <img src="https://images.unsplash.com/photo-1511629091441-ee46146481b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwcm9mZXNzb3IlMjBjbGFzc3Jvb218ZW58MHx8fHwxNzU5NDI2NjAyfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Professor lecturing in a modern classroom" class="absolute inset-0 h-full w-full object-cover" data-ai-hint="professor classroom" />
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="container relative z-10 mx-auto flex h-full max-w-7xl flex-col items-center justify-center text-center text-white">
+          <h1 class="font-headline text-4xl font-bold md:text-5xl">
+            Nuestro Claustro
+          </h1>
+          <p class="mt-4 max-w-2xl text-lg text-primary-foreground/90">
+            Expertos y líderes que inspiran a la próxima generación.
+          </p>
+        </div>
+      </section>
+
+      <!-- Content Section -->
+      <section class="py-16 md:py-24">
+        <div class="container mx-auto max-w-3xl text-center">
+          <h2 class="font-headline text-3xl font-bold tracking-tight">Conoce a Nuestros Docentes</h2>
+          <p class="mt-4 text-lg text-gray-600">
+            Contamos con un cuerpo docente de excelencia, con amplia experiencia profesional y académica, comprometido con la formación integral de nuestros estudiantes.
+          </p>
+          <p class="mt-4 text-lg text-gray-600">
+            Actualmente, el directorio de docentes se encuentra en mantenimiento. Vuelve pronto para explorar los perfiles de nuestros profesores.
+          </p>
+          <a href="#" class="mt-8 inline-flex items-center justify-center rounded-md text-sm font-medium h-11 px-8 border border-input bg-background hover:bg-accent hover:text-accent-foreground">
+            Portal Docente
+          </a>
+        </div>
+      </section>
+    </main>
+    <%- include('templates/footer.ejs'); %>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceso de Admisión - Universidad Tecnológica</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              body: ['Inter', 'sans-serif'],
+              headline: ['PT Sans', 'sans-serif'],
+            },
+            colors: {
+              background: 'hsl(165 60% 97%)',
+              foreground: 'hsl(171 80% 10%)',
+              card: 'hsl(165 60% 97%)',
+              'card-foreground': 'hsl(171 80% 10%)',
+              popover: 'hsl(165 60% 97%)',
+              'popover-foreground': 'hsl(171 80% 10%)',
+              primary: {
+                DEFAULT: 'hsl(171 95% 27%)',
+                foreground: 'hsl(171 25% 95%)',
+              },
+              secondary: {
+                DEFAULT: 'hsl(169 53% 90%)',
+                foreground: 'hsl(171 95% 27%)',
+              },
+              muted: {
+                DEFAULT: 'hsl(169 53% 94%)',
+                foreground: 'hsl(171 40% 30%)',
+              },
+              accent: {
+                DEFAULT: 'hsl(169 53% 41%)',
+                foreground: 'hsl(171 25% 98%)',
+              },
+              destructive: 'hsl(0 84.2% 60.2%)',
+              'destructive-foreground': 'hsl(0 0% 98%)',
+              border: 'hsl(171 20% 88%)',
+              input: 'hsl(171 20% 88%)',
+              ring: 'hsl(171 95% 27%)',
+            },
+            borderRadius: {
+              lg: '0.5rem',
+              md: 'calc(0.5rem - 2px)',
+              sm: 'calc(0.5rem - 4px)',
+            },
+          }
+        }
+      }
+    </script>
+</head>
+<body class="font-body antialiased">
+  <div class="flex min-h-screen flex-col">
+    <%- include('header'); %>
+
+    <main class="flex-1">
+      <!-- Hero Section -->
+      <section class="relative h-80 w-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1592280771190-3e2e4d571952?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx1bml2ZXJzaXR5JTIwY2FtcHVzfGVufDB8fHx8MTc1OTM5NjM5Mnww&ixlib=rb-4.1.0&q=80&w=1080');">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="container relative z-10 mx-auto flex h-full max-w-7xl flex-col items-center justify-center text-center text-white">
+          <h1 class="font-headline text-4xl font-bold md:text-5xl">
+            Proceso de Admisión
+          </h1>
+          <p class="mt-4 max-w-2xl text-lg text-primary-foreground/90">
+            Tu futuro comienza aquí. Sigue estos pasos para unirte a nuestra comunidad estudiantil.
+          </p>
+        </div>
+      </section>
+
+      <!-- Admission Steps Section -->
+      <section class="py-16 md:py-24 bg-background">
+        <div class="container mx-auto max-w-5xl">
+          <div class="space-y-12">
+            
+            <!-- Step 1 -->
+            <div class="flex flex-col md:flex-row items-center gap-8">
+              <div class="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <span class="font-headline text-4xl font-bold">1</span>
+              </div>
+              <div class="rounded-lg border bg-card p-6 shadow-sm w-full">
+                <h3 class="font-headline text-2xl font-bold">Registro en Línea y Ficha</h3>
+                <p class="mt-2 text-muted-foreground">Completa tu solicitud de admisión en nuestro portal y obtén tu ficha para el examen. Asegúrate de tener tu CURP y una dirección de correo electrónico válida a la mano.</p>
+                <a href="#" class="mt-4 inline-flex items-center text-primary font-semibold">
+                  Ir al Portal de Registro
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex flex-col md:flex-row items-center gap-8">
+              <div class="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <span class="font-headline text-4xl font-bold">2</span>
+              </div>
+              <div class="rounded-lg border bg-card p-6 shadow-sm w-full">
+                <h3 class="font-headline text-2xl font-bold">Examen de Admisión</h3>
+                <p class="mt-2 text-muted-foreground">Presenta el examen de admisión CENEVAL EXANI-II. La fecha y hora se indicarán en tu ficha de registro. Te recomendamos revisar la guía de estudio para prepararte adecuadamente.</p>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="flex flex-col md:flex-row items-center gap-8">
+              <div class="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <span class="font-headline text-4xl font-bold">3</span>
+              </div>
+              <div class="rounded-lg border bg-card p-6 shadow-sm w-full">
+                <h3 class="font-headline text-2xl font-bold">Publicación de Resultados</h3>
+                <p class="mt-2 text-muted-foreground">Consulta la lista de aspirantes aceptados en nuestro sitio web oficial en la fecha indicada en la convocatoria. ¡Te deseamos mucho éxito!</p>
+              </div>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="flex flex-col md:flex-row items-center gap-8">
+              <div class="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <span class="font-headline text-4xl font-bold">4</span>
+              </div>
+              <div class="rounded-lg border bg-card p-6 shadow-sm w-full">
+                <h3 class="font-headline text-2xl font-bold">Entrega de Documentos y Pago</h3>
+                <p class="mt-2 text-muted-foreground">Si fuiste aceptado, deberás entregar tu documentación en el departamento de servicios escolares. Los documentos requeridos incluyen: certificado de bachillerato, acta de nacimiento, CURP y fotografías. Realiza el pago de inscripción correspondiente.</p>
+              </div>
+            </div>
+
+             <!-- Step 5 -->
+            <div class="flex flex-col md:flex-row items-center gap-8">
+              <div class="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <span class="font-headline text-4xl font-bold">5</span>
+              </div>
+              <div class="rounded-lg border bg-card p-6 shadow-sm w-full">
+                <h3 class="font-headline text-2xl font-bold">¡Bienvenido a la Universidad!</h3>
+                <p class="mt-2 text-muted-foreground">Una vez completado el proceso, recibirás tu matrícula y credencial de estudiante. Asiste al curso de inducción para conocer todos los detalles de tu nueva vida universitaria. ¡Felicidades!</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <%- include('footer'); %>
+  </div>
+</body>
+</html>

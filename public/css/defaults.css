@@ -1,0 +1,27 @@
+.dp_flex {
+    display: flex;
+}
+
+.flex_full_width {
+    min-width: 100vw;
+}
+
+.no_overflow {
+    overflow: hidden;
+}
+
+.auto_margin_left, .aml {
+    margin-left: auto;
+}
+
+.margin_left_150, .ml_150 {
+    margin-left: 150px;
+}
+
+.auto_margin_right, .amr {
+    margin-right: auto;
+}
+
+.margin_right_150, .mr_150 {
+    margin-right: 150px;
+}

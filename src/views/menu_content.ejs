@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= (typeof title !== 'undefined' ? title : 'Submenu') %> - Universidad Tecnológica</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style type="text/tailwindcss">
+    @layer base {
+      :root {
+        --background: 165 60% 97%;
+        --foreground: 171 80% 10%;
+        --card: 165 60% 97%;
+        --card-foreground: 171 80% 10%;
+        --popover: 165 60% 97%;
+        --popover-foreground: 171 80% 10%;
+        --primary: 171 95% 27%;
+        --primary-foreground: 171 25% 95%;
+        --secondary: 169 53% 90%;
+        --secondary-foreground: 171 95% 27%;
+        --muted: 169 53% 94%;
+        --muted-foreground: 171 40% 30%;
+        --accent: 169 53% 41%;
+        --accent-foreground: 171 25% 98%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 171 20% 88%;
+        --input: 171 20% 88%;
+        --ring: 171 95% 27%;
+        --radius: 0.5rem;
+      }
+    }
+    @layer base {
+      * { @apply border-border; }
+      body { @apply bg-background text-foreground; }
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            headline: ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(var(--background))',
+            foreground: 'hsl(var(--foreground))',
+            card: {
+              DEFAULT: 'hsl(var(--card))',
+              foreground: 'hsl(var(--card-foreground))',
+            },
+            popover: {
+              DEFAULT: 'hsl(var(--popover))',
+              foreground: 'hsl(var(--popover-foreground))',
+            },
+            primary: {
+              DEFAULT: 'hsl(var(--primary))',
+              foreground: 'hsl(var(--primary-foreground))',
+            },
+            secondary: {
+              DEFAULT: 'hsl(var(--secondary))',
+              foreground: 'hsl(var(--secondary-foreground))',
+            },
+            muted: {
+              DEFAULT: 'hsl(var(--muted))',
+              foreground: 'hsl(var(--muted-foreground))',
+            },
+            accent: {
+              DEFAULT: 'hsl(var(--accent))',
+              foreground: 'hsl(var(--accent-foreground))',
+            },
+            destructive: {
+              DEFAULT: 'hsl(var(--destructive))',
+              foreground: 'hsl(var(--destructive-foreground))',
+            },
+            border: 'hsl(var(--border))',
+            input: 'hsl(var(--input))',
+            ring: 'hsl(var(--ring))',
+          },
+          borderRadius: {
+            lg: 'var(--radius)',
+            md: 'calc(var(--radius) - 2px)',
+            sm: 'calc(var(--radius) - 4px)',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-body antialiased">
+    <%- include('header'); %>
+    <main class="flex-1">
+        <!-- Hero Section -->
+        <section class="relative h-80 w-full bg-secondary/50">
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="container relative z-10 mx-auto flex h-full max-w-7xl flex-col items-center justify-center text-center text-white">
+                <h1 class="font-headline text-4xl font-bold md:text-5xl">
+                    <% if (typeof title !== 'undefined') { %>
+                        <%= title %>
+                    <% } %>
+                </h1>
+                <p class="mt-4 max-w-2xl text-lg text-primary-foreground/90">
+                    <% if (typeof subtitle !== 'undefined') { %>
+                        <%= subtitle %>
+                    <% } %>
+                </p>
+            </div>
+        </section>
+
+        <!-- Grid Section -->
+        <section class="py-16 md:py-24">
+            <div class="container mx-auto max-w-7xl">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <% if (typeof items !== 'undefined' && items.length > 0) { %>
+                        <% items.forEach(item => { %>
+                            <a href="<%= item.href %>" target="<%= item.external ? '_blank' : '_self' %>" class="block rounded-lg border bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-lg p-6">
+                                <h2 class="font-headline text-xl font-semibold text-primary"><%= item.title %></h2>
+                                <% if (item.description) { %>
+                                    <p class="mt-2 text-muted-foreground"><%= item.description %></p>
+                                <% } %>
+                                <div class="mt-4 text-sm font-medium text-primary hover:underline">
+                                    Ir a la sección
+                                    <span aria-hidden="true">→</span>
+                                </div>
+                            </a>
+                        <% }); %>
+                    <% } else { %>
+                        <p class="text-muted-foreground col-span-full text-center">No hay opciones disponibles en esta sección.</p>
+                    <% } %>
+                </div>
+            </div>
+        </section>
+    </main>
+    <%- include('footer'); %>
+</body>
+</html>

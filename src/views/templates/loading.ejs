@@ -1,0 +1,58 @@
+<style>
+    .unique_loading_screen {
+        z-index: 1000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        opacity: 1;
+        cursor: progress;
+        text-decoration: none;
+        color: transparent;
+        background-image: url("/public/assets/images/extra/8fc32146cbf72ae17430e05ecc8b61beasdefd.gif");
+        background-position-x: center;
+        background-position-y: center;
+        background-size: 100%;
+
+        &::selection {
+            background-color: inherit;
+            color: inherit;
+        }
+    }
+
+    .load_hidden {
+        display: none;
+    }
+
+    .load_no_hid {
+        display: flex;
+    }
+</style>
+
+<input type="hidden" name="delay" id="delay" value="<%= delay %>">
+
+<div class="unique_loading_screen load_no_hid" id="loading_screen"></div>
+
+<script>
+    const delay = parseInt(document.getElementById("delay").value) || 0;
+    const loading = document.getElementById("loading_screen")
+    document.querySelector("body").style.overflow = "hidden";
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+            loading.classList.add("load_hidden")
+            loading.classList.remove("load_no_hid")
+            document.querySelector("body").style.overflow = "auto";
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
+        }, delay)
+    })
+</script>

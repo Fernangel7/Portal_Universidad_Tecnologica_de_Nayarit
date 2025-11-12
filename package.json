@@ -1,0 +1,28 @@
+{
+  "name": "utnay_website",
+  "version": "1.0.0",
+  "description": "Sitio web oficial de la Universidad Tecnológica de Nayarit",
+  "main": "src/app.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node ."
+  },
+  "keywords": [
+    "utnay",
+    "Universidad tecnológica de nayarit",
+    "website"
+  ],
+  "author": "Fernangel7",
+  "license": "MIT",
+  "packageManager": "pnpm@10.17.1",
+  "dependencies": {
+    "bcrypt": "6.0.0",
+    "cookie-parser": "1.4.7",
+    "cors": "2.8.5",
+    "dotenv": "17.2.2",
+    "ejs": "3.1.10",
+    "express": "5.1.0",
+    "jsonwebtoken": "9.0.2",
+    "sweetalert2": "11.26.3"
+  }
+}

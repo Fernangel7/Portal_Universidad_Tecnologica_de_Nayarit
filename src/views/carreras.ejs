@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oferta Educativa - Universidad Tecnológica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --background: 165 60% 97%; --foreground: 171 80% 10%; --card: 165 60% 97%; --card-foreground: 171 80% 10%; --popover: 165 60% 97%; --popover-foreground: 171 80% 10%; --primary: 171 95% 27%; --primary-foreground: 171 25% 95%; --secondary: 169 53% 90%; --secondary-foreground: 171 95% 27%; --muted: 169 53% 94%; --muted-foreground: 171 40% 30%; --accent: 169 53% 41%; --accent-foreground: 171 25% 98%; --destructive: 0 84.2% 60.2%; --destructive-foreground: 0 0% 98%; --border: 171 20% 88%; --input: 171 20% 88%; --ring: 171 95% 27%; --radius: 0.5rem;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: hsl(var(--background)); color: hsl(var(--foreground)); }
+        .font-headline { font-family: 'PT Sans', sans-serif; }
+        .bg-primary { background-color: hsl(var(--primary)); }
+        .text-primary-foreground { color: hsl(var(--primary-foreground)); }
+        .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+        .border { border-color: hsl(var(--border)); }
+        .bg-card { background-color: hsl(var(--card)); }
+        .text-card-foreground { color: hsl(var(--card-foreground)); }
+        .hover\:shadow-lg:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
+        .transition-shadow { transition-property: box-shadow; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+    </style>
+</head>
+<body class="antialiased">
+    <%- include('header'); %>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative h-80 w-full">
+            <img src="<%= allProgramsHero.imageUrl %>" alt="<%= allProgramsHero.description %>" class="absolute inset-0 h-full w-full object-cover" />
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="container relative z-10 mx-auto flex h-full max-w-7xl flex-col items-center justify-center text-center text-white">
+                <h1 class="font-headline text-4xl font-bold md:text-5xl">Oferta Educativa</h1>
+                <p class="mt-4 max-w-2xl text-lg text-primary-foreground/90">
+                    Explora todos nuestros programas y encuentra tu vocación.
+                </p>
+            </div>
+        </section>
+
+        <!-- Programs Grid Section -->
+        <section class="py-16 md:py-24">
+            <div class="container mx-auto max-w-7xl">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <% programs.forEach(program => { %>
+                        <div class="overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-lg">
+                            <div class="p-0">
+                                <% if (program.programImage) { %>
+                                <img src="<%= program.programImage.imageUrl %>" alt="<%= program.programImage.description %>" width="600" height="400" class="h-48 w-full object-cover" />
+                                <% } %>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-headline text-xl font-semibold"><%= program.name %></h3>
+                                <p class="mt-2 text-muted-foreground"><%= program.shortDescription %></p>
+                                <a href="/carreras/<%= program.slug %>" class="inline-flex items-center gap-2 mt-4 text-sm font-medium text-primary underline-offset-4 hover:underline">
+                                    Conocer más
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%- include('footer'); %>
+</body>
+</html>
