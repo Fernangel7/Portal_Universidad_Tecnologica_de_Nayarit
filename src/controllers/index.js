@@ -1,10 +1,9 @@
-const navigationLinks = require('../data/navigation')
-const images = require("../data/images")
-const featuredPrograms = require("../data/featured_programs")
-const newsItems = require("../data/news_items")
+const navigationLinks = require('../data/navigation.js')
+const images = require("../data/images.js")
+const featuredPrograms = require("../data/featured_programs.js")
+const newsItems = require("../data/news_items.js")
 
-const { loading_delay } = require("../config")
-const { website_name } = require("../util")
+const { loading_delay, website_name, InscriptionProcess } = require("../config/config-globals.js")
 
 const img = images.placeholderImages
 
@@ -19,7 +18,7 @@ module.exports = class IndexController {
             campusLifeImage: { ...img[0] },
             ...navigationLinks,
             delay: loading_delay,
-            IscProcess: require("../config").InscriptionProcess
+            IscProcess: InscriptionProcess
         })
     }
 

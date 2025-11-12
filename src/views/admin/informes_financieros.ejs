@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: 165 60% 97%;
+            --foreground: 171 80% 10%;
+            --card: 165 60% 97%;
+            --card-foreground: 171 80% 10%;
+            --popover: 165 60% 97%;
+            --popover-foreground: 171 80% 10%;
+            --primary: 171 95% 27%;
+            --primary-foreground: 171 25% 95%;
+            --secondary: 169 53% 90%;
+            --secondary-foreground: 171 95% 27%;
+            --muted: 169 53% 94%;
+            --muted-foreground: 171 40% 30%;
+            --accent: 169 53% 41%;
+            --accent-foreground: 171 25% 98%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 0 0% 98%;
+            --border: 171 20% 88%;
+            --input: 171 20% 88%;
+            --ring: 171 95% 27%;
+            --radius: 0.5rem;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: hsl(var(--muted) / 0.4);
+        }
+        .font-headline {
+            font-family: 'PT Sans', sans-serif;
+        }
+        .bg-background { background-color: hsl(var(--background)); }
+        .bg-primary { background-color: hsl(var(--primary)); }
+        .text-primary-foreground { color: hsl(var(--primary-foreground)); }
+        .bg-muted\/40 { background-color: hsl(var(--muted), 0.4); }
+        .border-b { border-bottom-width: 1px; }
+        .border-r { border-right-width: 1px; }
+        .border-border { border-color: hsl(var(--border)); }
+        .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+        .text-foreground { color: hsl(var(--foreground)); }
+        .bg-card { background-color: hsl(var(--card)); }
+        .bg-muted { background-color: hsl(var(--muted)); }
+        .text-card-foreground { color: hsl(var(--card-foreground)); }
+        .shadow-sm { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
+        .rounded-lg { border-radius: var(--radius); }
+        .rounded-md { border-radius: calc(var(--radius) - 2px); }
+        .border { border-width: 1px; }
+        /* Mobile sheet styles */
+        .sheet-content {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .sheet-open .sheet-content {
+            transform: translateX(0);
+        }
+        .sheet-overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none;
+        }
+        .sheet-open .sheet-overlay {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="relative min-h-screen w-full md:flex">
+        <!-- Sidebar for Desktop -->
+        <%- include('./templates/left_menu.ejs', { hovered: 7 }) %>
+
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1">
+            <header class="flex h-14 items-center gap-4 border-b bg-background px-4 md:px-6">
+                <!-- Mobile Menu Trigger -->
+                <button id="mobile-menu-trigger" class="md:hidden p-2 -ml-2 text-muted-foreground">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                    <span class="sr-only">Toggle Menu</span>
+                </button>
+                
+                <div class="flex-1">
+                    <h1 class="font-semibold text-lg">Informes Financieros</h1>
+                </div>
+
+                <!-- User Dropdown -->
+                <div class="relative">
+                    <button id="user-menu-button" class="overflow-hidden rounded-full w-8 h-8">
+                        <img src="https://picsum.photos/seed/admin-avatar/40/40" alt="Admin">
+                    </button>
+                    <div id="user-menu" class="hidden absolute right-0 mt-2 w-48 bg-background rounded-md shadow-lg border border-border py-1 z-50">
+                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Mi Cuenta</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Configuración</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Soporte</a>
+                        <hr class="my-1 border-border">
+                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </header>
+            
+            <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 md:gap-8">
+                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                     <div class="bg-card rounded-lg border shadow-sm p-6">
+                        <div class="flex flex-row items-center justify-between pb-2">
+                            <h3 class="text-sm font-medium text-card-foreground">Ingresos Totales (Este Año)</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold">$4,250,320.50</div>
+                            <p class="text-xs text-muted-foreground">+15.2% vs año anterior</p>
+                        </div>
+                    </div>
+                     <div class="bg-card rounded-lg border shadow-sm p-6">
+                        <div class="flex flex-row items-center justify-between pb-2">
+                            <h3 class="text-sm font-medium text-card-foreground">Gastos Operativos (Este Mes)</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold">$230,850.00</div>
+                            <p class="text-xs text-muted-foreground">-5% vs mes anterior</p>
+                        </div>
+                    </div>
+                     <div class="bg-card rounded-lg border shadow-sm p-6">
+                        <div class="flex flex-row items-center justify-between pb-2">
+                            <h3 class="text-sm font-medium text-card-foreground">Inscripciones Pagadas</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold">+1,205</div>
+                            <p class="text-xs text-muted-foreground">Ciclo 2024-2</p>
+                        </div>
+                    </div>
+                     <div class="bg-card rounded-lg border shadow-sm p-6">
+                        <div class="flex flex-row items-center justify-between pb-2">
+                            <h3 class="text-sm font-medium text-card-foreground">Becas Otorgadas</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold">340</div>
+                            <p class="text-xs text-muted-foreground">Monto total: $850,000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid gap-4 md:grid-cols-2">
+                    <div class="bg-card rounded-lg border shadow-sm p-6">
+                        <h3 class="text-xl font-headline font-semibold">Ingresos vs Egresos (Últimos 6 meses)</h3>
+                        <div class="mt-4 h-80"><canvas id="incomeExpenseChart"></canvas></div>
+                    </div>
+                    <div class="bg-card rounded-lg border shadow-sm p-6">
+                        <h3 class="text-xl font-headline font-semibold">Distribución de Ingresos</h3>
+                        <div class="mt-4 h-80"><canvas id="incomeSourceChart"></canvas></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobile-sheet" class="md:hidden fixed inset-0 z-40 hidden">
+        <div id="mobile-sheet-overlay" class="sheet-overlay fixed inset-0 bg-black/60"></div>
+        <div class="sheet-content relative flex flex-col w-64 h-full bg-background z-50">
+             <div class="flex items-center justify-between border-b border-border p-4 h-14">
+                <div class="flex items-center gap-2 font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M4.18 4.18A2 2 0 0 0 3 6v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-1.18-1.82L13 2.18a2 2 0 0 0-2 0L4.18 4.18Z"/><path d="M12 22V10"/><path d="m17 14-5-3-5 3"/><path d="M12 10v4"/></svg>
+                    <span>Universidad Inc</span>
+                </div>
+                 <button id="mobile-menu-close" class="p-2">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                 </button>
+            </div>
+            <nav class="flex flex-col p-2 space-y-1">
+                <a href="/admin-dashboard.html" class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    Dashboard
+                </a>
+                <a href="/admin-informacion.html" class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                    Información General
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile Menu and User Dropdown
+            const userMenuButton = document.getElementById('user-menu-button');
+            const userMenu = document.getElementById('user-menu');
+            const mobileMenuTrigger = document.getElementById('mobile-menu-trigger');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileSheet = document.getElementById('mobile-sheet');
+            const mobileSheetOverlay = document.getElementById('mobile-sheet-overlay');
+
+            if (userMenuButton && userMenu) {
+                userMenuButton.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    userMenu.classList.toggle('hidden');
+                });
+                document.addEventListener('click', function (event) {
+                    if (!userMenu.contains(event.target) && !userMenuButton.contains(event.target)) {
+                        userMenu.classList.add('hidden');
+                    }
+                });
+            }
+            
+            function openSheet() {
+                if (mobileSheet) mobileSheet.classList.remove('hidden');
+                setTimeout(() => {
+                    if (mobileSheet) mobileSheet.classList.add('sheet-open');
+                }, 10);
+            }
+            function closeSheet() {
+                if (mobileSheet) mobileSheet.classList.remove('sheet-open');
+                 setTimeout(() => {
+                    if (mobileSheet) mobileSheet.classList.add('hidden');
+                }, 300);
+            }
+
+            if (mobileMenuTrigger) mobileMenuTrigger.addEventListener('click', openSheet);
+            if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeSheet);
+            if (mobileSheetOverlay) mobileSheetOverlay.addEventListener('click', closeSheet);
+
+            // Chart.js Line Chart
+            const incomeExpenseCtx = document.getElementById('incomeExpenseChart');
+            if (incomeExpenseCtx) {
+                new Chart(incomeExpenseCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+                        datasets: [{
+                            label: 'Ingresos',
+                            data: [350, 410, 380, 520, 450, 600],
+                            borderColor: 'hsl(171, 95%, 27%)',
+                            backgroundColor: 'hsl(171, 95%, 27%, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }, {
+                            label: 'Egresos',
+                            data: [220, 250, 210, 300, 280, 320],
+                            borderColor: 'hsl(0, 84%, 60%)',
+                            backgroundColor: 'hsl(0, 84%, 60%, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+
+            // Chart.js Doughnut Chart
+            const incomeSourceCtx = document.getElementById('incomeSourceChart');
+            if(incomeSourceCtx) {
+                new Chart(incomeSourceCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Colegiaturas', 'Donaciones', 'Eventos', 'Otros'],
+                        datasets: [{
+                            label: 'Fuente de Ingresos',
+                            data: [65, 15, 10, 10],
+                            backgroundColor: [
+                                'hsl(171, 95%, 27%)',
+                                'hsl(169, 53%, 41%)',
+                                'hsl(169, 53%, 90%)',
+                                'hsl(171, 40%, 30%)'
+                            ],
+                            hoverOffset: 4
+                        }]
+                    },
+                     options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

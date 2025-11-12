@@ -1,4 +1,4 @@
-const educative_offer = require("./educative_offer")
+const educative_offer = require("./educative_offer.js")
 
 const programs_List = [
     "grastronomy_program",

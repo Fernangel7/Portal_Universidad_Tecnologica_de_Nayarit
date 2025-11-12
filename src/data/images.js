@@ -3,13 +3,13 @@ const images = {
     {
       "id": "homepage-hero",
       "description": "University campus aerial view",
-      "imageUrl": "/public/assets/images/general/ut-nayarit.webp",
+      "imageUrl": "./public/images/general/ut-nayarit.webp",
       "imageHint": "university campus"
     },
     {
       "id": "homepage-news-1",
       "description": "utn",
-      "imageUrl": "public/assets/images/general/admision_2025_notice.png",
+      "imageUrl": "public/images/general/admision_2025_notice.png",
       "imageHint": "utn admision"
     },
     {
@@ -87,7 +87,7 @@ const images = {
     {
       "id": "program-gastronomy",
       "description": "Chef plating a gourmet dish",
-      "imageUrl": "/public/assets/images/careers/Lic_Gatronomia.jpg",
+      "imageUrl": "/public/images/careers/Lic_Gatronomia.jpg",
       "imageHint": "gourmet dish"
     },
     {
@@ -99,7 +99,7 @@ const images = {
     {
       "id": "program-logistics",
       "description": "Large container ship in a port",
-      "imageUrl": "/public/assets/images/careers/logistica-internacional.jpg",
+      "imageUrl": "/public/images/careers/logistica-internacional.jpg",
       "imageHint": "container ship"
     },
     {
@@ -129,7 +129,7 @@ const images = {
     {
       "id": "program-admin",
       "description": "N/A",
-      "imageUrl": "/public/assets/images/careers/licenciado-en-administracion-1024x728.jpg",
+      "imageUrl": "/public/images/careers/licenciado-en-administracion-1024x728.jpg",
       "imageHint": "office skyline"
     },
     {

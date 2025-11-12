@@ -1,4 +1,4 @@
-const { captalize_case } = require("../util")
+const { captalize_case } = require("../utils/utils-globals.js")
 
 const images = require("./images")
 const img = images.placeholderImages
