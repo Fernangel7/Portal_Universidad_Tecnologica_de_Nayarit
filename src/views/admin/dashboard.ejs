@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --background: 165 60% 97%;
+            --foreground: 171 80% 10%;
+            --card: 165 60% 97%;
+            --card-foreground: 171 80% 10%;
+            --popover: 165 60% 97%;
+            --popover-foreground: 171 80% 10%;
+            --primary: 171 95% 27%;
+            --primary-foreground: 171 25% 95%;
+            --secondary: 169 53% 90%;
+            --secondary-foreground: 171 95% 27%;
+            --muted: 169 53% 94%;
+            --muted-foreground: 171 40% 30%;
+            --accent: 169 53% 41%;
+            --accent-foreground: 171 25% 98%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 0 0% 98%;
+            --border: 171 20% 88%;
+            --input: 171 20% 88%;
+            --ring: 171 95% 27%;
+            --radius: 0.5rem;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: hsl(var(--muted) / 0.4);
+        }
+
+        .font-headline {
+            font-family: 'PT Sans', sans-serif;
+        }
+
+        .bg-background {
+            background-color: hsl(var(--background));
+        }
+
+        .bg-primary {
+            background-color: hsl(var(--primary));
+        }
+
+        .text-primary-foreground {
+            color: hsl(var(--primary-foreground));
+        }
+
+        .bg-muted\/40 {
+            background-color: hsl(var(--muted), 0.4);
+        }
+
+        .border-b {
+            border-bottom-width: 1px;
+        }
+
+        .border-border {
+            border-color: hsl(var(--border));
+        }
+
+        .text-muted-foreground {
+            color: hsl(var(--muted-foreground));
+        }
+
+        .text-foreground {
+            color: hsl(var(--foreground));
+        }
+
+        .bg-card {
+            background-color: hsl(var(--card));
+        }
+
+        .text-card-foreground {
+            color: hsl(var(--card-foreground));
+        }
+
+        .shadow-sm {
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        .rounded-lg {
+            border-radius: var(--radius);
+        }
+
+        .border {
+            border-width: 1px;
+        }
+
+        .badge-secondary {
+            border-color: transparent;
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+        }
+
+        .badge-outline {
+            color: hsl(var(--foreground));
+            border-color: hsl(var(--border));
+        }
+
+        /* Mobile sheet styles */
+        .sheet-content {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sheet-open .sheet-content {
+            transform: translateX(0);
+        }
+
+        .sheet-overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none;
+        }
+
+        .sheet-open .sheet-overlay {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <div class="relative min-h-screen w-full md:flex">
+        <!-- Sidebar for Desktop -->
+        <%- include('./templates/left_menu.ejs', { hovered: 0 }) %>
+
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1">
+            <header class="flex h-14 items-center gap-4 border-b bg-background px-4 md:px-6">
+                <!-- Mobile Menu Trigger -->
+                <button id="mobile-menu-trigger" class="md:hidden p-2 -ml-2 text-muted-foreground">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="h-6 w-6">
+                        <line x1="4" x2="20" y1="12" y2="12" />
+                        <line x1="4" x2="20" y1="6" y2="6" />
+                        <line x1="4" x2="20" y1="18" y2="18" />
+                    </svg>
+                    <span class="sr-only">Toggle Menu</span>
+                </button>
+
+                <div class="flex-1">
+                    <!-- Can be used for search or breadcrumbs -->
+                </div>
+
+                <!-- User Dropdown -->
+                <div class="relative">
+                    <button id="user-menu-button" class="overflow-hidden rounded-full w-8 h-8">
+                        <img src="https://picsum.photos/seed/admin-avatar/40/40" alt="Admin">
+                    </button>
+                    <div id="user-menu"
+                        class="hidden absolute right-0 mt-2 w-48 bg-background rounded-md shadow-lg border border-border py-1 z-50">
+                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Mi Cuenta</a>
+                        <a href="#"
+                            class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Configuración</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Soporte</a>
+                        <hr class="my-1 border-border">
+                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Cerrar
+                            Sesión</a>
+                    </div>
+                </div>
+            </header>
+
+            <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 md:gap-8">
+                <div class="grid auto-rows-max items-start gap-4 md:gap-8">
+                    <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+                        <!-- Card: Total de Carreras -->
+                        <div class="bg-card rounded-lg border shadow-sm p-6">
+                            <div class="flex flex-row items-center justify-between pb-2">
+                                <h3 class="text-sm font-medium text-card-foreground">Total de Carreras</h3>
+                                <svg xmlns="http://wwwGREEN" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="text-muted-foreground">
+                                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold">12</div>
+                                <p class="text-xs text-muted-foreground">+2 desde el último semestre</p>
+                            </div>
+                        </div>
+                        <!-- Card: Total de Alumnos -->
+                        <div class="bg-card rounded-lg border shadow-sm p-6">
+                            <div class="flex flex-row items-center justify-between pb-2">
+                                <h3 class="text-sm font-medium text-card-foreground">Total de Alumnos</h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="text-muted-foreground">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold">+2350</div>
+                                <p class="text-xs text-muted-foreground">+180.1% desde el mes pasado</p>
+                            </div>
+                        </div>
+                        <!-- Card: Total de Docentes -->
+                        <div class="bg-card rounded-lg border shadow-sm p-6">
+                            <div class="flex flex-row items-center justify-between pb-2">
+                                <h3 class="text-sm font-medium text-card-foreground">Total de Docentes</h3>
+                                <svg xmlns="http://wwwRED" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="text-muted-foreground">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold">+52</div>
+                                <p class="text-xs text-muted-foreground">+5 desde el último ciclo</p>
+                            </div>
+                        </div>
+                        <!-- Card: Artículos de Noticias -->
+                        <div class="bg-card rounded-lg border shadow-sm p-6">
+                            <div class="flex flex-row items-center justify-between pb-2">
+                                <h3 class="text-sm font-medium text-card-foreground">Artículos de Noticias</h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="text-muted-foreground">
+                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                    <path d="M12 18h.01" />
+                                    <path d="M16 12h-4v-1" />
+                                    <path d="M12 12v6" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold">+57</div>
+                                <p class="text-xs text-muted-foreground">+12 este mes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid gap-4 md:grid-cols-2">
+                        <!-- Card: Contenido Reciente -->
+                        <div class="bg-card rounded-lg border shadow-sm">
+                            <div class="p-6">
+                                <h3 class="text-xl font-headline font-semibold">Contenido Reciente</h3>
+                                <p class="text-sm text-muted-foreground">Últimas actualizaciones en noticias y eventos.
+                                </p>
+                            </div>
+                            <div class="p-0">
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm">
+                                        <thead class="bg-muted/50">
+                                            <tr>
+                                                <th class="p-4 text-left font-medium text-muted-foreground">Título</th>
+                                                <th
+                                                    class="p-4 text-left font-medium text-muted-foreground hidden sm:table-cell">
+                                                    Tipo</th>
+                                                <th
+                                                    class="p-4 text-left font-medium text-muted-foreground hidden sm:table-cell">
+                                                    Estado</th>
+                                                <th class="p-4 text-right font-medium text-muted-foreground">Acciones
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-border">
+                                            <tr>
+                                                <td class="p-4 font-medium">Proceso de Admisión 2024</td>
+                                                <td class="p-4 hidden sm:table-cell">Noticia</td>
+                                                <td class="p-4 hidden sm:table-cell">
+                                                    <span
+                                                        class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-secondary">Publicado</span>
+                                                </td>
+                                                <td class="p-4 text-right">
+                                                    <button
+                                                        class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-4 font-medium">Feria de Empleo</td>
+                                                <td class="p-4 hidden sm:table-cell">Evento</td>
+                                                <td class="p-4 hidden sm:table-cell">
+                                                    <span
+                                                        class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-outline">Borrador</span>
+                                                </td>
+                                                <td class="p-4 text-right">
+                                                    <button
+                                                        class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card: Chart -->
+                        <div class="bg-card rounded-lg border shadow-sm p-6">
+                            <h3 class="text-xl font-headline font-semibold">Visitas del Sitio Web</h3>
+                            <p class="text-sm text-muted-foreground">Visitantes únicos en los últimos 6 meses.</p>
+                            <div class="mt-4 h-[200px] w-full relative group">
+                                <img src="https://quickchart.io/chart?c={type:'bar',data:{labels:['Enero','Feb','Mar','Abr','May','Jun'],%20datasets:[{label:'Desktop',data:[186,305,237,73,209,214]},{label:'Mobile',data:[80,200,120,190,130,140]}]}}"
+                                    alt="Chart of website visits" class="chart-image" />
+                                <div id="chart-tooltip"
+                                    class="chart-tooltip opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute transform bg-background border border-border rounded-lg shadow-lg p-4"
+                                    style="left: 0; top: 40px; transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1); max-height: calc(100% - 40px);">
+                                    <h4 class="font-semibold mb-2">Estadísticas de <span id="current-month">Enero</span>
+                                    </h4>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-3 h-3 bg-blue-500 rounded"></div>
+                                            <span>Desktop: <span id="desktop-count">0</span> visitas</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-3 h-3 bg-red-500 rounded"></div>
+                                            <span>Mobile: <span id="mobile-count">0</span> visitas</span>
+                                        </div>
+                                        <div class="text-xs text-muted-foreground mt-2">
+                                            Total: <span id="total-count">0</span> visitas
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobile-sheet" class="md:hidden fixed inset-0 z-40">
+        <!-- Overlay -->
+        <div id="mobile-sheet-overlay" class="sheet-overlay fixed inset-0 bg-black/60"></div>
+        <!-- Content -->
+        <div class="sheet-content relative flex flex-col w-64 h-full bg-background z-50">
+            <div class="flex items-center justify-between border-b border-border p-4 h-14">
+                <div class="flex items-center gap-2 font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="h-6 w-6">
+                        <path
+                            d="M4.18 4.18A2 2 0 0 0 3 6v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-1.18-1.82L13 2.18a2 2 0 0 0-2 0L4.18 4.18Z" />
+                        <path d="M12 22V10" />
+                        <path d="m17 14-5-3-5 3" />
+                        <path d="M12 10v4" />
+                    </svg>
+                    <span>Universidad Inc</span>
+                </div>
+                <button id="mobile-menu-close" class="p-2">
+                    <svg xmlns="http://wwwWWW.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="h-6 w-6">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <nav class="flex flex-col p-2 space-y-1">
+                <a href="#"
+                    class="flex items-center gap-3 rounded-lg bg-primary text-primary-foreground px-3 py-2 transition-all hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="h-5 w-5">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="#"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="h-5 w-5">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" x2="8" y1="13" y2="13" />
+                        <line x1="16" x2="8" y1="17" y2="17" />
+                        <line x1="10" x2="8" y1="9" y2="9" />
+                    </svg>
+                    Información
+                </a>
+                <a href="#"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="h-5 w-5">
+                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                    </svg>
+                    Carreras
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const userMenuButton = document.getElementById('user-menu-button');
+            const userMenu = document.getElementById('user-menu');
+            const mobileMenuTrigger = document.getElementById('mobile-menu-trigger');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileSheet = document.getElementById('mobile-sheet');
+            const mobileSheetOverlay = document.getElementById('mobile-sheet-overlay');
+
+            // User dropdown
+            if (userMenuButton && userMenu) {
+                userMenuButton.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    userMenu.classList.toggle('hidden');
+                });
+
+                document.addEventListener('click', function (event) {
+                    if (!userMenu.contains(event.target) && !userMenuButton.contains(event.target)) {
+                        userMenu.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Mobile sheet
+            function openSheet() {
+                if (mobileSheet) mobileSheet.classList.add('sheet-open');
+            }
+            function closeSheet() {
+                if (mobileSheet) mobileSheet.classList.remove('sheet-open');
+            }
+
+            if (mobileMenuTrigger) mobileMenuTrigger.addEventListener('click', openSheet);
+            if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeSheet);
+            if (mobileSheetOverlay) mobileSheetOverlay.addEventListener('click', closeSheet);
+
+            // Chart tooltip functionality
+            const chartContainer = document.querySelector('.mt-4');
+            const chartImage = document.querySelector('.chart-image');
+            const tooltip = document.getElementById('chart-tooltip');
+            const desktopCount = document.getElementById('desktop-count');
+            const mobileCount = document.getElementById('mobile-count');
+            const totalCount = document.getElementById('total-count');
+            const currentMonth = document.getElementById('current-month');
+
+            // Evitar que el tooltip interfiera con los eventos del mouse
+            if (tooltip) {
+                tooltip.style.pointerEvents = 'none';
+            }
+
+            if (chartContainer && chartImage) {
+                // Datos por mes
+                const months = ['Enero', 'Feb', 'Mar', 'Abr', 'May', 'Jun'];
+                const desktopData = [186, 305, 237, 73, 209, 214];
+                const mobileData = [80, 200, 120, 190, 130, 140];
+
+                let isMouseInChart = false;
+
+                // Manejar el movimiento del mouse sobre el contenedor
+                chartContainer.addEventListener('mousemove', (e) => {
+                    isMouseInChart = true;
+                    const rect = chartImage.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    // Calcular el índice del mes basado en la posición del mouse
+                    const monthIndex = Math.floor(x / (rect.width / months.length));
+
+                    if (monthIndex >= 0 && monthIndex < months.length) {
+                        // Actualizar el mes y las estadísticas
+                        currentMonth.textContent = months[monthIndex];
+                        desktopCount.textContent = desktopData[monthIndex];
+                        mobileCount.textContent = mobileData[monthIndex];
+                        totalCount.textContent = desktopData[monthIndex] + mobileData[monthIndex];
+
+                        // Actualizar la posición del tooltip
+                        const tooltip = document.getElementById('chart-tooltip');
+                        if (tooltip) {
+                            // Usar requestAnimationFrame para actualización más suave
+                            requestAnimationFrame(() => {
+                                // Calcular la posición del cursor relativa al contenedor
+                                const cursorX = x;
+
+                                // Obtener el ancho del tooltip
+                                const tooltipWidth = tooltip.offsetWidth;
+
+                                // Calcular la posición horizontal con límites
+                                const minXMargin = 52; // Margen mínimo desde los bordes
+                                const maxX = rect.width - tooltipWidth - minXMargin; // Posición máxima permitida
+
+                                // Calcular posición inicial
+                                let leftPosition = Math.min(
+                                    Math.max(minXMargin, cursorX), // No menor que el margen mínimo
+                                    maxX // No mayor que la posición máxima
+                                );
+
+                                // Ajustar si el tooltip queda cortado
+                                if (leftPosition + tooltipWidth > rect.width - minXMargin) {
+                                    leftPosition = rect.width - tooltipWidth - minXMargin;
+                                }
+
+                                // Aplicar la posición horizontal con transformación hardware-accelerated
+                                tooltip.style.transform = `translateX(${leftPosition}px)`;
+                            });
+
+                            // Ajustar la posición vertical manteniéndola dentro de los límites
+                            const tooltipHeight = tooltip.offsetHeight;
+                            const monthsLabelHeight = 40; // altura aproximada para los nombres de los meses
+                            const yPosition = Math.min(
+                                Math.max(40, y), // No permitir que suba más arriba de 0
+                                rect.height - tooltipHeight - monthsLabelHeight // límite para no tapar los meses
+                            );
+                            tooltip.style.top = `${yPosition}px`;
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<aside class="hidden md:flex flex-col w-64 bg-background border-r border-border">
+    <div class="flex items-center justify-center border-b border-border p-4 h-28 relative mt-5 mb-1">
+        <a href="/admin/" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <img src="/public/images/logotypes/logo_utnay.png" alt="logo utnay" class="h-20 w-auto scale-[2]" />
+        </a>
+    </div>
+    <nav class="flex flex-col p-2 space-y-1">
+        <a href="/admin/dashboard"
+            class="flex items-center gap-3 rounded-lg <% if (hovered == 0) { %>bg-primary text-primary-foreground <% } else {%> text-muted-foreground <%} %> px-3 py-2 transition-all <% if (hovered == 0) { %> hover:text-white <% } else { %> hover:text-primary <% } %>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Dashboard
+        </a>
+        <a href="/admin/informacion_general"
+            class="flex items-center gap-3 rounded-lg <% if (hovered == 1) { %>bg-primary text-primary-foreground <% } else {%> text-muted-foreground <%} %> px-3 py-2 transition-all <% if (hovered == 1) { %> hover:text-white <% } else { %> hover:text-primary <% } %>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" x2="8" y1="13" y2="13" />
+                <line x1="16" x2="8" y1="17" y2="17" />
+                <line x1="10" x2="8" y1="9" y2="9" />
+            </svg>
+            Información General
+        </a>
+        <a href="/admin/carreras"
+            class="flex items-center gap-3 rounded-lg <% if (hovered == 2) { %>bg-primary text-primary-foreground <% } else {%> text-muted-foreground <%} %> px-3 py-2 transition-all <% if (hovered == 2) { %> hover:text-white <% } else { %> hover:text-primary <% } %>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+            </svg>
+            Carreras
+        </a>
+        <a href="/admin/noticias"
+            class="flex items-center gap-3 rounded-lg <% if (hovered == 3) { %>bg-primary text-primary-foreground <% } else {%> text-muted-foreground <%} %> px-3 py-2 transition-all <% if (hovered == 3) { %> hover:text-white <% } else { %> hover:text-primary <% } %>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                <polyline points="14 2 14 8 20 8" />
+                <path d="M12 18h.01" />
+                <path d="M16 12h-4v-1" />
+                <path d'="M12 12v6" />
+            </svg>
+            Noticias
+        </a>
+        <a href="/admin/eventos"
+            class="flex items-center gap-3 rounded-lg <% if (hovered == 4) { %>bg-primary text-primary-foreground <% } else {%> text-muted-foreground <%} %> px-3 py-2 transition-all <% if (hovered == 4) { %> hover:text-white <% } else { %> hover:text-primary <% } %>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                <line x1="16" x2="16" y1="2" y2="6" />
+                <line x1="8" x2="8" y1="2" y2="6" />
+                <line x1="3" x2="21" y1="10" y2="10" />
+            </svg>
+            Eventos
+        </a>
+        <a href="/admin/docentes"
+            class="flex items-center gap-3 rounded-lg <% if (hovered == 5) { %>bg-primary text-primary-foreground <% } else {%> text-muted-foreground <%} %> px-3 py-2 transition-all <% if (hovered == 5) { %> hover:text-white <% } else { %> hover:text-primary <% } %>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+            Docentes
+        </a>
+        <a href="/admin/alumnos"
+            class="flex items-center gap-3 rounded-lg <% if (hovered == 6) { %>bg-primary text-primary-foreground <% } else {%> text-muted-foreground <%} %> px-3 py-2 transition-all <% if (hovered == 6) { %> hover:text-white <% } else { %> hover:text-primary <% } %>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+            Alumnos
+        </a>
+        <a href="/admin/informes_financieros"
+            class="flex items-center gap-3 rounded-lg <% if (hovered == 7) { %>bg-primary text-primary-foreground <% } else {%> text-muted-foreground <%} %> px-3 py-2 transition-all <% if (hovered == 7) { %> hover:text-white <% } else { %> hover:text-primary <% } %>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <line x1="8" x2="21" y1="6" y2="6" />
+                <line x1="8" x2="21" y1="12" y2="12" />
+                <line x1="8" x2="21" y1="18" y2="18" />
+                <line x1="3" x2="3.01" y1="6" y2="6" />
+                <line x1="3" x2="3.01" y1="12" y2="12" />
+                <line x1="3" x2="3.01" y1="18" y2="18" />
+            </svg>
+            Informes Financieros
+        </a>
+    </nav>
+</aside>
