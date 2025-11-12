@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Añadir Docente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: 165 60% 97%;
+            --foreground: 171 80% 10%;
+            --card: 165 60% 97%;
+            --card-foreground: 171 80% 10%;
+            --popover: 165 60% 97%;
+            --popover-foreground: 171 80% 10%;
+            --primary: 171 95% 27%;
+            --primary-foreground: 171 25% 95%;
+            --secondary: 169 53% 90%;
+            --secondary-foreground: 171 95% 27%;
+            --muted: 169 53% 94%;
+            --muted-foreground: 171 40% 30%;
+            --accent: 169 53% 41%;
+            --accent-foreground: 171 25% 98%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 0 0% 98%;
+            --border: 171 20% 88%;
+            --input: 171 20% 88%;
+            --ring: 171 95% 27%;
+            --radius: 0.5rem;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: hsl(var(--muted) / 0.4);
+        }
+        .font-headline {
+            font-family: 'PT Sans', sans-serif;
+        }
+        .bg-background { background-color: hsl(var(--background)); }
+        .bg-primary { background-color: hsl(var(--primary)); }
+        .text-primary { color: hsl(var(--primary)); }
+        .text-primary-foreground { color: hsl(var(--primary-foreground)); }
+        .bg-secondary { background-color: hsl(var(--secondary)); }
+        .text-secondary-foreground { color: hsl(var(--secondary-foreground)); }
+        .bg-muted { background-color: hsl(var(--muted)); }
+        .bg-muted\/50 { background-color: hsl(var(--muted) / 0.5); }
+        .border-b { border-bottom-width: 1px; }
+        .border-r { border-right-width: 1px; }
+        .border-border { border-color: hsl(var(--border)); }
+        .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+        .text-foreground { color: hsl(var(--foreground)); }
+        .bg-card { background-color: hsl(var(--card)); }
+        .text-card-foreground { color: hsl(var(--card-foreground)); }
+        .shadow-sm { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
+        .rounded-lg { border-radius: var(--radius); }
+        .rounded-md { border-radius: calc(var(--radius) - 2px); }
+        .border { border-width: 1px; }
+        /* Mobile sheet styles */
+        .sheet-content {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .sheet-open .sheet-content {
+            transform: translateX(0);
+        }
+        .sheet-overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none;
+        }
+        .sheet-open .sheet-overlay {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="relative min-h-screen w-full md:flex">
+        <!-- Sidebar -->
+        <%- include('./templates/left_menu.ejs', { hovered: 5 }) %>
+
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1">
+            <header class="flex h-14 items-center gap-4 border-b bg-background px-4 md:px-6">
+                <!-- Mobile Menu Trigger -->
+                <button id="mobile-menu-trigger" class="md:hidden p-2 -ml-2 text-muted-foreground">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                    <span class="sr-only">Toggle Menu</span>
+                </button>
+                
+                <div class="flex-1">
+                    <!-- Can be used for search or breadcrumbs -->
+                </div>
+
+                <!-- User Dropdown -->
+                <div class="relative">
+                    <button id="user-menu-button" class="overflow-hidden rounded-full w-8 h-8">
+                        <img src="https://picsum.photos/seed/admin-avatar/40/40" alt="Admin" class="rounded-full">
+                    </button>
+                    <div id="user-menu" class="hidden absolute right-0 mt-2 w-48 bg-background rounded-md shadow-lg border border-border py-1 z-50">
+                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Mi Cuenta</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Configuración</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Soporte</a>
+                        <hr class="my-1 border-border">
+                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </header>
+            
+            <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 md:gap-8">
+                <div class="max-w-4xl mx-auto w-full">
+                    <div class="flex items-center gap-4 mb-6">
+                        <a href="/admin-docentes.html" class="text-primary hover:text-primary/80">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m15 18-6-6 6-6"/></svg>
+                        </a>
+                        <h2 class="text-2xl font-headline font-bold tracking-tight">Añadir Nuevo Docente</h2>
+                    </div>
+                    <div class="bg-card rounded-lg border shadow-sm p-6">
+                       <form class="grid gap-6">
+                           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                               <div class="space-y-2">
+                                    <label for="teacher-name" class="text-sm font-medium leading-none">Nombre Completo</label>
+                                    <input id="teacher-name" placeholder="Ej. Dr. Alejandro Vargas" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="teacher-email" class="text-sm font-medium leading-none">Correo Institucional</label>
+                                    <input type="email" id="teacher-email" placeholder="Ej. a.vargas@universidad.edu" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                </div>
+                           </div>
+                            <div class="space-y-2">
+                                <label for="teacher-department" class="text-sm font-medium leading-none">Departamento</label>
+                                <select id="teacher-department" class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                    <option>Ingeniería Civil</option>
+                                    <option>Licenciatura en Mercadotecnia</option>
+                                    <option>Licenciatura en Gastronomía</option>
+                                    <option>Tecnologías de la Información</option>
+                                    <option>Ingeniería en Logística Internacional</option>
+                                    <option>Ingeniería Mecatrónica</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="teacher-bio" class="text-sm font-medium leading-none">Biografía Corta</label>
+                                <textarea id="teacher-bio" rows="4" placeholder="Un breve resumen sobre la experiencia y especialidad del docente." class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"></textarea>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="teacher-photo" class="text-sm font-medium leading-none">Foto de Perfil</label>
+                                <input id="teacher-photo" type="file" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium">
+                                <p class="text-xs text-muted-foreground">Sube una foto profesional del docente.</p>
+                            </div>
+                            <div class="flex justify-end gap-2">
+                                <a href="/admin-docentes.html" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground">Cancelar</a>
+                                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">Guardar Docente</button>
+                            </div>
+                       </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobile-sheet" class="md:hidden fixed inset-0 z-40" style="pointer-events: none;">
+        <!-- Overlay -->
+        <div id="mobile-sheet-overlay" class="sheet-overlay fixed inset-0 bg-black/60"></div>
+        <!-- Content -->
+        <div class="sheet-content relative flex flex-col w-64 h-full bg-background z-50" style="pointer-events: auto;">
+             <div class="flex items-center justify-between border-b border-border p-4 h-14">
+                <a href="/admin-dashboard.html" class="flex items-center gap-2 font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><path d="M4.18 4.18A2 2 0 0 0 3 6v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-1.18-1.82L13 2.18a2 2 0 0 0-2 0L4.18 4.18Z"></path><path d="M12 22V10"></path><path d="m17 14-5-3-5 3"></path><path d="M12 10v4"></path></svg>
+                    <span>Universidad Inc</span>
+                </a>
+                 <button id="mobile-menu-close" class="p-2 -mr-2">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                 </button>
+            </div>
+            <nav class="flex flex-col p-2 space-y-1">
+                <a href="/admin-dashboard.html" class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">Dashboard</a>
+                <a href="/admin-informacion.html" class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">Información</a>
+                <a href="/admin-carreras.html" class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">Carreras</a>
+                <a href="/admin-noticias.html" class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">Noticias</a>
+                <a href="/admin-eventos.html" class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">Eventos</a>
+                <a href="/admin-docentes.html" class="flex items-center gap-3 rounded-lg bg-primary text-primary-foreground px-3 py-2 transition-all">Docentes</a>
+                <a href="/admin-alumnos.html" class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">Alumnos</a>
+                <a href="/admin-informes.html" class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">Informes</a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const userMenuButton = document.getElementById('user-menu-button');
+            const userMenu = document.getElementById('user-menu');
+            const mobileMenuTrigger = document.getElementById('mobile-menu-trigger');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileSheet = document.getElementById('mobile-sheet');
+            const mobileSheetOverlay = document.getElementById('mobile-sheet-overlay');
+
+            // User dropdown
+            if (userMenuButton && userMenu) {
+                userMenuButton.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    userMenu.classList.toggle('hidden');
+                });
+
+                document.addEventListener('click', function (event) {
+                    if (!userMenu.contains(event.target) && !userMenuButton.contains(event.target)) {
+                        userMenu.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Mobile sheet
+            function openSheet() {
+                if (mobileSheet) mobileSheet.classList.add('sheet-open');
+                if (mobileSheet) mobileSheet.style.pointerEvents = 'auto';
+            }
+            function closeSheet() {
+                if (mobileSheet) mobileSheet.classList.remove('sheet-open');
+                if (mobileSheet) mobileSheet.style.pointerEvents = 'none';
+            }
+
+            if (mobileMenuTrigger) mobileMenuTrigger.addEventListener('click', openSheet);
+            if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeSheet);
+            if (mobileSheetOverlay) mobileSheetOverlay.addEventListener('click', closeSheet);
+            
+            // Initially hide sheet
+            if (mobileSheet) mobileSheet.style.pointerEvents = 'none';
+        });
+    </script>
+</body>
+</html>
+
+    
