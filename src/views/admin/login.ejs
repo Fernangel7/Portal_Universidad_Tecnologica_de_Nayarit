@@ -1,76 +1,122 @@
+<style>
+    :root {
+        --background: 165 60% 97%;
+        --foreground: 171 80% 10%;
+        --card: 165 60% 97%;
+        --card-foreground: 171 80% 10%;
+        --primary: 171 95% 27%;
+        --primary-foreground: 171 25% 95%;
+        --muted: 169 53% 94%;
+        --muted-foreground: 171 40% 30%;
+        --border: 171 20% 88%;
+        --input: 171 20% 88%;
+        --ring: 171 95% 27%;
+        --radius: 0.5rem;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: hsl(var(--muted));
+    }
+
+    .font-headline {
+        font-family: 'PT Sans', sans-serif;
+    }
+
+    .bg-background {
+        background-color: hsl(var(--background));
+    }
+
+    .bg-primary {
+        background-color: hsl(var(--primary));
+    }
+
+    .text-primary-foreground {
+        color: hsl(var(--primary-foreground));
+    }
+
+    .text-muted-foreground {
+        color: hsl(var(--muted-foreground));
+    }
+
+    .bg-card {
+        background-color: hsl(var(--card));
+    }
+
+    .text-card-foreground {
+        color: hsl(var(--card-foreground));
+    }
+
+    .border-border {
+        border-color: hsl(var(--border));
+    }
+
+    .rounded-lg {
+        border-radius: var(--radius);
+    }
+
+    .shadow-lg {
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    }
+
+    .border {
+        border-width: 1px;
+    }
+
+    .hover\:bg-primary\/90:hover {
+        background-color: hsl(var(--primary) / 0.9);
+    }
+
+    input.form-input {
+        display: flex;
+        height: 2.5rem;
+        width: 100%;
+        border-radius: 0.375rem;
+        border-width: 1px;
+        border-color: hsl(var(--input));
+        background-color: hsl(var(--background));
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+    }
+
+    input.form-input:focus-visible {
+        --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+        --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+        --tw-ring-color: hsl(var(--ring));
+    }
+</style>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title>
+        <%= title %>
+    </title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --background: 165 60% 97%;
-            --foreground: 171 80% 10%;
-            --card: 165 60% 97%;
-            --card-foreground: 171 80% 10%;
-            --primary: 171 95% 27%;
-            --primary-foreground: 171 25% 95%;
-            --muted: 169 53% 94%;
-            --muted-foreground: 171 40% 30%;
-            --border: 171 20% 88%;
-            --input: 171 20% 88%;
-            --ring: 171 95% 27%;
-            --radius: 0.5rem;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: hsl(var(--muted));
-        }
-        .font-headline {
-            font-family: 'PT Sans', sans-serif;
-        }
-        .bg-background { background-color: hsl(var(--background)); }
-        .bg-primary { background-color: hsl(var(--primary)); }
-        .text-primary-foreground { color: hsl(var(--primary-foreground)); }
-        .text-muted-foreground { color: hsl(var(--muted-foreground)); }
-        .bg-card { background-color: hsl(var(--card)); }
-        .text-card-foreground { color: hsl(var(--card-foreground)); }
-        .border-border { border-color: hsl(var(--border)); }
-        .rounded-lg { border-radius: var(--radius); }
-        .shadow-lg { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
-        .border { border-width: 1px; }
-        .hover\:bg-primary\/90:hover { background-color: hsl(var(--primary) / 0.9); }
-        input.form-input {
-            display: flex;
-            height: 2.5rem;
-            width: 100%;
-            border-radius: 0.375rem;
-            border-width: 1px;
-            border-color: hsl(var(--input));
-            background-color: hsl(var(--background));
-            padding: 0.5rem 0.75rem;
-            font-size: 0.875rem;
-            line-height: 1.25rem;
-            outline: 2px solid transparent;
-            outline-offset: 2px;
-        }
-        input.form-input:focus-visible {
-            --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-            --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-            box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-            --tw-ring-color: hsl(var(--ring));
-        }
-    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body class="antialiased">
     <div class="flex min-h-screen flex-col items-center justify-center bg-muted/40 px-4">
         <div class="w-full max-w-sm">
             <div class="flex justify-center mb-6">
                 <div class="flex items-center gap-2">
                     <!-- <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.18 4.18A2 2 0 0 0 3 6v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-1.18-1.82L13 2.18a2 2 0 0 0-2 0L4.18 4.18Z"></path><path d="M12 22V10"></path><path d="m17 14-5-3-5 3"></path><path d="M12 10v4"></path></svg> -->
-                    <span class="font-headline text-2xl font-bold" style="color: hsl(var(--primary))"><%= title %></span>
+                    <span class="font-headline text-2xl font-bold" style="color: hsl(var(--primary))">
+                        <%= title %>
+                    </span>
                 </div>
             </div>
             <div class="bg-card text-card-foreground rounded-lg border border-border shadow-lg">
@@ -80,17 +126,18 @@
                 </div>
                 <div class="p-6 pt-0 space-y-4">
                     <div class="space-y-2">
-                        <label for="email" class="text-sm font-medium leading-none">Email</label>
-                        <input type="email" id="email" placeholder="admin@example.com" class="form-input">
+                        <label for="username" class="text-sm font-medium leading-none">Usuario</label>
+                        <input type="text" id="username" placeholder="username" class="form-input" required>
                     </div>
                     <div class="space-y-2">
                         <div class="flex items-center">
                             <label for="password" class="text-sm font-medium leading-none">Contraseña</label>
                             <!-- <a href="#" class="ml-auto inline-block text-sm underline text-muted-foreground hover:text-primary">¿Olvidaste tu contraseña?</a> -->
                         </div>
-                        <input type="password" id="password" class="form-input">
+                        <input type="password" id="password" class="form-input" required placeholder="********">
                     </div>
-                    <button class="w-full h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90">
+                    <button id="verify-access"
+                        class="w-full h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90">
                         Iniciar Sesión
                     </button>
                 </div>
@@ -98,4 +145,35 @@
         </div>
     </div>
 </body>
+
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const verifyButton = document.getElementById('verify-access');
+
+        verifyButton.addEventListener('click', async () => {
+            const username = document.getElementById('username').value || "";
+            const password = document.getElementById('password').value || "";
+
+            try {
+                const response = await axios.post('/admin/login/verify', {
+                    username: username,
+                    password: password
+                }, {
+                    timeout: 15000
+                });
+
+                // Manejar la respuesta del servidor
+                if (response.data.status === 200) {
+                    // Redirigir al dashboard si el inicio de sesión es exitoso
+                    window.location.href = '/admin/dashboard';
+                } else {
+                    alert('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
+                }
+            } catch (error) {
+                console.error('Error during login verification:', error);
+            }
+        });
+    });
+</script>
