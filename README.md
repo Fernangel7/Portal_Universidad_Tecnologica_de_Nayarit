@@ -86,9 +86,10 @@ Sigue estos pasos para levantar el proyecto:
     # Ejemplo de backend/.env
     PORT=5000
     MONGODB_URI='mongodb://localhost:27017/universidad'
-    MONGO_DATABASE_NAME:'databasename'
+    MONGODB_DATABASE_NAME:'databasename'
+    BCRYPT_SALT_ROUNDS=10
+    COOKIE_PARSER_SECRET_KEY=tu_secreto_muy_seguro
     JWT_SECRET_KEY=tu_secreto_muy_seguro
-    COOKIE_SECRET_KEY=tu_secreto_muy_seguro
     ```
 
 4.  **Ejecuta el proyecto:**
