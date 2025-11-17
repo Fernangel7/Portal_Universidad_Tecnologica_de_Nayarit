@@ -22,8 +22,6 @@ module.exports = {
             } catch (e) { }
         }
 
-        // if (req.url === '/admin/login') return next()
-
         return res.render('401', { title: "401 - Unauthorized" })
     }
 }

@@ -30,9 +30,61 @@ class admin_render_controller {
         })
     }
 
+    static async carreras_add(req, res) {
+        res.render('admin/update/add_carreras', {
+            title: website_name,
+            options: {
+                isAdd: true,
+                isUpdate: false,
+                data: {
+
+                }
+            }
+        })
+    }
+
+    static async carreras_update(req, res) {
+        res.render('admin/update/add_carreras', {
+            title: website_name,
+            options: {
+                isAdd: false,
+                isUpdate: true,
+                data: {
+                    
+                }
+            }
+        })
+    }
+
     static async noticias(req, res) {
         res.render('admin/noticias', {
             title: website_name
+        })
+    }
+
+    static async noticias_add(req, res) {
+        res.render('admin/update/add_noticias', {
+            title: website_name,
+            options: {
+                isAdd: true,
+                isUpdate: false,
+                data: {
+                    
+                }
+            }
+        })
+    }
+
+    static async noticias_update(req, res) {
+        res.render('admin/update/add_noticias', {
+            title: website_name,
+            options: {
+                isAdd: false,
+                isUpdate: true,
+                data: {
+                    
+                }
+            }
         })
     }
 
@@ -42,15 +94,93 @@ class admin_render_controller {
         })
     }
 
+    static async eventos_add(req, res) {
+        res.render('admin/update/add_eventos', {
+            title: website_name,
+            options: {
+                isAdd: true,
+                isUpdate: false,
+                data: {
+                    
+                }
+            }
+        })
+    }
+
+    static async eventos_update(req, res) {
+        res.render('admin/update/add_eventos', {
+            title: website_name,
+            options: {
+                isAdd: false,
+                isUpdate: true,
+                data: {
+                    
+                }
+            }
+        })
+    }
+
     static async docentes(req, res) {
         res.render('admin/docentes', {
             title: website_name
         })
     }
 
+    static async docentes_add(req, res) {
+        res.render('admin/update/add_docentes', {
+            title: website_name,
+            options: {
+                isAdd: true,
+                isUpdate: false,
+                data: {
+                    
+                }
+            }
+        })
+    }
+
+    static async docentes_update(req, res) {
+        res.render('admin/update/add_docentes', {
+            title: website_name,
+            options: {
+                isAdd: false,
+                isUpdate: true,
+                data: {
+                    
+                }
+            }
+        })
+    }
+
     static async alumnos(req, res) {
         res.render('admin/alumnos', {
             title: website_name
+        })
+    }
+
+    static async alumnos_add(req, res) {
+        res.render('admin/update/add_alumnos', {
+            title: website_name,
+            options: {
+                isAdd: true,
+                isUpdate: false,
+                data: {
+                    
+                }
+            }
+        })
+    }
+
+    static async alumnos_update(req, res) {
+        res.render('admin/update/add_alumnos', {
+            title: website_name,
+            options: {
+                isAdd: false,
+                isUpdate: true,
+                data: {
+                    
+                }
+            }
         })
     }
 
