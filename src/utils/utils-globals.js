@@ -1,4 +1,6 @@
 const website_name = "Universidad Tecnologica de Nayarit"
+const loading_delay = 500
+const InscriptionProcess = false
 
 function captalize_case (str) {
     return str.split(' ').map(palabra => {
@@ -6,7 +8,10 @@ function captalize_case (str) {
   }).join(' ');
 }
 
+
 module.exports = {
     captalize_case,
-    website_name
+    loading_delay,
+    website_name,
+    InscriptionProcess
 }

@@ -13,6 +13,7 @@ const { corsMiddleware } = require('./middlewares/cors.js')
 const main_routes = require('./routes/index.js')
 const carreras_routes = require('./routes/carreras')
 const { admin_router } = require('./routes/admin.js')
+const { admin_actions_router } = require('./routes/admin_actions/admin.main.redirection.js')
 
 //configs
 const { PORT, COOKIE_PARSER_SECRET_KEY } = require('./config/config-globals.js')
@@ -48,6 +49,7 @@ connectDB().then(() => generateDB())
 
 app.use('/', main_routes)
 app.use('/admin', admin_router)
+app.use('/admin/raw-data', admin_actions_router)
 app.use('/carreras', carreras_routes)
 
 //404 render
