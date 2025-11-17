@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Becas y Apoyos Financieros - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            headline: ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(165 60% 97%)',
+            foreground: 'hsl(171 80% 10%)',
+            card: 'hsl(165 60% 97%)',
+            'card-foreground': 'hsl(171 80% 10%)',
+            popover: 'hsl(165 60% 97%)',
+            'popover-foreground': 'hsl(171 80% 10%)',
+            primary: 'hsl(171 95% 27%)',
+            'primary-foreground': 'hsl(171 25% 95%)',
+            secondary: 'hsl(169 53% 90%)',
+            'secondary-foreground': 'hsl(171 95% 27%)',
+            muted: 'hsl(169 53% 94%)',
+            'muted-foreground': 'hsl(171 40% 30%)',
+            accent: 'hsl(169 53% 41%)',
+            'accent-foreground': 'hsl(171 25% 98%)',
+            destructive: 'hsl(0 84.2% 60.2%)',
+            'destructive-foreground': 'hsl(0 0% 98%)',
+            border: 'hsl(171 20% 88%)',
+            input: 'hsl(171 20% 88%)',
+            ring: 'hsl(171 95% 27%)',
+          },
+          borderRadius: {
+            lg: '0.5rem',
+            md: 'calc(0.5rem - 2px)',
+            sm: 'calc(0.5rem - 4px)',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="font-body antialiased bg-background text-foreground">
+  <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: title }) %>
+
+  <%- include("./templates/page_header.ejs", { 
+    pageTitle: "Becas y Apoyos Financieros",
+    pageDescription: "Conoce los programas de apoyo económico para que continúes tu formación profesional",
+    breadcrumbs: [
+      { title: "Inicio", href: "/" },
+      { title: "Alumnos", href: "#" },
+      { title: "Becas", href: null }
+    ]
+  }) %>
+
+  <!-- Main Content -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <!-- Introduction -->
+      <div class="prose prose-lg max-w-none mb-12">
+        <p class="text-lg text-muted-foreground leading-relaxed">
+          En la Universidad Tecnológica de Nayarit estamos comprometidos con hacer accesible la educación superior 
+          de calidad. Por ello, ofrecemos diversos programas de becas y apoyos financieros para estudiantes que 
+          demuestren excelencia académica, necesidad económica o habilidades destacadas.
+        </p>
+      </div>
+
+      <!-- Scholarship Types -->
+      <div class="mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8">Tipos de Becas Disponibles</h2>
+        <div class="grid gap-8 md:grid-cols-2">
+          
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-primary p-6">
+              <h3 class="font-headline text-2xl font-semibold text-primary-foreground">Beca de Excelencia Académica</h3>
+            </div>
+            <div class="p-6">
+              <p class="text-muted-foreground mb-4">
+                Para estudiantes con promedio sobresaliente que mantienen un rendimiento académico destacado.
+              </p>
+              <div class="space-y-3">
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Cobertura:</strong> 50% a 100% de colegiatura</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Requisito:</strong> Promedio mínimo de 9.0</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Renovable:</strong> Cuatrimestralmente</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-accent p-6">
+              <h3 class="font-headline text-2xl font-semibold text-accent-foreground">Beca Socioeconómica</h3>
+            </div>
+            <div class="p-6">
+              <p class="text-muted-foreground mb-4">
+                Apoyo para estudiantes que enfrentan dificultades económicas y requieren asistencia financiera.
+              </p>
+              <div class="space-y-3">
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Cobertura:</strong> 30% a 80% de colegiatura</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Requisito:</strong> Estudio socioeconómico</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Promedio mínimo:</strong> 8.0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-secondary p-6">
+              <h3 class="font-headline text-2xl font-semibold text-secondary-foreground">Beca Deportiva y Cultural</h3>
+            </div>
+            <div class="p-6">
+              <p class="text-muted-foreground mb-4">
+                Para estudiantes que destacan en actividades deportivas, artísticas o culturales.
+              </p>
+              <div class="space-y-3">
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Cobertura:</strong> 25% a 75% de colegiatura</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Requisito:</strong> Participación activa en equipos</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Promedio mínimo:</strong> 8.0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-primary/80 p-6">
+              <h3 class="font-headline text-2xl font-semibold text-primary-foreground">Beca de Manutención</h3>
+            </div>
+            <div class="p-6">
+              <p class="text-muted-foreground mb-4">
+                Apoyo económico adicional para gastos de transporte, alimentación y materiales escolares.
+              </p>
+              <div class="space-y-3">
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Monto:</strong> Variable según necesidad</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Requisito:</strong> Situación económica vulnerable</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm"><strong>Modalidad:</strong> Apoyo mensual</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- External Scholarships -->
+      <div class="bg-secondary/50 rounded-lg p-8 md:p-12 mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-6">Becas Externas y Gubernamentales</h2>
+        <p class="text-muted-foreground mb-8">
+          Además de nuestras becas institucionales, los estudiantes pueden aplicar a programas externos:
+        </p>
+        <div class="grid gap-6 md:grid-cols-2">
+          
+          <div class="bg-card rounded-lg p-6 border border-border">
+            <h3 class="font-headline text-xl font-semibold mb-3">Beca Benito Juárez</h3>
+            <p class="text-sm text-muted-foreground mb-4">
+              Programa federal para estudiantes de educación superior en situación de vulnerabilidad económica.
+            </p>
+            <a href="https://becasbenitojuarez.mx/" target="_blank" class="inline-flex items-center text-sm font-medium text-primary hover:underline">
+              Más información
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="bg-card rounded-lg p-6 border border-border">
+            <h3 class="font-headline text-xl font-semibold mb-3">Beca Jóvenes Escribiendo el Futuro</h3>
+            <p class="text-sm text-muted-foreground mb-4">
+              Apoyo económico mensual para estudiantes de educación superior en todo el país.
+            </p>
+            <a href="https://jovenesconstruyendoelfuturo.stps.gob.mx/" target="_blank" class="inline-flex items-center text-sm font-medium text-primary hover:underline">
+              Más información
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="bg-card rounded-lg p-6 border border-border">
+            <h3 class="font-headline text-xl font-semibold mb-3">Becas del Gobierno de Nayarit</h3>
+            <p class="text-sm text-muted-foreground mb-4">
+              Programas estatales de apoyo a la educación para estudiantes nayaritas destacados.
+            </p>
+            <a href="https://www.nayarit.gob.mx/" target="_blank" class="inline-flex items-center text-sm font-medium text-primary hover:underline">
+              Más información
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="bg-card rounded-lg p-6 border border-border">
+            <h3 class="font-headline text-xl font-semibold mb-3">Becas SEP - CGUTYP</h3>
+            <p class="text-sm text-muted-foreground mb-4">
+              Coordinación General de Universidades Tecnológicas y Politécnicas ofrece diversos programas.
+            </p>
+            <a href="http://cgutyp.sep.gob.mx/" target="_blank" class="inline-flex items-center text-sm font-medium text-primary hover:underline">
+              Más información
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Application Process -->
+      <div class="mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8 text-center">Proceso de Solicitud</h2>
+        <div class="grid gap-6 md:grid-cols-5">
+          
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground text-2xl font-bold">
+              1
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Consulta Convocatoria</h3>
+            <p class="text-sm text-muted-foreground">
+              Revisa fechas, requisitos y documentos necesarios
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground text-2xl font-bold">
+              2
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Reúne Documentos</h3>
+            <p class="text-sm text-muted-foreground">
+              Prepara toda la documentación solicitada
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground text-2xl font-bold">
+              3
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Presenta Solicitud</h3>
+            <p class="text-sm text-muted-foreground">
+              Entrega en el Departamento de Servicios Escolares
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground text-2xl font-bold">
+              4
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Evaluación</h3>
+            <p class="text-sm text-muted-foreground">
+              Análisis y validación de tu solicitud
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground text-2xl font-bold">
+              5
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Resultado</h3>
+            <p class="text-sm text-muted-foreground">
+              Notificación de asignación de beca
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Required Documents -->
+      <div class="mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8">Documentos Generales Requeridos</h2>
+        <div class="bg-card rounded-lg border border-border p-8">
+          <div class="grid gap-4 md:grid-cols-2">
+            <div class="flex items-start gap-3">
+              <div class="flex-shrink-0 mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+              </div>
+              <span class="text-sm">Solicitud de beca debidamente llenada</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="flex-shrink-0 mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+              </div>
+              <span class="text-sm">Copia de identificación oficial</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="flex-shrink-0 mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+              </div>
+              <span class="text-sm">Kardex o certificado de calificaciones</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="flex-shrink-0 mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+              </div>
+              <span class="text-sm">Comprobante de domicilio reciente</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="flex-shrink-0 mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+              </div>
+              <span class="text-sm">CURP actualizada</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="flex-shrink-0 mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+              </div>
+              <span class="text-sm">Carta de motivos (según el tipo de beca)</span>
+            </div>
+          </div>
+          <div class="mt-6 p-4 bg-muted/50 rounded-lg">
+            <p class="text-sm text-muted-foreground">
+              <strong>Nota:</strong> Los requisitos específicos pueden variar según el tipo de beca. 
+              Consulta la convocatoria vigente o comunícate con el Departamento de Servicios Escolares 
+              para obtener información detallada.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="text-center bg-gradient-to-br from-primary to-accent rounded-lg p-8 md:p-12">
+        <h2 class="font-headline text-3xl font-bold tracking-tight text-primary-foreground mb-4">
+          ¿Necesitas Apoyo Económico?
+        </h2>
+        <p class="text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          No permitas que la situación económica sea un obstáculo para tu educación. Conoce las opciones disponibles.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="mailto:becas@utnay.edu.mx" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 bg-background text-foreground hover:bg-background/90">
+            Solicitar Información
+          </a>
+          <a href="tel:+523112119800" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+            Contactar a Servicios Escolares
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <%- include("./templates/footer.ejs", {title: title}) %>
+
+</body>
+</html>

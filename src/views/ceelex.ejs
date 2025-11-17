@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CEELEX - Centro de Enseñanza de Lenguas Extranjeras - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            headline: ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(165 60% 97%)',
+            foreground: 'hsl(171 80% 10%)',
+            card: 'hsl(165 60% 97%)',
+            'card-foreground': 'hsl(171 80% 10%)',
+            popover: 'hsl(165 60% 97%)',
+            'popover-foreground': 'hsl(171 80% 10%)',
+            primary: 'hsl(171 95% 27%)',
+            'primary-foreground': 'hsl(171 25% 95%)',
+            secondary: 'hsl(169 53% 90%)',
+            'secondary-foreground': 'hsl(171 95% 27%)',
+            muted: 'hsl(169 53% 94%)',
+            'muted-foreground': 'hsl(171 40% 30%)',
+            accent: 'hsl(169 53% 41%)',
+            'accent-foreground': 'hsl(171 25% 98%)',
+            destructive: 'hsl(0 84.2% 60.2%)',
+            'destructive-foreground': 'hsl(0 0% 98%)',
+            border: 'hsl(171 20% 88%)',
+            input: 'hsl(171 20% 88%)',
+            ring: 'hsl(171 95% 27%)',
+          },
+          borderRadius: {
+            lg: '0.5rem',
+            md: 'calc(0.5rem - 2px)',
+            sm: 'calc(0.5rem - 4px)',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="font-body antialiased bg-background text-foreground">
+  <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: title }) %>
+
+  <%- include("./templates/page_header.ejs", { 
+    pageTitle: "CEELEX",
+    pageDescription: "Centro de Enseñanza de Lenguas Extranjeras - Domina nuevos idiomas y amplía tus oportunidades",
+    breadcrumbs: [
+      { title: "Inicio", href: "/" },
+      { title: "Servicios", href: "#" },
+      { title: "CEELEX", href: null }
+    ]
+  }) %>
+
+  <!-- Main Content -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <!-- Introduction -->
+      <div class="prose prose-lg max-w-none mb-12">
+        <p class="text-lg text-muted-foreground leading-relaxed">
+          El Centro de Enseñanza de Lenguas Extranjeras (CEELEX) de la Universidad Tecnológica de Nayarit 
+          ofrece programas de idiomas de alta calidad para estudiantes, profesionistas y público en general, 
+          con el objetivo de desarrollar competencias lingüísticas que potencien el desarrollo profesional y académico.
+        </p>
+      </div>
+
+      <!-- Languages Offered -->
+      <div class="mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8 text-center">Idiomas que Ofrecemos</h2>
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-primary/10 mx-auto">
+              <span class="text-3xl">🇬🇧</span>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2 text-center">Inglés</h3>
+            <p class="text-muted-foreground text-center">
+              Niveles básico, intermedio y avanzado con certificación internacional
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-primary/10 mx-auto">
+              <span class="text-3xl">🇫🇷</span>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2 text-center">Francés</h3>
+            <p class="text-muted-foreground text-center">
+              Cursos desde nivel A1 hasta C1 según Marco Común Europeo
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-primary/10 mx-auto">
+              <span class="text-3xl">🇩🇪</span>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2 text-center">Alemán</h3>
+            <p class="text-muted-foreground text-center">
+              Programas intensivos y regulares con instructores certificados
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-primary/10 mx-auto">
+              <span class="text-3xl">🇮🇹</span>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2 text-center">Italiano</h3>
+            <p class="text-muted-foreground text-center">
+              Aprende el idioma de la cultura, el arte y la gastronomía
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-primary/10 mx-auto">
+              <span class="text-3xl">🇵🇹</span>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2 text-center">Portugués</h3>
+            <p class="text-muted-foreground text-center">
+              Domina el idioma más hablado de América Latina
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-primary/10 mx-auto">
+              <span class="text-3xl">🇯🇵</span>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2 text-center">Japonés</h3>
+            <p class="text-muted-foreground text-center">
+              Introducción al idioma y cultura japonesa
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="bg-secondary/50 rounded-lg p-8 md:p-12 mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8 text-center">Nuestras Ventajas</h2>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          
+          <div class="flex gap-4">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-1">Profesores Certificados</h3>
+              <p class="text-sm text-muted-foreground">
+                Docentes con certificaciones internacionales y amplia experiencia
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-1">Grupos Reducidos</h3>
+              <p class="text-sm text-muted-foreground">
+                Máximo 15 alumnos por grupo para atención personalizada
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <rect width="18" height="18" x="3" y="3" rx="2"/>
+                  <path d="M3 9h18"/>
+                  <path d="M9 21V9"/>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-1">Horarios Flexibles</h3>
+              <p class="text-sm text-muted-foreground">
+                Turnos matutino, vespertino y sabatino
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-1">Certificación Oficial</h3>
+              <p class="text-sm text-muted-foreground">
+                Constancias y certificados con validez internacional
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-1">Instalaciones Modernas</h3>
+              <p class="text-sm text-muted-foreground">
+                Aulas equipadas con tecnología multimedia
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                  <path d="M2 12h20"/>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-1">Material Didáctico</h3>
+              <p class="text-sm text-muted-foreground">
+                Libros y recursos digitales incluidos en la inscripción
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Course Modalities -->
+      <div class="mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8 text-center">Modalidades de Estudio</h2>
+        <div class="grid gap-8 md:grid-cols-3">
+          
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden">
+            <div class="bg-primary p-6 text-center">
+              <h3 class="font-headline text-2xl font-semibold text-primary-foreground">Presencial</h3>
+            </div>
+            <div class="p-6">
+              <ul class="space-y-3">
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">Clases en instalaciones de la universidad</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">Interacción directa con profesores</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">Práctica conversacional en grupo</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">2 a 4 horas semanales</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden">
+            <div class="bg-accent p-6 text-center">
+              <h3 class="font-headline text-2xl font-semibold text-accent-foreground">En Línea</h3>
+            </div>
+            <div class="p-6">
+              <ul class="space-y-3">
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">Clases vía videoconferencia</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">Plataforma educativa 24/7</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">Flexibilidad de horarios</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">Recursos multimedia interactivos</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden">
+            <div class="bg-secondary p-6 text-center">
+              <h3 class="font-headline text-2xl font-semibold text-secondary-foreground">Híbrido</h3>
+            </div>
+            <div class="p-6">
+              <ul class="space-y-3">
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">Combina presencial y en línea</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">Lo mejor de ambas modalidades</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">Mayor flexibilidad</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary flex-shrink-0 mt-0.5">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                  <span class="text-sm">Ideal para profesionistas ocupados</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="text-center bg-gradient-to-br from-primary to-accent rounded-lg p-8 md:p-12">
+        <h2 class="font-headline text-3xl font-bold tracking-tight text-primary-foreground mb-4">
+          Inscripciones Abiertas
+        </h2>
+        <p class="text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          Inicia tu camino hacia el dominio de un nuevo idioma. Contáctanos para conocer nuestros horarios y promociones.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="mailto:ceelex@utnay.edu.mx" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 bg-background text-foreground hover:bg-background/90">
+            Solicitar Información
+          </a>
+          <a href="tel:+523112119800" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+            Llamar Ahora
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <%- include("./templates/footer.ejs", {title: title}) %>
+
+</body>
+</html>

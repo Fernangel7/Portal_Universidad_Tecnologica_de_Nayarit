@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Calidad - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            headline: ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(165 60% 97%)',
+            foreground: 'hsl(171 80% 10%)',
+            card: 'hsl(165 60% 97%)',
+            'card-foreground': 'hsl(171 80% 10%)',
+            primary: 'hsl(171 95% 27%)',
+            'primary-foreground': 'hsl(171 25% 95%)',
+            secondary: 'hsl(169 53% 90%)',
+            'secondary-foreground': 'hsl(171 95% 27%)',
+            muted: 'hsl(169 53% 94%)',
+            'muted-foreground': 'hsl(171 40% 30%)',
+            accent: 'hsl(169 53% 41%)',
+            border: 'hsl(171 20% 88%)',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="font-body antialiased bg-background text-foreground">
+  <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: title }) %>
+
+  <%- include("./templates/page_header.ejs", { 
+    pageTitle: "Sistema de Gestión de Calidad",
+    pageDescription: "Compromiso con la excelencia educativa y mejora continua",
+    breadcrumbs: [
+      { title: "Inicio", href: "/" },
+      { title: "Acerca de", href: "#" },
+      { title: "Sistema de Calidad", href: null }
+    ]
+  }) %>
+
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <div class="prose prose-lg max-w-none mb-12">
+        <p class="text-lg text-muted-foreground leading-relaxed">
+          La Universidad Tecnológica de Nayarit mantiene un firme compromiso con la calidad educativa, 
+          implementando un Sistema de Gestión de Calidad que garantiza la mejora continua en todos nuestros 
+          procesos académicos y administrativos.
+        </p>
+      </div>
+
+      <!-- Certifications and Accreditations -->
+      <div class="mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8 text-center">Certificaciones y Acreditaciones</h2>
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 text-center hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 mx-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary">
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <path d="m10 13 2 2 4-4"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2">ISO 9001:2015</h3>
+            <p class="text-sm text-muted-foreground">
+              Certificación internacional en Sistema de Gestión de Calidad
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 text-center hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 mx-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2">Programas Acreditados</h3>
+            <p class="text-sm text-muted-foreground">
+              Acreditación de programas educativos por organismos reconocidos por COPAES
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 text-center hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 mx-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                <line x1="9" x2="9.01" y1="9" y2="9"/>
+                <line x1="15" x2="15.01" y1="9" y2="9"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2">Reconocimiento SEP</h3>
+            <p class="text-sm text-muted-foreground">
+              Reconocimiento de Validez Oficial de Estudios (RVOE)
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Quality Policy -->
+      <div class="bg-secondary/50 rounded-lg p-8 md:p-12 mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-6 text-center">Política de Calidad</h2>
+        <div class="max-w-4xl mx-auto">
+          <div class="bg-card rounded-lg border p-8">
+            <p class="text-muted-foreground leading-relaxed text-center italic">
+              "En la Universidad Tecnológica de Nayarit estamos comprometidos con ofrecer servicios educativos 
+              de excelencia que satisfagan las necesidades de nuestros estudiantes y del sector productivo, 
+              mediante la mejora continua de nuestros procesos, el desarrollo del capital humano y el uso 
+              eficiente de los recursos, cumpliendo con los requisitos aplicables y promoviendo una cultura 
+              de calidad en toda la comunidad universitaria."
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quality Objectives -->
+      <div class="mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8">Objetivos de Calidad</h2>
+        <div class="grid gap-6 md:grid-cols-2">
+          
+          <div class="flex gap-4 p-6 rounded-lg border bg-card">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold">
+                1
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-2">Excelencia Académica</h3>
+              <p class="text-sm text-muted-foreground">
+                Mantener altos estándares de calidad en la enseñanza-aprendizaje y alcanzar índices 
+                de eficiencia terminal superiores al 70%.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 p-6 rounded-lg border bg-card">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold">
+                2
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-2">Vinculación Efectiva</h3>
+              <p class="text-sm text-muted-foreground">
+                Garantizar que más del 80% de nuestros egresados realicen estadías profesionales 
+                en empresas del sector productivo.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 p-6 rounded-lg border bg-card">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold">
+                3
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-2">Satisfacción del Cliente</h3>
+              <p class="text-sm text-muted-foreground">
+                Lograr índices de satisfacción superiores al 85% en estudiantes, egresados y 
+                empleadores.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 p-6 rounded-lg border bg-card">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold">
+                4
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-2">Mejora Continua</h3>
+              <p class="text-sm text-muted-foreground">
+                Implementar acciones de mejora en al menos el 90% de los procesos identificados 
+                con oportunidades de optimización.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 p-6 rounded-lg border bg-card">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold">
+                5
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-2">Competencia del Personal</h3>
+              <p class="text-sm text-muted-foreground">
+                Asegurar que el 100% del personal docente y administrativo cuente con la 
+                capacitación necesaria para sus funciones.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 p-6 rounded-lg border bg-card">
+            <div class="flex-shrink-0">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold">
+                6
+              </div>
+            </div>
+            <div>
+              <h3 class="font-headline text-lg font-semibold mb-2">Infraestructura Adecuada</h3>
+              <p class="text-sm text-muted-foreground">
+                Mantener instalaciones, laboratorios y equipos en óptimas condiciones de 
+                funcionamiento y actualización tecnológica.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Quality Documents -->
+      <div class="mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8">Documentos del Sistema de Calidad</h2>
+        <div class="space-y-4">
+          
+          <div class="rounded-lg border bg-card p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                <div>
+                  <h3 class="font-semibold">Manual de Calidad</h3>
+                  <p class="text-sm text-muted-foreground">Descripción del Sistema de Gestión de Calidad</p>
+                </div>
+              </div>
+              <a href="#" class="text-sm font-medium text-primary hover:underline">Descargar</a>
+            </div>
+          </div>
+
+          <div class="rounded-lg border bg-card p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                <div>
+                  <h3 class="font-semibold">Procedimientos Institucionales</h3>
+                  <p class="text-sm text-muted-foreground">Documentación de procesos clave</p>
+                </div>
+              </div>
+              <a href="#" class="text-sm font-medium text-primary hover:underline">Descargar</a>
+            </div>
+          </div>
+
+          <div class="rounded-lg border bg-card p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                <div>
+                  <h3 class="font-semibold">Indicadores de Desempeño</h3>
+                  <p class="text-sm text-muted-foreground">Métricas y resultados del SGC</p>
+                </div>
+              </div>
+              <a href="#" class="text-sm font-medium text-primary hover:underline">Descargar</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="text-center bg-gradient-to-br from-primary to-accent rounded-lg p-8 md:p-12">
+        <h2 class="font-headline text-3xl font-bold tracking-tight text-primary-foreground mb-4">
+          Compromiso con la Excelencia
+        </h2>
+        <p class="text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          Nuestro Sistema de Gestión de Calidad es un compromiso continuo con la mejora y la excelencia educativa.
+        </p>
+        <a href="mailto:calidad@utnay.edu.mx" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 bg-background text-foreground hover:bg-background/90">
+          Contactar Departamento de Calidad
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <%- include("./templates/footer.ejs", {title: title}) %>
+
+</body>
+</html>

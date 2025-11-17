@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Incubadora de Negocios - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            headline: ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(165 60% 97%)',
+            foreground: 'hsl(171 80% 10%)',
+            card: 'hsl(165 60% 97%)',
+            'card-foreground': 'hsl(171 80% 10%)',
+            popover: 'hsl(165 60% 97%)',
+            'popover-foreground': 'hsl(171 80% 10%)',
+            primary: 'hsl(171 95% 27%)',
+            'primary-foreground': 'hsl(171 25% 95%)',
+            secondary: 'hsl(169 53% 90%)',
+            'secondary-foreground': 'hsl(171 95% 27%)',
+            muted: 'hsl(169 53% 94%)',
+            'muted-foreground': 'hsl(171 40% 30%)',
+            accent: 'hsl(169 53% 41%)',
+            'accent-foreground': 'hsl(171 25% 98%)',
+            destructive: 'hsl(0 84.2% 60.2%)',
+            'destructive-foreground': 'hsl(0 0% 98%)',
+            border: 'hsl(171 20% 88%)',
+            input: 'hsl(171 20% 88%)',
+            ring: 'hsl(171 95% 27%)',
+          },
+          borderRadius: {
+            lg: '0.5rem',
+            md: 'calc(0.5rem - 2px)',
+            sm: 'calc(0.5rem - 4px)',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="font-body antialiased bg-background text-foreground">
+  <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: title }) %>
+
+  <%- include("./templates/page_header.ejs", { 
+    pageTitle: "Incubadora de Negocios",
+    pageDescription: "Impulsamos el desarrollo de emprendedores y nuevas empresas con asesoría especializada",
+    breadcrumbs: [
+      { title: "Inicio", href: "/" },
+      { title: "Vinculación", href: "#" },
+      { title: "Incubadora de Negocios", href: null }
+    ]
+  }) %>
+
+  <!-- Main Content -->
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <!-- Introduction -->
+      <div class="prose prose-lg max-w-none mb-12">
+        <p class="text-lg text-muted-foreground leading-relaxed">
+          La Incubadora de Negocios de la Universidad Tecnológica de Nayarit es un espacio diseñado para 
+          fomentar el espíritu emprendedor y apoyar el desarrollo de proyectos innovadores que contribuyan 
+          al crecimiento económico de nuestra región.
+        </p>
+      </div>
+
+      <!-- Services Grid -->
+      <div class="mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8">Nuestros Servicios</h2>
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2">Asesoría Empresarial</h3>
+            <p class="text-muted-foreground">
+              Orientación especializada en la creación y desarrollo de planes de negocio viables y sostenibles.
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4"/>
+                <path d="M12 8h.01"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2">Capacitación Continua</h3>
+            <p class="text-muted-foreground">
+              Talleres y cursos sobre gestión empresarial, marketing, finanzas y desarrollo de productos.
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2">Networking</h3>
+            <p class="text-muted-foreground">
+              Conexión con inversionistas, mentores y otros emprendedores para crear alianzas estratégicas.
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <path d="M3 3v18h18"/>
+                <path d="m19 9-5 5-4-4-3 3"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2">Seguimiento y Evaluación</h3>
+            <p class="text-muted-foreground">
+              Monitoreo constante del progreso de tu empresa y ajustes estratégicos para garantizar el éxito.
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2">Espacios de Coworking</h3>
+            <p class="text-muted-foreground">
+              Acceso a instalaciones equipadas para el desarrollo de tu proyecto en un ambiente colaborativo.
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-xl font-semibold mb-2">Apoyo Legal y Fiscal</h3>
+            <p class="text-muted-foreground">
+              Orientación en trámites legales, fiscales y de propiedad intelectual para tu empresa.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Process Section -->
+      <div class="bg-secondary/50 rounded-lg p-8 md:p-12 mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8 text-center">Proceso de Incubación</h2>
+        <div class="grid gap-6 md:grid-cols-4">
+          
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground text-2xl font-bold">
+              1
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Registro</h3>
+            <p class="text-sm text-muted-foreground">
+              Completa tu solicitud y presenta tu idea de negocio
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground text-2xl font-bold">
+              2
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Evaluación</h3>
+            <p class="text-sm text-muted-foreground">
+              Análisis de viabilidad y potencial de tu proyecto
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground text-2xl font-bold">
+              3
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Desarrollo</h3>
+            <p class="text-sm text-muted-foreground">
+              Acompañamiento en la creación de tu plan de negocio
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground text-2xl font-bold">
+              4
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Lanzamiento</h3>
+            <p class="text-sm text-muted-foreground">
+              Apoyo en la puesta en marcha de tu empresa
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="text-center bg-gradient-to-br from-primary to-accent rounded-lg p-8 md:p-12">
+        <h2 class="font-headline text-3xl font-bold tracking-tight text-primary-foreground mb-4">
+          ¿Tienes una idea de negocio?
+        </h2>
+        <p class="text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          Te ayudamos a convertirla en realidad. Únete a nuestra incubadora y recibe todo el apoyo que necesitas.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="mailto:incubadora@utnay.edu.mx" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 bg-background text-foreground hover:bg-background/90">
+            Contáctanos
+          </a>
+          <a href="tel:+523112119800" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+            Llamar Ahora
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <%- include("./templates/footer.ejs", {title: title}) %>
+
+</body>
+</html>
