@@ -33,6 +33,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(corsMiddleware())
 app.use(cookieParser(COOKIE_PARSER_SECRET_KEY))
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.use(express.static('public', {
     setHeaders: (req, res) => {
