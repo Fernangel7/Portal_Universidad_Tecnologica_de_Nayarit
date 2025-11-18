@@ -6,21 +6,21 @@ const navigationLinks = {
         }, {
             title: 'Aspirantes',
             children: [
-                {
+                /*{
                     title: 'Proceso de Admisión',
                     href: '#',
                     external: true,
                     description: 'Conoce los pasos para unirte a nuestra comunidad.'
-                }, {
+                },*/ {
                     title: 'Oferta Educativa',
                     href: '/carreras',
                     description: 'Explora todas las carreras que tenemos para ti.'
-                }, {
+                }/*, {
                     title: 'Vida Estudiantil',
                     href: '#',
                     external: true,
                     description: 'Descubre las actividades y grupos estudiantiles.'
-                }
+                }*/
             ]
         }, {
             title: 'Alumnos',
@@ -31,15 +31,15 @@ const navigationLinks = {
                     description: 'Información sobre apoyos y becas disponibles.'
                 }, {
                     title: 'Calendario Escolar',
-                    href: '#',
+                    href: 'https://utnay.edu.mx/archivos/Calendario2024.pdf',
                     external: true,
                     description: 'Consulta las fechas importantes del ciclo escolar.',
-                }, {
+                }/*, {
                     title: 'Servicios Escolares',
                     href: '#',
                     external: true,
                     description: 'Trámites y servicios para alumnos.'
-                }
+                }*/
             ]
         }, {
             title: 'Carreras',
@@ -102,21 +102,21 @@ const navigationLinks = {
             children: [
                 {
                     title: 'APP SIGA',
-                    href: '#', external: true,
+                    href: 'https://utn.appsiga.net/', external: true,
                     description: 'Sistema Integral de Gestión Académica.'
-                }, {
+                }/*, {
                     title: 'SIDOUT',
                     href: '#', external: true,
                     description: 'Plataforma de seguimiento y tutorías.'
-                }, {
+                }*/, {
                     title: 'Plataforma Transparencia UTN',
-                    href: '#', external: true,
+                    href: '/transparencia', external: true,
                     description: 'Portal de transparencia de la universidad.'
-                }, {
+                }/*, {
                     title: 'Enlace P.N.T',
                     href: '#', external: true,
                     description: 'Plataforma Nacional de Transparencia.'
-                }
+                }*/
             ]
         }, {
             title: 'Vinculación',

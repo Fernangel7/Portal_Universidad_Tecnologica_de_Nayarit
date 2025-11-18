@@ -209,7 +209,7 @@
                                         <circle cx="11" cy="11" r="8" />
                                         <path d="m21 21-4.3-4.3" />
                                     </svg>
-                                    <input type="search" placeholder="Buscar por clave..."
+                                    <input type="search" id="searchInput" placeholder="Buscar por nombre..."
                                         class="pl-8 w-full sm:w-64 h-9 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                                 </div>
                                 <button
@@ -256,6 +256,7 @@
                                                     <td class="p-4 text-muted-foreground hidden sm:table-cell"><%= t.Cargo || '-' %></td>
                                                     <td class="p-4 text-right space-x-2">
                                                         <a href="/admin/docentes/update/<%= t.UUID %>" class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-block">Editar</a>
+                                                        <button onclick="deleteTeacher('<%= t.UUID %>')" class="px-3 py-1 border border-red-300 bg-red-50 hover:bg-red-100 text-red-600 rounded-md text-sm inline-block">Eliminar</button>
                                                     </td>
                                                 </tr>
                                             <% }) %>
@@ -356,8 +357,44 @@
             if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeSheet);
             if (mobileSheetOverlay) mobileSheetOverlay.addEventListener('click', closeSheet);
 
-            document.getElementById('button_add').addEventListener('click', function () { window.location.href = '/admin/docentes/add';})
+            document.getElementById('button_add').addEventListener('click', function () { window.location.href = '/admin/docentes/add'; })
+
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            const tableBody = document.querySelector('tbody');
+            if (searchInput && tableBody) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    const rows = tableBody.querySelectorAll('tr');
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td');
+                        if (cells.length > 0) {
+                            const text = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+                            row.style.display = text.includes(searchTerm) ? '' : 'none';
+                        }
+                    });
+                });
+            }
         });
+
+        async function deleteTeacher(uuid) {
+            if (!confirm('¿Estás seguro de que deseas eliminar este docente?')) return;
+            try {
+                const response = await fetch(`/admin/raw-data/docentes/delete-one/${uuid}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+                if (result.status === 200) {
+                    alert('Docente eliminado correctamente');
+                    window.location.reload();
+                } else {
+                    alert('Error al eliminar: ' + result.msg);
+                }
+            } catch (error) {
+                alert('Error al eliminar el docente');
+            }
+        }
     </script>
 </body>
 

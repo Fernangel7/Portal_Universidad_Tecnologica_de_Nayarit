@@ -118,54 +118,55 @@
                         <a href="/admin/noticias" class="text-primary hover:text-primary/80">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m15 18-6-6 6-6"/></svg>
                         </a>
-                        <h2 class="text-2xl font-headline font-bold tracking-tight">Crear Nueva Noticia</h2>
+                        <h2 class="text-2xl font-headline font-bold tracking-tight"><%= (options && options.isUpdate) ? 'Editar Noticia' : 'Crear Nueva Noticia' %></h2>
                     </div>
                     <div class="bg-card rounded-lg border shadow-sm p-6">
-                       <form class="grid gap-6" action="/admin/noticias/add-one" method="POST">
+                       <form class="grid gap-6" action="<%= (options && options.isUpdate && options.data && options.data.UUID) ? ('/admin/noticias/update/' + options.data.UUID) : '/admin/raw-data/noticias/add-one' %>" method="POST">
                             <div class="space-y-2">
                                 <label for="news-title" class="text-sm font-medium leading-none">Título de la Noticia</label>
-                                <input name="titulo" id="news-title" placeholder="Ej. Inicia el Proceso de Admisión 2024" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="titulo" id="news-title" placeholder="Ej. Inicia el Proceso de Admisión 2024" value="<%= (options && options.data && options.data.Titulo) ? options.data.Titulo : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                             </div>
                             <div class="space-y-2">
                                 <label for="news-slug" class="text-sm font-medium leading-none">Slug (URL opcional)</label>
-                                <input name="slug" id="news-slug" type="text" placeholder="inicia-proceso-admision-2024" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="slug" id="news-slug" type="text" placeholder="inicia-proceso-admision-2024" value="<%= (options && options.data && options.data.Slug) ? options.data.Slug : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                             </div>
                             
                             <div class="space-y-2">
                                 <label for="news-content" class="text-sm font-medium leading-none">Contenido del Artículo</label>
-                                <input id="news-content" type="hidden" name="contenido">
+                                <input id="news-content" type="hidden" name="contenido" value="<%- (options && options.data && options.data.Contenido) ? options.data.Contenido : '' %>">
                                 <trix-editor input="news-content" class="trix-content"></trix-editor>
                             </div>
 
                             <div class="space-y-2">
                                 <label for="news-image" class="text-sm font-medium leading-none">Imagen (URL)</label>
-                                <input name="imageUrl" id="news-image" type="url" placeholder="https://example.com/imagen.jpg" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="imageUrl" id="news-image" type="url" placeholder="https://example.com/imagen.jpg" value="<%= (options && options.data && options.data.ImageUrl) ? options.data.ImageUrl : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                                 <p class="text-xs text-muted-foreground">Usa una URL pública de la imagen.</p>
                             </div>
 
                             <div class="space-y-2">
                                 <label for="news-summary" class="text-sm font-medium leading-none">Resumen Corto</label>
-                                <textarea name="resumen" id="news-summary" rows="3" placeholder="Resumen breve" class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm"></textarea>
+                                <textarea name="resumen" id="news-summary" rows="3" placeholder="Resumen breve" class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm"><%= (options && options.data && options.data.Resumen) ? options.data.Resumen : '' %></textarea>
                             </div>
 
                             <div class="space-y-2">
                                 <label for="news-category" class="text-sm font-medium leading-none">Categoría</label>
-                                <input name="categoria" id="news-category" placeholder="Ej. Admisiones" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="categoria" id="news-category" placeholder="Ej. Admisiones" value="<%= (options && options.data && options.data.Categoria) ? options.data.Categoria : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                             </div>
 
                             <div class="space-y-2">
                                 <label for="news-date" class="text-sm font-medium leading-none">Fecha de Publicación</label>
-                                <input name="publicada_en" id="news-date" type="date" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="publicada_en" id="news-date" type="date" value="<%= (options && options.data && options.data.Publicada_en) ? (new Date(options.data.Publicada_en).toISOString().slice(0,10)) : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                             </div>
 
                             <div class="flex items-center space-x-2">
-                                <input name="publicado" type="checkbox" id="news-published" class="h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                <input type="hidden" name="publicado" value="off">
+                                <input name="publicado" type="checkbox" id="news-published" <%= (options && options.data && options.data.Estado) ? 'checked' : '' %> class="h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                                 <label for="news-published" class="text-sm font-medium leading-none">Publicar inmediatamente</label>
                             </div>
 
                             <div class="flex justify-end gap-2">
                                 <a href="/admin/noticias" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground">Cancelar</a>
-                                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">Guardar</button>
+                                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90"><%= (options && options.isUpdate) ? 'Actualizar' : 'Guardar' %></button>
                             </div>
                        </form>
                     </div>

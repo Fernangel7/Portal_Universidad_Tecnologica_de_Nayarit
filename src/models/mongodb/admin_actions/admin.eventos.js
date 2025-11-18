@@ -19,7 +19,7 @@ class AdminEventosModel {
 
     static async findEventById(id) {
         try {
-            const event = await evento_model.findOne({ UUID: id, Estado: true });
+            const event = await evento_model.findOne({ UUID: id });
             if (!event) return { status: 404, msg: 'Evento no encontrado', data: null };
             return { status: 200, msg: 'Evento encontrado', data: { event } };
         } catch (error) {

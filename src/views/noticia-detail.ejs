@@ -9,21 +9,155 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
 </head>
-<body class="font-body antialiased bg-white">
+<body class="font-body antialiased bg-background">
   <div class="flex min-h-screen flex-col">
-    <%- include('templates/header.ejs', navigationLinks); %>
-    <main class="flex-1">
-      <article class="mx-auto max-w-3xl px-4 py-12">
-        <h1 class="font-headline text-4xl font-bold mb-4"><%= noticia.titulo %></h1>
-        <div class="text-sm text-gray-500 mb-6"><%= noticia.publicada_en ? new Date(noticia.publicada_en).toLocaleDateString('es-MX') : '' %></div>
-        <% if (noticia.imageUrl) { %>
-          <img src="<%= noticia.imageUrl %>" alt="Imagen" class="rounded-lg mb-8 w-full object-cover" />
-        <% } %>
-        <p class="text-lg text-gray-700 mb-6"><%= noticia.resumen %></p>
-        <div class="prose max-w-none"><%- noticia.contenido %></div>
+    <%- include('templates/header.ejs') %>
+    
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b border-border">
+      <div class="container mx-auto max-w-4xl px-4 py-4">
+        <a href="/noticias" class="back-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+          Volver a Noticias
+        </a>
+      </div>
+    </div>
+
+    <main class="flex-1 py-12 bg-background">
+      <article class="container mx-auto max-w-4xl px-4">
+        <!-- Article Header -->
+        <header class="mb-8">
+          <h1 class="font-headline text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+            <%= noticia.titulo %>
+          </h1>
+          
+          <!-- Meta Information -->
+          <div class="flex flex-wrap items-center gap-4 mb-8">
+            <div class="article-meta-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                <line x1="16" x2="16" y1="2" y2="6"/>
+                <line x1="8" x2="8" y1="2" y2="6"/>
+                <line x1="3" x2="21" y1="10" y2="10"/>
+              </svg>
+              <%= noticia.publicada_en ? new Date(noticia.publicada_en).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Fecha no disponible' %>
+            </div>
+            
+            <div class="article-meta-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <%= Math.ceil((noticia.contenido || '').length / 1000) %> min de lectura
+            </div>
+          </div>
+
+          <!-- Featured Image -->
+          <% if (noticia.imageUrl) { %>
+            <div class="relative w-full aspect-video md:aspect-[21/9] overflow-hidden rounded-xl shadow-lg mb-8">
+              <img src="<%= noticia.imageUrl %>" 
+                   alt="<%= noticia.titulo %>" 
+                   class="w-full h-full object-cover" />
+            </div>
+          <% } %>
+
+          <!-- Summary -->
+          <% if (noticia.resumen) { %>
+            <div class="bg-secondary/30 border-l-4 border-primary px-6 py-4 rounded-r-lg">
+              <p class="text-lg text-foreground font-medium leading-relaxed">
+                <%= noticia.resumen %>
+              </p>
+            </div>
+          <% } %>
+        </header>
+
+        <!-- Article Content -->
+        <div class="bg-white rounded-xl shadow-sm border border-border p-8 md:p-12 mb-8">
+          <div class="prose prose-lg">
+            <%- noticia.contenido %>
+          </div>
+        </div>
+
+        <!-- Share Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-border p-6 mb-8">
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <h3 class="font-headline text-lg font-semibold text-foreground">
+              Compartir esta noticia
+            </h3>
+            <div class="flex items-center gap-3">
+              <button onclick="shareOnFacebook()" class="share-button" title="Compartir en Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+              </button>
+              <button onclick="shareOnTwitter()" class="share-button" title="Compartir en Twitter/X">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+                </svg>
+              </button>
+              <button onclick="shareOnWhatsApp()" class="share-button" title="Compartir en WhatsApp">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+              </button>
+              <button onclick="copyLink()" class="share-button" title="Copiar enlace">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="text-center">
+          <a href="/noticias" 
+             class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors shadow-sm">
+            Ver todas las noticias
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
       </article>
     </main>
-    <%- include('templates/footer.ejs'); %>
+    <%- include('templates/footer.ejs') %>
   </div>
+
+  <script>
+    const currentUrl = window.location.href;
+    const title = "<%= noticia.titulo.replace(/"/g, '\\"') %>";
+    
+    function shareOnFacebook() {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`, '_blank', 'width=600,height=400');
+    }
+    
+    function shareOnTwitter() {
+      window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(title)}`, '_blank', 'width=600,height=400');
+    }
+    
+    function shareOnWhatsApp() {
+      window.open(`https://wa.me/?text=${encodeURIComponent(title + ' ' + currentUrl)}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        const btn = event.currentTarget;
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        btn.style.backgroundColor = 'hsl(171 95% 27%)';
+        btn.style.color = 'white';
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.style.backgroundColor = '';
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
 </body>
 </html>

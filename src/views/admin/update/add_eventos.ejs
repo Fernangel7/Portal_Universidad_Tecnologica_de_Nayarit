@@ -105,48 +105,48 @@
                         <a href="/admin/eventos" class="text-primary hover:text-primary/80">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m15 18-6-6 6-6"/></svg>
                         </a>
-                        <h2 class="text-2xl font-headline font-bold tracking-tight">Añadir Nuevo Evento</h2>
+                        <h2 class="text-2xl font-headline font-bold tracking-tight"><%= (options && options.isUpdate) ? 'Editar Evento' : 'Añadir Nuevo Evento' %></h2>
                     </div>
                     <div class="bg-card rounded-lg border shadow-sm p-6">
-                       <form class="grid gap-6" action="/admin/eventos/add-one" method="POST">
+                       <form class="grid gap-6" action="<%= (options && options.isUpdate && options.data && options.data.UUID) ? ('/admin/eventos/update/' + options.data.UUID) : '/admin/raw-data/eventos/add-one' %>" method="POST">
                             <div class="space-y-2">
                                 <label for="event-title" class="text-sm font-medium leading-none">Título del Evento</label>
-                                <input name="titulo" id="event-title" placeholder="Ej. Feria de Empleo y Emprendimiento" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="titulo" id="event-title" placeholder="Ej. Feria de Empleo y Emprendimiento" value="<%= (options && options.data && options.data.Titulo) ? options.data.Titulo : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                             </div>
                             <div class="space-y-2">
                                 <label for="event-slug" class="text-sm font-medium leading-none">Slug (URL opcional)</label>
-                                <input name="slug" id="event-slug" type="text" placeholder="feria-empleo-2024" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="slug" id="event-slug" type="text" placeholder="feria-empleo-2024" value="<%= (options && options.data && options.data.Slug) ? options.data.Slug : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="space-y-2">
-                                    <label for="event-date" class="text-sm font-medium leading-none">Fecha del Evento</label>
-                                    <input name="fechaInicio" type="date" id="event-date" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                    <label for="event-date-start" class="text-sm font-medium leading-none">Fecha de Inicio</label>
+                                    <input name="fechaInicio" type="datetime-local" id="event-date-start" value="<%= (options && options.data && options.data.FechaInicio) ? (new Date(options.data.FechaInicio).toISOString().slice(0,16)) : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                                 </div>
                                 <div class="space-y-2">
-                                    <label for="event-time" class="text-sm font-medium leading-none">Hora del Evento</label>
-                                    <input name="fechaFin" type="time" id="event-time" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                    <label for="event-date-end" class="text-sm font-medium leading-none">Fecha de Fin</label>
+                                    <input name="fechaFin" type="datetime-local" id="event-date-end" value="<%= (options && options.data && options.data.FechaFin) ? (new Date(options.data.FechaFin).toISOString().slice(0,16)) : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                                 </div>
                             </div>
                             <div class="space-y-2">
                                 <label for="event-location" class="text-sm font-medium leading-none">Ubicación</label>
-                                <input name="ubicacion" id="event-location" placeholder="Ej. Auditorio Principal" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="ubicacion" id="event-location" placeholder="Ej. Auditorio Principal" value="<%= (options && options.data && options.data.Ubicacion) ? options.data.Ubicacion : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                             </div>
                              <div class="space-y-2">
                                 <label for="event-description" class="text-sm font-medium leading-none">Descripción</label>
-                                <textarea name="descripcion" id="event-description" rows="5" placeholder="Describe los detalles del evento, ponentes, actividades, etc." class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"></textarea>
+                                <textarea name="descripcion" id="event-description" rows="5" placeholder="Describe los detalles del evento, ponentes, actividades, etc." class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"><%= (options && options.data && options.data.Descripcion) ? options.data.Descripcion : '' %></textarea>
                             </div>
                             <div class="space-y-2">
                                 <label for="event-image" class="text-sm font-medium leading-none">Imagen (URL)</label>
-                                <input name="imageUrl" id="event-image" type="url" placeholder="https://example.com/banner.jpg" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="imageUrl" id="event-image" type="url" placeholder="https://example.com/banner.jpg" value="<%= (options && options.data && options.data.ImageUrl) ? options.data.ImageUrl : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                                 <p class="text-xs text-muted-foreground">Usa una URL pública del banner.</p>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <input name="publicado" type="checkbox" id="event-published" class="h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                <input name="publicado" type="checkbox" id="event-published" <%= (options && options.data && options.data.Estado) ? 'checked' : '' %> class="h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                                 <label for="event-published" class="text-sm font-medium leading-none">Publicar inmediatamente</label>
                             </div>
                             <div class="flex justify-end gap-2">
                                 <a href="/admin/eventos" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground">Cancelar</a>
-                                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">Guardar Evento</button>
+                                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90"><%= (options && options.isUpdate) ? 'Actualizar Evento' : 'Guardar Evento' %></button>
                             </div>
                        </form>
                     </div>

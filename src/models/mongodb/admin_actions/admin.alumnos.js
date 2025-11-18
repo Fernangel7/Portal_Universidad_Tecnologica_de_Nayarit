@@ -13,7 +13,7 @@ class AdminAlumnosModel {
 
     static async findStudentByMatricula(matricula) {
         try {
-            const student = await alumno_model.findOne({ Matricula: matricula, Estado: true });
+            const student = await alumno_model.findOne({ Matricula: matricula });
             if (!student) return { status: 404, msg: 'Alumno no encontrado', data: null };
             return { status: 200, msg: 'Alumno encontrado', data: { student } };
         } catch (error) {

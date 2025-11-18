@@ -193,7 +193,7 @@
                                         <circle cx="11" cy="11" r="8" />
                                         <path d="m21 21-4.3-4.3" />
                                     </svg>
-                                    <input type="search" placeholder="Buscar por clave..."
+                                    <input type="search" id="searchInput" placeholder="Buscar por título..."
                                         class="pl-8 w-full sm:w-64 h-9 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                                 </div>
                                 <button
@@ -241,6 +241,7 @@
                                                     </td>
                                                     <td class="p-4 text-right space-x-2">
                                                         <a href="/admin/noticias/update/<%= item.UUID %>" class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-block">Editar</a>
+                                                        <button type="button" data-id="<%= item.UUID %>" class="btn-delete px-3 py-1 border border-input text-red-600 hover:bg-red-50 rounded-md text-sm inline-block">Eliminar</button>
                                                     </td>
                                                 </tr>
                                             <% }) %>
@@ -342,6 +343,46 @@
             if (mobileSheetOverlay) mobileSheetOverlay.addEventListener('click', closeSheet);
 
             document.getElementById('button_add').addEventListener('click', function () { window.location.href = '/admin/noticias/add';})
+
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            const tableBody = document.querySelector('tbody');
+            if (searchInput && tableBody) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    const rows = tableBody.querySelectorAll('tr');
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td');
+                        if (cells.length > 0) {
+                            const text = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+                            row.style.display = text.includes(searchTerm) ? '' : 'none';
+                        }
+                    });
+                });
+            }
+
+            // Delete handlers
+            const deleteButtons = document.querySelectorAll('.btn-delete');
+            deleteButtons.forEach(btn => {
+                btn.addEventListener('click', async function () {
+                    const id = this.getAttribute('data-id');
+                    if (!id) return;
+                    const ok = confirm('¿Estás seguro de eliminar esta noticia?');
+                    if (!ok) return;
+                    try {
+                        const resp = await fetch(`/admin/raw-data/noticias/delete-one/${id}`, { method: 'DELETE' });
+                        if (resp.ok) {
+                            // Remove row or reload
+                            const tr = this.closest('tr');
+                            if (tr) tr.remove();
+                        } else {
+                            alert('No se pudo eliminar la noticia.');
+                        }
+                    } catch (e) {
+                        alert('Error eliminando la noticia.');
+                    }
+                })
+            })
         });
     </script>
 </body>

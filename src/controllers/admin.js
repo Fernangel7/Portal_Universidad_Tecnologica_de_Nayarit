@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 const { admin_mongo_model } = require('../models/mongodb/admin.js')
+const { carrera_model, docente_model, noticia_model, evento_model, alumno_model } = require('../models/mongodb/general.js')
 const { admin_carreras_model } = require('../models/mongodb/admin_actions/admin.carreras.js')
 const { admin_noticias_model } = require('../models/mongodb/admin_actions/admin.noticias.js')
 const { admin_eventos_model } = require('../models/mongodb/admin_actions/admin.eventos.js')
@@ -12,9 +13,37 @@ const { website_name } = require('../utils/utils-globals.js')
 
 class admin_render_controller {
     static async dashboard(req, res) {
-        res.render('admin/dashboard', {
-            title: website_name
-        })
+        try {
+            const [careers, students, teachers, news] = await Promise.all([
+                carrera_model.countDocuments({}).catch(() => 0),
+                alumno_model.countDocuments({}).catch(() => 0),
+                docente_model.countDocuments({}).catch(() => 0),
+                noticia_model.countDocuments({}).catch(() => 0),
+            ])
+
+            // Fetch recent content from news and events, merge and sort by Updated_at/Created_at
+            const [latestNews, latestEvents] = await Promise.all([
+                noticia_model.find({}).select('Titulo Estado Updated_at Created_at').sort({ Updated_at: -1, Created_at: -1 }).limit(5).lean().catch(() => []),
+                evento_model.find({}).select('Titulo Estado Updated_at Created_at').sort({ Updated_at: -1, Created_at: -1 }).limit(5).lean().catch(() => []),
+            ])
+
+            const items = [
+                ...latestNews.map(n => ({ titulo: n.Titulo, tipo: 'Noticia', estado: n.Estado, fecha: n.Updated_at || n.Created_at })),
+                ...latestEvents.map(e => ({ titulo: e.Titulo, tipo: 'Evento', estado: e.Estado, fecha: e.Updated_at || e.Created_at })),
+            ].sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).slice(0, 5)
+
+            res.render('admin/dashboard', {
+                title: website_name,
+                metrics: { careers, students, teachers, news },
+                recentItems: items
+            })
+        } catch (e) {
+            res.render('admin/dashboard', {
+                title: website_name,
+                metrics: { careers: 0, students: 0, teachers: 0, news: 0 },
+                recentItems: []
+            })
+        }
     }
 
     static async login(req, res) {
@@ -110,16 +139,23 @@ class admin_render_controller {
     }
 
     static async noticias_update(req, res) {
-        res.render('admin/update/add_noticias', {
-            title: website_name,
-            options: {
-                isAdd: false,
-                isUpdate: true,
-                data: {
-                    
-                }
+        try {
+            const { id } = req.params;
+            const result = await admin_noticias_model.findNewsById(id);
+            if (result.status === 404) {
+                return res.status(404).render('404', { title: 'Noticia no encontrada' });
             }
-        })
+            res.render('admin/update/add_noticias', {
+                title: website_name,
+                options: {
+                    isAdd: false,
+                    isUpdate: true,
+                    data: result.status === 200 ? result.data.noticia : {}
+                }
+            })
+        } catch (error) {
+            res.status(500).render('404', { title: 'Error al cargar noticia' })
+        }
     }
 
     static async eventos(req, res) {
@@ -149,16 +185,23 @@ class admin_render_controller {
     }
 
     static async eventos_update(req, res) {
-        res.render('admin/update/add_eventos', {
-            title: website_name,
-            options: {
-                isAdd: false,
-                isUpdate: true,
-                data: {
-                    
-                }
+        try {
+            const { id } = req.params;
+            const result = await admin_eventos_model.findEventById(id);
+            if (result.status === 404) {
+                return res.status(404).render('404', { title: 'Evento no encontrado' });
             }
-        })
+            res.render('admin/update/add_eventos', {
+                title: website_name,
+                options: {
+                    isAdd: false,
+                    isUpdate: true,
+                    data: result.status === 200 ? result.data.event : {}
+                }
+            })
+        } catch (error) {
+            res.status(500).render('404', { title: 'Error al cargar evento' })
+        }
     }
 
     static async docentes(req, res) {
@@ -188,16 +231,23 @@ class admin_render_controller {
     }
 
     static async docentes_update(req, res) {
-        res.render('admin/update/add_docentes', {
-            title: website_name,
-            options: {
-                isAdd: false,
-                isUpdate: true,
-                data: {
-                    
-                }
+        try {
+            const { id } = req.params;
+            const result = await admin_docentes_model.findTeacherById(id);
+            if (result.status === 404) {
+                return res.status(404).render('404', { title: 'Docente no encontrado' });
             }
-        })
+            res.render('admin/update/add_docentes', {
+                title: website_name,
+                options: {
+                    isAdd: false,
+                    isUpdate: true,
+                    data: result.status === 200 ? result.data.teacher : {}
+                }
+            })
+        } catch (error) {
+            res.status(500).render('404', { title: 'Error al cargar docente' })
+        }
     }
 
     static async alumnos(req, res) {
@@ -227,16 +277,23 @@ class admin_render_controller {
     }
 
     static async alumnos_update(req, res) {
-        res.render('admin/update/add_alumnos', {
-            title: website_name,
-            options: {
-                isAdd: false,
-                isUpdate: true,
-                data: {
-                    
-                }
+        try {
+            const { id } = req.params;
+            const result = await admin_alumnos_model.findStudentByMatricula(id);
+            if (result.status === 404) {
+                return res.status(404).render('404', { title: 'Alumno no encontrado' });
             }
-        })
+            res.render('admin/update/add_alumnos', {
+                title: website_name,
+                options: {
+                    isAdd: false,
+                    isUpdate: true,
+                    data: result.status === 200 ? result.data.student : {}
+                }
+            })
+        } catch (error) {
+            res.status(500).render('404', { title: 'Error al cargar alumno' })
+        }
     }
 
     static async informes_financieros(req, res) {

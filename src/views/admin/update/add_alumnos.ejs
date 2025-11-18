@@ -105,57 +105,38 @@
                         <a href="/admin/alumnos" class="text-primary hover:text-primary/80">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m15 18-6-6 6-6"/></svg>
                         </a>
-                        <h2 class="text-2xl font-headline font-bold tracking-tight">Añadir Nuevo Alumno</h2>
+                        <h2 class="text-2xl font-headline font-bold tracking-tight"><%= (options && options.isUpdate) ? 'Editar Alumno' : 'Añadir Nuevo Alumno' %></h2>
                     </div>
                     <div class="bg-card rounded-lg border shadow-sm p-6">
-                       <form class="grid gap-6">
+                       <form class="grid gap-6" action="<%= (options && options.isUpdate && options.data && options.data.Matricula) ? ('/admin/alumnos/update/' + options.data.Matricula) : '/admin/raw-data/alumnos/add-one' %>" method="POST">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                <div class="space-y-2">
-                                    <label for="student-name" class="text-sm font-medium leading-none">Nombre Completo</label>
-                                    <input id="student-name" placeholder="Ej. Ana Torres" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                    <label for="student-name" class="text-sm font-medium leading-none">Nombre</label>
+                                    <input name="nombre" id="student-name" placeholder="Ej. Ana" value="<%= (options && options.data && options.data.Nombre) ? options.data.Nombre : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" required>
                                 </div>
                                 <div class="space-y-2">
-                                    <label for="student-id" class="text-sm font-medium leading-none">Matrícula</label>
-                                    <input id="student-id" placeholder="Ej. AT20220101" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                    <label for="student-lastname" class="text-sm font-medium leading-none">Apellidos</label>
+                                    <input name="apellidos" id="student-lastname" placeholder="Ej. Torres García" value="<%= (options && options.data && options.data.Apellidos) ? options.data.Apellidos : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                                 </div>
                            </div>
                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="space-y-2">
-                                    <label for="student-email" class="text-sm font-medium leading-none">Correo Electrónico</label>
-                                    <input type="email" id="student-email" placeholder="Ej. ana.torres@alumnos.edu" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                    <label for="student-id" class="text-sm font-medium leading-none">Matrícula</label>
+                                    <input name="matricula" id="student-id" placeholder="Ej. AT20220101" value="<%= (options && options.data && options.data.Matricula) ? options.data.Matricula : '' %>" <%= (options && options.isUpdate) ? 'readonly' : '' %> class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm <%= (options && options.isUpdate) ? 'opacity-60' : '' %>" required>
                                 </div>
                                 <div class="space-y-2">
-                                    <label for="student-phone" class="text-sm font-medium leading-none">Teléfono</label>
-                                    <input type="tel" id="student-phone" placeholder="Ej. (55) 1234-5678" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                    <label for="student-email" class="text-sm font-medium leading-none">Correo Electrónico</label>
+                                    <input name="correo" type="email" id="student-email" placeholder="Ej. ana.torres@alumnos.edu" value="<%= (options && options.data && options.data.Correo) ? options.data.Correo : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                                 </div>
                            </div>
                             <div class="space-y-2">
-                                <label for="student-program" class="text-sm font-medium leading-none">Carrera</label>
-                                <select id="student-program" class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm">
-                                    <option>Ingeniería Civil</option>
-                                    <option>Licenciatura en Mercadotecnia</option>
-                                    <option>Licenciatura en Gastronomía</option>
-                                    <option>Tecnologías de la Información</option>
-                                    <option>Ingeniería en Logística Internacional</option>
-                                    <option>Ingeniería Mecatrónica</option>
-                                </select>
-                            </div>
-                             <div class="space-y-2">
-                                <label for="student-status" class="text-sm font-medium leading-none">Estado</label>
-                                <select id="student-status" class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm">
-                                    <option value="activo">Activo</option>
-                                    <option value="inactivo">Inactivo</option>
-                                    <option value="graduado">Graduado</option>
-                                </select>
-                            </div>
-                            <div class="space-y-2">
-                                <label for="student-photo" class="text-sm font-medium leading-none">Foto de Perfil</label>
-                                <input id="student-photo" type="file" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium">
-                                <p class="text-xs text-muted-foreground">Sube una imagen para el perfil del alumno (opcional).</p>
+                                <label for="student-program" class="text-sm font-medium leading-none">Carrera (Slug)</label>
+                                <input name="carreraSlug" id="student-program" placeholder="Ej. ingenieria-civil" value="<%= (options && options.data && options.data.CarreraSlug) ? options.data.CarreraSlug : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <p class="text-xs text-muted-foreground">Ingresa el slug de la carrera (ej. ingenieria-civil).</p>
                             </div>
                             <div class="flex justify-end gap-2">
                                 <a href="/admin/alumnos" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground">Cancelar</a>
-                                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">Guardar Alumno</button>
+                                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90"><%= (options && options.isUpdate) ? 'Actualizar Alumno' : 'Guardar Alumno' %></button>
                             </div>
                        </form>
                     </div>

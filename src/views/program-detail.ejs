@@ -65,22 +65,70 @@
     <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid gap-12 lg:grid-cols-3">
         <div class="lg:col-span-2">
-          <div class="prose prose-lg max-w-none">
+          <div class="prose prose-lg max-w-none" id="acerca">
             <h2 class="font-headline">Acerca del Programa</h2>
-            <p class="text-muted-foreground">
-              <%= program.shortDescription %>
-            </p>
+            <div class="text-muted-foreground whitespace-pre-wrap">
+              <%= (program.programDetails && program.programDetails.trim().length > 0) ? program.programDetails : (program.shortDescription || '') %>
+            </div>
           </div>
 
           <div class="mt-10 grid gap-6 md:grid-cols-2">
-            <div class="rounded-lg border bg-card p-6">
+            <div class="rounded-lg border bg-card p-6" id="campo-laboral">
               <h3 class="font-headline text-lg font-semibold mb-2">Campo Laboral</h3>
-              <p class="text-sm text-muted-foreground">Oportunidades laborales relacionadas con el programa.</p>
+              <% const workLines = (program.workField || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean); %>
+              <% if (workLines.length > 0) { %>
+                <ul class="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                  <% workLines.forEach(function(line){ %>
+                    <li><%= line %></li>
+                  <% }) %>
+                </ul>
+              <% } else { %>
+                <p class="text-sm text-muted-foreground">Información no disponible.</p>
+              <% } %>
             </div>
-            <div class="rounded-lg border bg-card p-6">
-              <h3 class="font-headline text-lg font-semibold mb-2">Competencias</h3>
-              <p class="text-sm text-muted-foreground">Habilidades y competencias que desarrollarás.</p>
+            <div class="rounded-lg border bg-card p-6" id="perfil-egreso">
+              <h3 class="font-headline text-lg font-semibold mb-2">Perfil de Egreso</h3>
+              <% const egresoLines = (program.competencies || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean); %>
+              <% if (egresoLines.length > 0) { %>
+                <ul class="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                  <% egresoLines.forEach(function(line){ %>
+                    <li><%= line %></li>
+                  <% }) %>
+                </ul>
+              <% } else { %>
+                <p class="text-sm text-muted-foreground">Información no disponible.</p>
+              <% } %>
             </div>
+          </div>
+
+          <div class="mt-10" id="plan-de-estudios">
+            <h3 class="font-headline text-xl font-semibold mb-4">Plan de Estudio</h3>
+            <% if (program.studyPlan && program.studyPlan.length > 0) { %>
+              <div class="grid gap-4 md:grid-cols-2">
+                <% program.studyPlan
+                  .slice()
+                  .sort((a,b) => (a.term||0)-(b.term||0))
+                  .forEach(function(term){ %>
+                  <details class="rounded-lg border bg-card p-5">
+                    <summary class="cursor-pointer select-none text-sm font-medium text-primary">Cuatrimestre <%= term.term %></summary>
+                    <div class="mt-3 text-sm text-muted-foreground">
+                      <% const termLines = (term.content || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean); %>
+                      <% if (termLines.length > 0) { %>
+                        <ul class="list-disc pl-5 space-y-1">
+                          <% termLines.forEach(function(line){ %>
+                            <li><%= line %></li>
+                          <% }) %>
+                        </ul>
+                      <% } else { %>
+                        <p>Sin contenido para este cuatrimestre.</p>
+                      <% } %>
+                    </div>
+                  </details>
+                <% }) %>
+              </div>
+            <% } else { %>
+              <p class="text-sm text-muted-foreground">Plan de estudio no disponible.</p>
+            <% } %>
           </div>
         </div>
         <aside>

@@ -98,11 +98,14 @@ carreras_routes.get("/:programId", async (req, res) => {
             studyPlan: career.StudyPlan || []
         }
         
-        const careersForNav = dbCareers.slice(0, 12).map(c => ({
-            title: c.Nombre,
-            href: `/carreras/${c.Slug}`,
-            description: c.ShortDescription || ''
-        }))
+        const careersForNav = dbCareers.slice(0, 12).map(c => {
+            const s = c.Slug && c.Slug.trim() && !c.Slug.includes('://') ? c.Slug : slugify(c.Nombre)
+            return {
+                title: c.Nombre,
+                href: `/carreras/${s}`,
+                description: c.ShortDescription || ''
+            }
+        })
         
         const navLinks = { ...navigationLinks }
         const carrerasMenu = navLinks.navigationLinks.find(item => item.title === 'Carreras')

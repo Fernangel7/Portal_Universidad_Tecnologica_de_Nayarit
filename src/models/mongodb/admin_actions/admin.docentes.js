@@ -10,7 +10,7 @@ const slugify = (str) => (str || '').toString().toLowerCase()
 class AdminDocentesModel {
     static async getAllTeachers() {
         try {
-            const teachers = await docente_model.find({ Estado: true }).sort({ Created_at: -1 });
+            const teachers = await docente_model.find({}).sort({ Created_at: -1 });
             return { status: 200, msg: 'Docentes obtenidos', data: { teachers } };
         } catch (error) {
             return { status: 500, msg: 'Error al obtener docentes', data: { error: error.message } };
@@ -19,7 +19,7 @@ class AdminDocentesModel {
 
     static async findTeacherById(id) {
         try {
-            const teacher = await docente_model.findOne({ UUID: id, Estado: true });
+            const teacher = await docente_model.findOne({ UUID: id });
             if (!teacher) return { status: 404, msg: 'Docente no encontrado', data: null };
             return { status: 200, msg: 'Docente encontrado', data: { teacher } };
         } catch (error) {

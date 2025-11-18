@@ -105,43 +105,46 @@
                         <a href="/admin/docentes" class="text-primary hover:text-primary/80">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m15 18-6-6 6-6"/></svg>
                         </a>
-                        <h2 class="text-2xl font-headline font-bold tracking-tight">Añadir Nuevo Docente</h2>
+                        <h2 class="text-2xl font-headline font-bold tracking-tight"><%= (options && options.isUpdate) ? 'Editar Docente' : 'Añadir Nuevo Docente' %></h2>
                     </div>
                     <div class="bg-card rounded-lg border shadow-sm p-6">
-                       <form class="grid gap-6">
+                       <form class="grid gap-6" action="<%= (options && options.isUpdate && options.data && options.data.UUID) ? ('/admin/docentes/update/' + options.data.UUID) : '/admin/raw-data/docentes/add-one' %>" method="POST">
                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                <div class="space-y-2">
                                     <label for="teacher-name" class="text-sm font-medium leading-none">Nombre Completo</label>
-                                    <input id="teacher-name" placeholder="Ej. Dr. Alejandro Vargas" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                    <input name="nombre" id="teacher-name" placeholder="Ej. Dr. Alejandro Vargas" value="<%= (options && options.data && options.data.Nombre) ? options.data.Nombre : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" required>
                                 </div>
                                 <div class="space-y-2">
-                                    <label for="teacher-email" class="text-sm font-medium leading-none">Correo Institucional</label>
-                                    <input type="email" id="teacher-email" placeholder="Ej. a.vargas@universidad.edu" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                    <label for="teacher-slug" class="text-sm font-medium leading-none">Slug (URL opcional)</label>
+                                    <input name="slug" id="teacher-slug" type="text" placeholder="dr-alejandro-vargas" value="<%= (options && options.data && options.data.Slug) ? options.data.Slug : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                                 </div>
                            </div>
-                            <div class="space-y-2">
-                                <label for="teacher-department" class="text-sm font-medium leading-none">Departamento</label>
-                                <select id="teacher-department" class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm">
-                                    <option>Ingeniería Civil</option>
-                                    <option>Licenciatura en Mercadotecnia</option>
-                                    <option>Licenciatura en Gastronomía</option>
-                                    <option>Tecnologías de la Información</option>
-                                    <option>Ingeniería en Logística Internacional</option>
-                                    <option>Ingeniería Mecatrónica</option>
-                                </select>
+                           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label for="teacher-cargo" class="text-sm font-medium leading-none">Cargo</label>
+                                    <input name="cargo" id="teacher-cargo" placeholder="Ej. Profesor de Tiempo Completo" value="<%= (options && options.data && options.data.Cargo) ? options.data.Cargo : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="teacher-department" class="text-sm font-medium leading-none">Departamento</label>
+                                    <input name="departamento" id="teacher-department" placeholder="Ej. Ingeniería" value="<%= (options && options.data && options.data.Departamento) ? options.data.Departamento : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                </div>
                             </div>
                             <div class="space-y-2">
                                 <label for="teacher-bio" class="text-sm font-medium leading-none">Biografía Corta</label>
-                                <textarea id="teacher-bio" rows="4" placeholder="Un breve resumen sobre la experiencia y especialidad del docente." class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"></textarea>
+                                <textarea name="shortBio" id="teacher-bio" rows="4" placeholder="Un breve resumen sobre la experiencia y especialidad del docente." class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"><%= (options && options.data && options.data.ShortBio) ? options.data.ShortBio : '' %></textarea>
                             </div>
                             <div class="space-y-2">
-                                <label for="teacher-photo" class="text-sm font-medium leading-none">Foto de Perfil</label>
-                                <input id="teacher-photo" type="file" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium">
-                                <p class="text-xs text-muted-foreground">Sube una foto profesional del docente.</p>
+                                <label for="teacher-fullbio" class="text-sm font-medium leading-none">Biografía Completa</label>
+                                <textarea name="fullBio" id="teacher-fullbio" rows="6" placeholder="Descripción detallada de la experiencia, formación académica y logros del docente." class="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"><%= (options && options.data && options.data.FullBio) ? options.data.FullBio : '' %></textarea>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="teacher-photo" class="text-sm font-medium leading-none">Foto de Perfil (URL)</label>
+                                <input name="imageUrl" id="teacher-photo" type="url" placeholder="https://example.com/foto.jpg" value="<%= (options && options.data && options.data.ImageUrl) ? options.data.ImageUrl : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <p class="text-xs text-muted-foreground">Usa una URL pública de la foto del docente.</p>
                             </div>
                             <div class="flex justify-end gap-2">
                                 <a href="/admin/docentes" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground">Cancelar</a>
-                                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">Guardar Docente</button>
+                                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90"><%= (options && options.isUpdate) ? 'Actualizar Docente' : 'Guardar Docente' %></button>
                             </div>
                        </form>
                     </div>

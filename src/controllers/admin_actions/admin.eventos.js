@@ -58,7 +58,8 @@ class AdminEventosController {
             if (fechaFin) data.FechaFin = fechaFin;
             if (ubicacion) data.Ubicacion = ubicacion;
             if (imageUrl) data.ImageUrl = imageUrl;
-            if (publicado !== undefined) data.Estado = publicado === 'on';
+            // Checkbox: 'on' si está marcado, undefined si no lo está
+            data.Estado = publicado === 'on';
             const result = await eventos_model.updateEvent(id, data);
             if (result.status === 200) return res.redirect('/admin/eventos');
             return res.status(result.status).json(result);

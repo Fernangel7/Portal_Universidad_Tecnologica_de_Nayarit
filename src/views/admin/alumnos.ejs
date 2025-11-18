@@ -209,7 +209,7 @@
                                         <circle cx="11" cy="11" r="8" />
                                         <path d="m21 21-4.3-4.3" />
                                     </svg>
-                                    <input type="search" placeholder="Buscar por matrícula..."
+                                    <input type="search" id="searchInput" placeholder="Buscar por matrícula o nombre..."
                                         class="pl-8 w-full sm:w-64 h-9 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                                 </div>
                                 <!-- <button
@@ -269,8 +269,8 @@
                                                         <% } %>
                                                     </td>
                                                     <td class="p-4 text-right space-x-2">
-                                                        <button class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Ver</button>
-                                                        <button onclick="confirmDeleteAlumno('<%= student.Matricula %>')" class="px-3 py-1 border border-input bg-destructive text-destructive-foreground hover:opacity-90 rounded-md text-sm">Eliminar</button>
+                                                        <a href="/admin/alumnos/update/<%= student.Matricula %>" class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-block">Editar</a>
+                                                        <button onclick="deleteStudent('<%= student.Matricula %>')" class="px-3 py-1 border border-red-300 bg-red-50 hover:bg-red-100 text-red-600 rounded-md text-sm">Eliminar</button>
                                                     </td>
                                                 </tr>
                                             <% }) %>
@@ -376,30 +376,43 @@
                 addButton.addEventListener('click', function () { window.location.href = '/admin/alumnos/add';})
             }
 
-            window.confirmDeleteAlumno = function(matricula){
-                if(!matricula) return;
-                if(typeof Swal === 'undefined'){
-                    if(confirm('¿Eliminar alumno '+ matricula +'?')){
-                        window.location.href = '/admin/alumnos/delete/' + matricula;
-                    }
-                    return;
-                }
-                Swal.fire({
-                    title: '¿Eliminar alumno?',
-                    text: 'Esta acción dará de baja al alumno (soft delete).',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, eliminar',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = '/admin/alumnos/delete/' + matricula;
-                    }
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            const tableBody = document.querySelector('tbody');
+            if (searchInput && tableBody) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    const rows = tableBody.querySelectorAll('tr');
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td');
+                        if (cells.length > 0) {
+                            const text = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+                            row.style.display = text.includes(searchTerm) ? '' : 'none';
+                        }
+                    });
                 });
             }
+
         });
+
+        async function deleteStudent(matricula) {
+            if (!confirm('¿Estás seguro de que deseas eliminar este alumno?')) return;
+            try {
+                const response = await fetch(`/admin/raw-data/alumnos/delete-one/${matricula}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+                if (result.status === 200) {
+                    alert('Alumno eliminado correctamente');
+                    window.location.reload();
+                } else {
+                    alert('Error al eliminar: ' + result.msg);
+                }
+            } catch (error) {
+                alert('Error al eliminar el alumno');
+            }
+        }
     </script>
 </body>
 

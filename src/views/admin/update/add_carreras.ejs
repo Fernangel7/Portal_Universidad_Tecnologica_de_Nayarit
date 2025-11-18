@@ -109,8 +109,15 @@
                             <%= options.isUpdate ? 'Editar Carrera' : 'Añadir Nueva Carrera' %>
                         </h2>
                     </div>
-                    <div class="bg-card rounded-lg border shadow-sm p-6">
-                       <form action="<%= options.isUpdate ? '/admin/carreras/update/' + options.data.UUID : '/admin/raw-data/carreras/add-one' %>" method="POST" class="grid gap-6">
+                          <div class="bg-card rounded-lg border shadow-sm p-6">
+                              <form action="<%= options.isUpdate ? ('/admin/carreras/update/' + options.data.UUID) : '/admin/raw-data/carreras/add-one' %>" method="POST" class="grid gap-6">
+                            <% if (options.isUpdate && options.data.UUID) { %>
+                            <div class="space-y-2">
+                                <label for="program-uuid" class="text-sm font-medium leading-none text-muted-foreground">UUID (Identificador único)</label>
+                                <input id="program-uuid" name="uuid" disabled value="<%= options.data.UUID %>" class="flex h-10 w-full rounded-md border border-input bg-muted text-muted-foreground px-3 py-2 text-sm cursor-not-allowed">
+                                <p class="text-xs text-muted-foreground">Este identificador no puede modificarse</p>
+                            </div>
+                            <% } %>
                             <div class="space-y-2">
                                 <label for="program-name" class="text-sm font-medium leading-none">Nombre de la Carrera</label>
                                 <input id="program-name" name="nombre" required placeholder="Ej. Ingeniería Civil" value="<%= options.isUpdate && options.data.Nombre ? options.data.Nombre : '' %>" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">

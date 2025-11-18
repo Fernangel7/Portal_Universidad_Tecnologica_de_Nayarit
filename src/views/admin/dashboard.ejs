@@ -174,8 +174,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-2xl font-bold">12</div>
-                                <p class="text-xs text-muted-foreground">+2 desde el último semestre</p>
+                                <div class="text-2xl font-bold"><%= (metrics && metrics.careers) || 0 %></div>
+                                <p class="text-xs text-muted-foreground">Programas registrados</p>
                             </div>
                         </div>
                         <!-- Card: Total de Alumnos -->
@@ -192,8 +192,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-2xl font-bold">+2350</div>
-                                <p class="text-xs text-muted-foreground">+180.1% desde el mes pasado</p>
+                                <div class="text-2xl font-bold">+<%= (metrics && metrics.students) || 0 %></div>
+                                <p class="text-xs text-muted-foreground">Estudiantes registrados</p>
                             </div>
                         </div>
                         <!-- Card: Total de Docentes -->
@@ -210,8 +210,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-2xl font-bold">+52</div>
-                                <p class="text-xs text-muted-foreground">+5 desde el último ciclo</p>
+                                <div class="text-2xl font-bold">+<%= (metrics && metrics.teachers) || 0 %></div>
+                                <p class="text-xs text-muted-foreground">Perfiles de docentes</p>
                             </div>
                         </div>
                         <!-- Card: Artículos de Noticias -->
@@ -229,8 +229,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-2xl font-bold">+57</div>
-                                <p class="text-xs text-muted-foreground">+12 este mes</p>
+                                <div class="text-2xl font-bold">+<%= (metrics && metrics.news) || 0 %></div>
+                                <p class="text-xs text-muted-foreground">Noticias publicadas o en borrador</p>
                             </div>
                         </div>
                     </div>
@@ -254,35 +254,30 @@
                                                 <th
                                                     class="p-4 text-left font-medium text-muted-foreground hidden sm:table-cell">
                                                     Estado</th>
-                                                <th class="p-4 text-right font-medium text-muted-foreground">Acciones
-                                                </th>
+                                                <!-- <th class="p-4 text-right font-medium text-muted-foreground">Acciones
+                                                </th> -->
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-border">
-                                            <tr>
-                                                <td class="p-4 font-medium">Proceso de Admisión 2024</td>
-                                                <td class="p-4 hidden sm:table-cell">Noticia</td>
-                                                <td class="p-4 hidden sm:table-cell">
-                                                    <span
-                                                        class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-secondary">Publicado</span>
-                                                </td>
-                                                <td class="p-4 text-right">
-                                                    <button
-                                                        class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-4 font-medium">Feria de Empleo</td>
-                                                <td class="p-4 hidden sm:table-cell">Evento</td>
-                                                <td class="p-4 hidden sm:table-cell">
-                                                    <span
-                                                        class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-outline">Borrador</span>
-                                                </td>
-                                                <td class="p-4 text-right">
-                                                    <button
-                                                        class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                                </td>
-                                            </tr>
+                                            <% if (recentItems && recentItems.length) { %>
+                                                <% recentItems.forEach(it => { %>
+                                                    <tr>
+                                                        <td class="p-4 font-medium"><%= it.titulo %></td>
+                                                        <td class="p-4 hidden sm:table-cell"><%= it.tipo %></td>
+                                                        <td class="p-4 hidden sm:table-cell">
+                                                            <% if (it.estado) { %>
+                                                                <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-secondary">Publicado</span>
+                                                            <% } else { %>
+                                                                <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-outline">Borrador</span>
+                                                            <% } %>
+                                                        </td>
+                                                    </tr>
+                                                <% }) %>
+                                            <% } else { %>
+                                                <tr>
+                                                    <td class="p-4 text-sm text-muted-foreground" colspan="3">Sin contenido reciente</td>
+                                                </tr>
+                                            <% } %>
                                         </tbody>
                                     </table>
                                 </div>

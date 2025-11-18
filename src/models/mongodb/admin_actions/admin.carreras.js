@@ -4,7 +4,7 @@ const { carrera_model } = require('../general.js');
 class AdminCarrerasModel {
     static async getAllCareers() {
         try {
-            const careers = await carrera_model.find({ Estado: true }).sort({ Created_at: -1 });
+            const careers = await carrera_model.find({}).sort({ Created_at: -1 });
             return {
                 status: 200,
                 msg: 'Carreras obtenidas exitosamente',
@@ -22,7 +22,7 @@ class AdminCarrerasModel {
 
     static async findCareerById(id) {
         try {
-            const career = await carrera_model.findOne({ UUID: id, Estado: true });
+            const career = await carrera_model.findOne({ UUID: id });
             if (!career) {
                 return {
                     status: 404,

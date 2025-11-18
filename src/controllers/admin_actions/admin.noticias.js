@@ -25,6 +25,7 @@ class AdminNoticiasController {
         try {
             const { titulo, slug, resumen, contenido, imageUrl, categoria, publicada_en, publicado } = req.body;
             if (!titulo) return res.status(400).json({ status: 400, msg: 'Título requerido', data: null });
+            const publishedFlag = Array.isArray(publicado) ? publicado.includes('on') : (publicado === 'on');
             const data = {
                 Titulo: titulo,
                 Slug: slug,
@@ -33,7 +34,7 @@ class AdminNoticiasController {
                 ImageUrl: imageUrl,
                 Categoria: categoria,
                 Publicada_en: publicada_en,
-                Estado: publicado === 'on' ? true : true
+                Estado: publishedFlag
             };
             const result = await noticias_model.addNews(data);
             if (result.status === 201) return res.redirect('/admin/noticias');
@@ -48,6 +49,7 @@ class AdminNoticiasController {
             const { id } = req.params;
             if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
             const { titulo, slug, resumen, contenido, imageUrl, categoria, publicada_en, publicado } = req.body;
+            const publishedFlag = Array.isArray(publicado) ? publicado.includes('on') : (publicado === 'on');
             const data = {};
             if (titulo) data.Titulo = titulo;
             if (slug) data.Slug = slug;
@@ -56,7 +58,7 @@ class AdminNoticiasController {
             if (imageUrl) data.ImageUrl = imageUrl;
             if (categoria) data.Categoria = categoria;
             if (publicada_en) data.Publicada_en = publicada_en;
-            if (publicado !== undefined) data.Estado = publicado === 'on';
+            if (publicado !== undefined) data.Estado = publishedFlag;
             const result = await noticias_model.updateNews(id, data);
             if (result.status === 200) return res.redirect('/admin/noticias');
             return res.status(result.status).json(result);
