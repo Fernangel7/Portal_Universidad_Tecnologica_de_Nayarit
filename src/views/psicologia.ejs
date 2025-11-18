@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Psicología - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            headline: ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(165 60% 97%)',
+            foreground: 'hsl(171 80% 10%)',
+            card: 'hsl(165 60% 97%)',
+            'card-foreground': 'hsl(171 80% 10%)',
+            popover: 'hsl(165 60% 97%)',
+            'popover-foreground': 'hsl(171 80% 10%)',
+            primary: 'hsl(171 95% 27%)',
+            'primary-foreground': 'hsl(171 25% 95%)',
+            secondary: 'hsl(169 53% 90%)',
+            'secondary-foreground': 'hsl(171 95% 27%)',
+            muted: 'hsl(169 53% 94%)',
+            'muted-foreground': 'hsl(171 40% 30%)',
+            accent: 'hsl(169 53% 41%)',
+            'accent-foreground': 'hsl(171 25% 98%)',
+            destructive: 'hsl(0 84.2% 60.2%)',
+            'destructive-foreground': 'hsl(0 0% 98%)',
+            border: 'hsl(171 20% 88%)',
+            input: 'hsl(171 20% 88%)',
+            ring: 'hsl(171 95% 27%)',
+          },
+          borderRadius: {
+            lg: '0.5rem',
+            md: 'calc(0.5rem - 2px)',
+            sm: 'calc(0.5rem - 4px)',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="font-body antialiased bg-background text-foreground">
+  <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: title }) %>
+
+  <%- include("./templates/page_header.ejs", { 
+    pageTitle: "Psicología",
+    pageDescription: "Atención psicológica y acompañamiento para el bienestar estudiantil",
+    breadcrumbs: [
+      { title: "Inicio", href: "/" },
+      { title: "Servicios", href: "#" },
+      { title: "Psicología", href: null }
+    ],
+    heroImage: heroImage
+  }) %>
+
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="prose prose-lg max-w-none mb-12">
+        <p class="text-lg text-muted-foreground leading-relaxed">
+          Ofrecemos acompañamiento psicológico profesional para estudiantes, con el objetivo de promover su bienestar emocional,
+          desarrollo personal y rendimiento académico. La atención se brinda con confidencialidad y por personal capacitado.
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2">
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+          <h3 class="font-headline text-xl font-semibold mb-3">Servicios</h3>
+          <ul class="space-y-3 text-sm text-muted-foreground">
+            <li>Orientación psicológica individual</li>
+            <li>Talleres de habilidades socioemocionales</li>
+            <li>Prevención y manejo del estrés</li>
+            <li>Canalización a servicios externos especializados</li>
+          </ul>
+        </div>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+          <h3 class="font-headline text-xl font-semibold mb-3">Cómo agendar</h3>
+          <p class="text-sm text-muted-foreground">Escríbenos para agendar una cita o solicitar información.</p>
+          <div class="mt-4 flex gap-3">
+            <a href="mailto:psicologia@utnay.edu.mx" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-5 bg-primary text-primary-foreground hover:bg-primary/90">Correo</a>
+            <a href="tel:+523112119800" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-5 border border-input hover:bg-secondary/50">Teléfono</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- include("./templates/footer.ejs", {title: title}) %>
+</body>
+</html>

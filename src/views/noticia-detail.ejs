@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= noticia.titulo %> - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+</head>
+<body class="font-body antialiased bg-white">
+  <div class="flex min-h-screen flex-col">
+    <%- include('templates/header.ejs', navigationLinks); %>
+    <main class="flex-1">
+      <article class="mx-auto max-w-3xl px-4 py-12">
+        <h1 class="font-headline text-4xl font-bold mb-4"><%= noticia.titulo %></h1>
+        <div class="text-sm text-gray-500 mb-6"><%= noticia.publicada_en ? new Date(noticia.publicada_en).toLocaleDateString('es-MX') : '' %></div>
+        <% if (noticia.imageUrl) { %>
+          <img src="<%= noticia.imageUrl %>" alt="Imagen" class="rounded-lg mb-8 w-full object-cover" />
+        <% } %>
+        <p class="text-lg text-gray-700 mb-6"><%= noticia.resumen %></p>
+        <div class="prose max-w-none"><%- noticia.contenido %></div>
+      </article>
+    </main>
+    <%- include('templates/footer.ejs'); %>
+  </div>
+</body>
+</html>
