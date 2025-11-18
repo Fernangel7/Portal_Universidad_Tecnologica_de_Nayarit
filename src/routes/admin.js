@@ -24,6 +24,10 @@ app.get('/informacion_general', UnauthorizedAccess, async (req, res) => await ad
 app.get('/carreras', UnauthorizedAccess, async (req, res) => await admin_render_controller.carreras(req, res))
 app.get('/carreras/add', UnauthorizedAccess, async (req, res) => await admin_render_controller.carreras_add(req, res))
 app.get('/carreras/update/:matricula', UnauthorizedAccess, async (req, res) => await admin_render_controller.carreras_update(req, res))
+app.post('/carreras/update/:matricula', UnauthorizedAccess, async (req, res) => {
+    // Redirect POST to PUT via raw-data endpoint
+    const result = await require('../controllers/admin_actions/admin.carreras.js').admin_carreras_controller.updateCareer(req, res);
+})
 
 app.get('/noticias', UnauthorizedAccess, async (req, res) => await admin_render_controller.noticias(req, res))
 app.get('/noticias/add', UnauthorizedAccess, async (req, res) => await admin_render_controller.noticias_add(req, res))
