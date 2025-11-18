@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><%= title %> - Mi Preficha</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					fontFamily: {
+						body: ['Inter', 'sans-serif'],
+						headline: ['PT Sans', 'sans-serif'],
+					},
+					colors: {
+						background: 'hsl(165 60% 97%)',
+						foreground: 'hsl(171 80% 10%)',
+						card: 'hsl(165 60% 97%)',
+						'card-foreground': 'hsl(171 80% 10%)',
+						popover: 'hsl(165 60% 97%)',
+						'popover-foreground': 'hsl(171 80% 10%)',
+						primary: 'hsl(171 95% 27%)',
+						'primary-foreground': 'hsl(171 25% 95%)',
+						secondary: 'hsl(169 53% 90%)',
+						'secondary-foreground': 'hsl(171 95% 27%)',
+						muted: 'hsl(169 53% 94%)',
+						'muted-foreground': 'hsl(171 40% 30%)',
+						accent: 'hsl(169 53% 41%)',
+						'accent-foreground': 'hsl(171 25% 98%)',
+						destructive: 'hsl(0 84.2% 60.2%)',
+						'destructive-foreground': 'hsl(0 0% 98%)',
+						border: 'hsl(171 20% 88%)',
+						input: 'hsl(171 20% 88%)',
+						ring: 'hsl(171 95% 27%)',
+					},
+					borderRadius: {
+						lg: '0.5rem',
+						md: 'calc(0.5rem - 2px)',
+						sm: 'calc(0.5rem - 4px)',
+					},
+				},
+			},
+		}
+	</script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-body antialiased bg-background text-foreground">
+	<%- include("./templates/header.ejs", { navigationLinks: [], title: title }) %>
+
+	<section class="py-12">
+		<div class="container mx-auto max-w-4xl px-4">
+			<div class="flex items-center justify-between mb-6">
+				<h1 class="font-headline text-3xl font-bold tracking-tight">Mi Preficha</h1>
+				<div class="flex gap-2">
+					<a href="/aspirantes/form/pre-register/edit" class="inline-flex items-center justify-center rounded-md border border-input px-4 py-2 text-sm hover:bg-secondary/60">Editar</a>
+					<a href="/aspirantes/logout" class="inline-flex items-center justify-center rounded-md bg-destructive text-destructive-foreground px-4 py-2 text-sm hover:bg-destructive/90">Salir</a>
+				</div>
+			</div>
+
+			<div class="grid gap-6 md:grid-cols-2">
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4">Datos del Aspirante</h2>
+					<dl class="space-y-2">
+						<div><dt class="text-muted-foreground text-sm">Preficha</dt><dd class="font-medium"><%= aspirante.Preficha %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Nombre</dt><dd class="font-medium"><%= aspirante.Nombre %> <%= aspirante.Apellidos %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Correo</dt><dd class="font-medium"><%= aspirante.Correo || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Teléfono</dt><dd class="font-medium"><%= aspirante.Telefono || '-' %></dd></div>
+					</dl>
+				</div>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4">Programa de Interés</h2>
+					<dl class="space-y-2">
+						<div><dt class="text-muted-foreground text-sm">Carrera</dt><dd class="font-medium"><%= aspirante.CarreraSlug || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Usuario</dt><dd class="font-medium"><%= aspirante.Username %></dd></div>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<%- include("./templates/footer.ejs", { title: title }) %>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><%= title %> - Acceso Aspirante</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					fontFamily: {
+						body: ['Inter', 'sans-serif'],
+						headline: ['PT Sans', 'sans-serif'],
+					},
+					colors: {
+						background: 'hsl(165 60% 97%)',
+						foreground: 'hsl(171 80% 10%)',
+						card: 'hsl(165 60% 97%)',
+						'card-foreground': 'hsl(171 80% 10%)',
+						popover: 'hsl(165 60% 97%)',
+						'popover-foreground': 'hsl(171 80% 10%)',
+						primary: 'hsl(171 95% 27%)',
+						'primary-foreground': 'hsl(171 25% 95%)',
+						secondary: 'hsl(169 53% 90%)',
+						'secondary-foreground': 'hsl(171 95% 27%)',
+						muted: 'hsl(169 53% 94%)',
+						'muted-foreground': 'hsl(171 40% 30%)',
+						accent: 'hsl(169 53% 41%)',
+						'accent-foreground': 'hsl(171 25% 98%)',
+						destructive: 'hsl(0 84.2% 60.2%)',
+						'destructive-foreground': 'hsl(0 0% 98%)',
+						border: 'hsl(171 20% 88%)',
+						input: 'hsl(171 20% 88%)',
+						ring: 'hsl(171 95% 27%)',
+					},
+					borderRadius: {
+						lg: '0.5rem',
+						md: 'calc(0.5rem - 2px)',
+						sm: 'calc(0.5rem - 4px)',
+					},
+				},
+			},
+		}
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-body antialiased bg-muted/40 min-h-screen flex items-center justify-center p-4">
+	<div class="w-full max-w-sm">
+		<div class="bg-card text-card-foreground rounded-lg border border-input shadow-lg">
+			<div class="p-6 space-y-1">
+				<h3 class="font-headline text-2xl font-semibold tracking-tight">Acceso de Aspirante</h3>
+				<p class="text-sm text-muted-foreground">Ingresa con tu usuario y contraseña</p>
+			</div>
+			<div class="p-6 pt-0 space-y-4">
+				<div class="space-y-2">
+					<label for="username" class="text-sm font-medium leading-none">Usuario</label>
+					<input type="text" id="username" placeholder="usuario" class="form-input w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm outline-none">
+				</div>
+				<div class="space-y-2">
+					<label for="password" class="text-sm font-medium leading-none">Contraseña</label>
+					<input type="password" id="password" placeholder="********" class="form-input w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm outline-none">
+				</div>
+				<button id="btn-login" class="w-full h-10 inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90">Iniciar Sesión</button>
+			</div>
+			<div class="p-6 pt-0 text-sm text-muted-foreground">
+				¿Aún no tienes usuario? <a href="/aspirantes/form/pre-register" class="text-primary underline-offset-4 hover:underline">Realiza tu pre-registro</a>
+			</div>
+		</div>
+		<a class="text-sm text-muted-foreground block text-center mt-5" href="/">Volver al Inicio</a>
+	</div>
+
+	<script>
+		document.getElementById('btn-login').addEventListener('click', async () => {
+			const username = document.getElementById('username').value || ''
+			const password = document.getElementById('password').value || ''
+			try {
+				const res = await axios.post('/aspirantes/login/verify', { username, password }, { timeout: 15000 })
+				if (res.data.status === 200) {
+					window.location.href = '/aspirantes/dashboard'
+				} else {
+					alert('Credenciales incorrectas. Por favor verifica e intenta nuevamente.')
+				}
+			} catch (e) {
+				alert('Error al iniciar sesión.')
+			}
+		})
+	</script>
+</body>
+</html>

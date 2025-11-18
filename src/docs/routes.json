@@ -1,0 +1,62 @@
+{
+  "public": [
+    { "url": "/", "view_name": "index" },
+    { "url": "/docentes", "view_name": "docentes" },
+    { "url": "/docentes/:slug", "view_name": "docente-detail" },
+    { "url": "/noticias", "view_name": "noticias" },
+    { "url": "/noticias/:slug", "view_name": "noticia-detail" },
+    { "url": "/eventos", "view_name": "eventos" },
+    { "url": "/eventos/:slug", "view_name": "evento-detail" },
+    { "url": "/incubadora-de-negocios", "view_name": "incubadora-de-negocios" },
+    { "url": "/ceelex", "view_name": "ceelex" },
+    { "url": "/becas", "view_name": "becas" },
+    { "url": "/ececut", "view_name": "ececut" },
+    { "url": "/aviso-de-privacidad", "view_name": "aviso-de-privacidad" },
+    { "url": "/transparencia", "view_name": "transparencia" },
+    { "url": "/transparencia/marco-normativo", "view_name": "marco-normativo" },
+    { "url": "/transparencia/estructura-organizacional", "view_name": "estructura-organizacional" },
+    { "url": "/transparencia/convocatorias", "view_name": "convocatorias" },
+    { "url": "/transparencia/infraestructura", "view_name": "infraestructura" },
+    { "url": "/transparencia/indicadores", "view_name": "indicadores" },
+    { "url": "/informes-financieros", "view_name": "informes-financieros" },
+    { "url": "/sistema-de-calidad", "view_name": "sistema-de-calidad" },
+    { "url": "/psicologia", "view_name": "psicologia" },
+    { "url": "/vinculacion/extension-universitaria", "view_name": "extension-universitaria" }
+  ],
+  "carreras": [
+    { "url": "/carreras", "view_name": "carreras" },
+    { "url": "/carreras/:programId", "view_name": "program-detail" }
+  ],
+  "aspirantes": [
+    { "method": "GET", "url": "/aspirantes/login", "view_name": "login_aspirante", "middlewares": [] },
+    { "method": "GET", "url": "/aspirantes/dashboard", "view_name": "dashboard_aspirante", "middlewares": ["AspiranteUnauthorized"] },
+    { "method": "GET", "url": "/aspirantes/form/pre-register", "view_name": "from_pre_registro", "middlewares": [] },
+    { "method": "GET", "url": "/aspirantes/form/pre-register/edit", "view_name": "from_pre_registro", "middlewares": ["AspiranteUnauthorized"] }
+  ],
+  "admin": [
+    { "method": "GET", "url": "/admin/login", "view_name": "admin/login", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/dashboard", "view_name": "admin/dashboard", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/informacion_general", "view_name": "admin/informacion_general", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/carreras", "view_name": "admin/carreras", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/carreras/add", "view_name": "admin/update/add_carreras", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/carreras/update/:matricula", "view_name": "admin/update/add_carreras", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/noticias", "view_name": "admin/noticias", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/noticias/add", "view_name": "admin/update/add_noticias", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/noticias/update/:id", "view_name": "admin/update/add_noticias", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/eventos", "view_name": "admin/eventos", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/eventos/add", "view_name": "admin/update/add_eventos", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/eventos/update/:id", "view_name": "admin/update/add_eventos", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/docentes", "view_name": "admin/docentes", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/docentes/add", "view_name": "admin/update/add_docentes", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/docentes/update/:id", "view_name": "admin/update/add_docentes", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/alumnos", "view_name": "admin/alumnos", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/alumnos/add", "view_name": "admin/update/add_alumnos", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/alumnos/update/:id", "view_name": "admin/update/add_alumnos", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/informes_financieros", "view_name": "admin/informes_financieros", "middlewares": ["UnauthorizedAccess"] },
+    { "method": "GET", "url": "/admin/aspirantes/pre-registros", "view_name": "admin/aspirantes_preregistros", "middlewares": ["UnauthorizedAccess"] }
+  ],
+  "errors": [
+    { "url": "[unauthorized via middleware]", "view_name": "401" },
+    { "url": "[* catch-all 404]", "view_name": "404" }
+  ]
+}

@@ -9,6 +9,7 @@ const { admin_docentes_model } = require('../models/mongodb/admin_actions/admin.
 const { admin_alumnos_model } = require('../models/mongodb/admin_actions/admin.alumnos.js')
 
 const { JWT_SECRET_KEY } = require('../config/config-globals.js')
+const { aspirantes_model } = require('../models/mongodb/aspirantes.js')
 const { website_name } = require('../utils/utils-globals.js')
 
 class admin_render_controller {
@@ -300,6 +301,19 @@ class admin_render_controller {
         res.render('admin/informes_financieros', {
             title: website_name
         })
+    }
+
+    static async aspirantes_preregistros(req, res) {
+        try {
+            const result = await aspirantes_model.listAll()
+            const aspirantes = result.status === 200 ? (result.data.aspirantes || []) : []
+            res.render('admin/aspirantes_preregistros', {
+                title: website_name,
+                aspirantes
+            })
+        } catch (e) {
+            res.render('admin/aspirantes_preregistros', { title: website_name, aspirantes: [] })
+        }
     }
 }
 

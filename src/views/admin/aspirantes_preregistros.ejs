@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 165 60% 97%;
+      --foreground: 171 80% 10%;
+      --card: 165 60% 97%;
+      --card-foreground: 171 80% 10%;
+      --popover: 165 60% 97%;
+      --popover-foreground: 171 80% 10%;
+      --primary: 171 95% 27%;
+      --primary-foreground: 171 25% 95%;
+      --secondary: 169 53% 90%;
+      --secondary-foreground: 171 95% 27%;
+      --muted: 169 53% 94%;
+      --muted-foreground: 171 40% 30%;
+      --accent: 169 53% 41%;
+      --accent-foreground: 171 25% 98%;
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 0 0% 98%;
+      --border: 171 20% 88%;
+      --input: 171 20% 88%;
+      --ring: 171 95% 27%;
+      --radius: 0.5rem;
+    }
+    body { font-family: 'Inter', sans-serif; background-color: hsl(var(--muted) / 0.4); }
+    .font-headline { font-family: 'PT Sans', sans-serif; }
+    .bg-background { background-color: hsl(var(--background)); }
+    .bg-card { background-color: hsl(var(--card)); }
+    .text-card-foreground { color: hsl(var(--card-foreground)); }
+    .border { border-width: 1px; }
+    .border-border { border-color: hsl(var(--border)); }
+    .badge-secondary { background-color: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); }
+  </style>
+</head>
+<body class="antialiased">
+  <div class="relative min-h-screen w-full md:flex">
+    <%- include('./templates/left_menu.ejs', { hovered: 7 }) %>
+
+    <div class="flex flex-col flex-1">
+      <header class="flex h-14 items-center gap-4 border-b bg-background px-4 md:px-6">
+        <button id="mobile-menu-trigger" class="md:hidden p-2 -ml-2 text-muted-foreground">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+          <span class="sr-only">Toggle Menu</span>
+        </button>
+        <div class="flex-1"><h1 class="font-semibold text-lg">Pre-registros de Aspirantes</h1></div>
+        <%- include('./templates/dropdown_user.ejs') %>
+      </header>
+
+      <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 md:gap-8">
+        <div class="bg-card rounded-lg border shadow-sm">
+          <div class="flex flex-col sm:flex-row items-center justify-between p-6">
+            <div>
+              <h3 class="text-xl font-headline font-semibold">Listado de Pre-registros</h3>
+              <p class="text-sm text-muted-foreground">Prefichas generadas por aspirantes.</p>
+            </div>
+            <div class="flex items-center gap-2 mt-4 sm:mt-0">
+              <div class="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                </svg>
+                <input type="search" id="searchInput" placeholder="Buscar por preficha, nombre o correo..." class="pl-8 w-full sm:w-72 h-9 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+              </div>
+            </div>
+          </div>
+          <div class="p-0">
+            <div class="overflow-x-auto overflow-visible pb-16">
+              <table class="w-full text-sm">
+                <thead class="bg-muted/50">
+                  <tr class="border-b">
+                    <th class="p-4 text-left font-medium text-muted-foreground">Preficha</th>
+                    <th class="p-4 text-left font-medium text-muted-foreground">Nombre</th>
+                    <th class="p-4 text-left font-medium text-muted-foreground hidden md:table-cell">Correo</th>
+                    <th class="p-4 text-left font-medium text-muted-foreground hidden md:table-cell">Carrera</th>
+                    <th class="p-4 text-left font-medium text-muted-foreground hidden sm:table-cell">Usuario</th>
+                    <th class="p-4 text-left font-medium text-muted-foreground hidden lg:table-cell">Fecha</th>
+                    <th class="p-4 text-right font-medium text-muted-foreground">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-border">
+                  <% if (aspirantes && aspirantes.length > 0) { %>
+                    <% aspirantes.forEach(function(a){ %>
+                      <tr>
+                        <td class="p-4 font-mono text-xs"><%= a.Preficha %></td>
+                        <td class="p-4 font-medium"><%= a.Nombre %> <%= a.Apellidos || '' %></td>
+                        <td class="p-4 text-muted-foreground hidden md:table-cell"><%= a.Correo || '-' %></td>
+                        <td class="p-4 text-muted-foreground hidden md:table-cell"><%= a.CarreraSlug || '-' %></td>
+                        <td class="p-4 text-muted-foreground hidden sm:table-cell"><%= a.Username %></td>
+                        <td class="p-4 text-muted-foreground hidden lg:table-cell"><%= (new Date(a.Created_at)).toLocaleString('es-MX') %></td>
+                        <td class="p-4 text-right">
+                          <% if (a.Correo) { %>
+                            <a href="mailto:<%= a.Correo %>?subject=Contacto%20Pre-registro%20UTN&body=<%= encodeURIComponent('Hola ' + a.Nombre + ' ' + (a.Apellidos || '') + '\n\nTe contactamos respecto a tu pre-registro (Preficha: ' + a.Preficha + ').' + (a.CarreraSlug ? ('\nCarrera de interés: ' + a.CarreraSlug) : '') + '\n\nSi necesitas actualizar tus datos, puedes iniciar sesión en el portal de aspirantes.\n\nAtentamente,\nAdmisiones UTN') %>" class="inline-flex items-center gap-2 px-3 py-1.5 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">
+                              Contactar
+                            </a>
+                          <% } else { %>
+                            <span class="text-sm text-muted-foreground">—</span>
+                          <% } %>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  <% } else { %>
+                    <tr>
+                      <td colspan="7" class="p-6 text-center text-muted-foreground">No hay pre-registros.</td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const searchInput = document.getElementById('searchInput');
+      const tbody = document.querySelector('tbody');
+      if (searchInput && tbody) {
+        searchInput.addEventListener('input', function(){
+          const q = this.value.toLowerCase().trim();
+          tbody.querySelectorAll('tr').forEach(tr => {
+            const txt = (tr.textContent || '').toLowerCase();
+            tr.style.display = txt.includes(q) ? '' : 'none';
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

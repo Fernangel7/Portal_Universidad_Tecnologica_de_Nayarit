@@ -7,8 +7,8 @@ const navigationLinks = {
             title: 'Aspirantes',
             children: [
                 {
-                    title: 'Proceso de Admisión',
-                    href: '/pre-registro',
+                    title: 'Pre Registro',
+                    href: '/aspirantes',
                     external: true,
                     description: 'Conoce los pasos para unirte a nuestra comunidad.'
                 }, {

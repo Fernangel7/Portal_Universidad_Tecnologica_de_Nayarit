@@ -60,6 +60,9 @@ app.post('/alumnos/update/:id', UnauthorizedAccess, async (req, res) => {
 
 app.get('/informes_financieros', UnauthorizedAccess, async (req, res) => await admin_render_controller.informes_financieros(req, res))
 
+// Pre-registros de aspirantes
+app.get('/aspirantes/pre-registros', UnauthorizedAccess, async (req, res) => await admin_render_controller.aspirantes_preregistros(req, res))
+
 app.get('/logout', UnauthorizedAccess, async (req, res) => {
     res.clearCookie('refreshToken')
     res.redirect('/admin/login')

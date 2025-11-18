@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><%= title %> - Pre-registro</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					fontFamily: {
+						body: ['Inter', 'sans-serif'],
+						headline: ['PT Sans', 'sans-serif'],
+					},
+					colors: {
+						background: 'hsl(165 60% 97%)',
+						foreground: 'hsl(171 80% 10%)',
+						card: 'hsl(165 60% 97%)',
+						'card-foreground': 'hsl(171 80% 10%)',
+						popover: 'hsl(165 60% 97%)',
+						'popover-foreground': 'hsl(171 80% 10%)',
+						primary: 'hsl(171 95% 27%)',
+						'primary-foreground': 'hsl(171 25% 95%)',
+						secondary: 'hsl(169 53% 90%)',
+						'secondary-foreground': 'hsl(171 95% 27%)',
+						muted: 'hsl(169 53% 94%)',
+						'muted-foreground': 'hsl(171 40% 30%)',
+						accent: 'hsl(169 53% 41%)',
+						'accent-foreground': 'hsl(171 25% 98%)',
+						destructive: 'hsl(0 84.2% 60.2%)',
+						'destructive-foreground': 'hsl(0 0% 98%)',
+						border: 'hsl(171 20% 88%)',
+						input: 'hsl(171 20% 88%)',
+						ring: 'hsl(171 95% 27%)',
+					},
+					borderRadius: {
+						lg: '0.5rem',
+						md: 'calc(0.5rem - 2px)',
+						sm: 'calc(0.5rem - 4px)',
+					},
+				},
+			},
+		}
+	</script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-body antialiased bg-background text-foreground">
+	<%- include("./templates/header.ejs", { navigationLinks: [], title: title }) %>
+
+	<section class="py-12">
+		<div class="container mx-auto max-w-3xl px-4">
+			<h1 class="font-headline text-3xl font-bold tracking-tight mb-6"><%= (typeof editMode !== 'undefined' && editMode) ? 'Editar Pre-ficha' : 'Pre-registro de Aspirante' %></h1>
+
+			<% if (created && created.ok) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6 mb-8">
+					<h2 class="font-headline text-2xl font-semibold mb-2">¡Pre-registro exitoso!</h2>
+					<p class="text-muted-foreground mb-4">Guarda tus credenciales para acceder al portal del aspirante:</p>
+					<ul class="space-y-1">
+						<li><span class="font-medium">Preficha:</span> <%= created.preficha %></li>
+						<li><span class="font-medium">Usuario:</span> <%= created.username %></li>
+						<li><span class="font-medium">Contraseña:</span> <%= created.password %></li>
+					</ul>
+					<a href="/aspirantes/login" class="mt-4 inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground px-4 py-2 text-sm font-medium hover:bg-primary/90">Ir al acceso</a>
+				</div>
+			<% } %>
+
+			<% if (created && created.error) { %>
+				<div class="rounded-md border border-destructive/30 bg-red-50 text-red-700 p-4 mb-6"><%= created.error %></div>
+			<% } %>
+
+			<form method="post" action="<%= (typeof editMode !== 'undefined' && editMode) ? '/aspirantes/form/pre-register/edit' : '/aspirantes/form/pre-register' %>" class="space-y-5">
+				<div class="grid gap-4 md:grid-cols-2">
+					<div class="space-y-2">
+						<label class="text-sm font-medium">Nombre</label>
+						<input name="Nombre" required class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.Nombre : '' %>">
+					</div>
+					<div class="space-y-2">
+						<label class="text-sm font-medium">Apellidos</label>
+						<input name="Apellidos" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.Apellidos : '' %>">
+					</div>
+				</div>
+
+				<div class="grid gap-4 md:grid-cols-2">
+					<div class="space-y-2">
+						<label class="text-sm font-medium">Correo</label>
+						<input type="email" name="Correo" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.Correo : '' %>">
+					</div>
+					<div class="space-y-2">
+						<label class="text-sm font-medium">Teléfono</label>
+						<input name="Telefono" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.Telefono : '' %>">
+					</div>
+				</div>
+
+				<div class="space-y-2">
+					<label class="text-sm font-medium">Carrera de interés</label>
+					<select name="CarreraSlug" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+						<option value="">Selecciona una opción</option>
+						<% (careers || []).forEach(function(c){ %>
+							<option value="<%= c.Slug %>" <%= (aspirante && aspirante.CarreraSlug === c.Slug) ? 'selected' : '' %>><%= c.Nombre %></option>
+						<% }) %>
+					</select>
+				</div>
+
+				<div class="flex items-center gap-3 pt-2">
+					<button type="submit" class="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground px-5 py-2 text-sm font-medium hover:bg-primary/90">
+						<%= (typeof editMode !== 'undefined' && editMode) ? 'Guardar cambios' : 'Enviar pre-registro' %>
+					</button>
+					<% if (!(typeof editMode !== 'undefined' && editMode)) { %>
+						<a href="/aspirantes/login" class="text-sm text-muted-foreground underline-offset-4 hover:underline">Ya tengo usuario</a>
+					<% } %>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<%- include("./templates/footer.ejs", { title: title }) %>
+</body>
+</html>

@@ -12,6 +12,7 @@ const { corsMiddleware } = require('./middlewares/cors.js')
 //routers
 const main_routes = require('./routes/index.js')
 const carreras_routes = require('./routes/carreras')
+const { aspirantes_router } = require('./routes/aspirantes.js')
 const { admin_router } = require('./routes/admin.js')
 const { admin_actions_router } = require('./routes/admin_actions/admin.main.redirection.js')
 
@@ -52,6 +53,18 @@ app.use('/', main_routes)
 app.use('/admin', admin_router)
 app.use('/admin/raw-data', admin_actions_router)
 app.use('/carreras', carreras_routes)
+app.use('/aspirantes', aspirantes_router)
+
+// Lightweight docs endpoint for routes.json
+app.get('/docs/routes', (req, res) => {
+    try {
+        const routes = require('./docs/routes.json')
+        res.setHeader('Content-Type', 'application/json')
+        res.status(200).send(routes)
+    } catch (e) {
+        res.status(500).json({ error: 'routes.json not available' })
+    }
+})
 
 //404 render
 app.use((req, res) => {
