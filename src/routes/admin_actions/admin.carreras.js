@@ -8,6 +8,8 @@ app.get('/get-all', async (req, res) => await carreras_controller.getAllCareers(
 app.get('/find/:id', async (req, res) => await carreras_controller.findCareerById(req, res))
 app.post('/add-one', async (req, res) => await carreras_controller.addCareer(req, res))
 app.put('/update-one/:id', async (req, res) => await carreras_controller.updateCareer(req, res))
+app.patch('/deactivate-one/:id', async (req, res) => await carreras_controller.deactivateCareer(req, res))
+app.patch('/reactivate-one/:id', async (req, res) => await carreras_controller.reactivateCareer(req, res))
 app.delete('/delete-one/:id', async (req, res) => await carreras_controller.deleteCareer(req, res))
 
 module.exports = {

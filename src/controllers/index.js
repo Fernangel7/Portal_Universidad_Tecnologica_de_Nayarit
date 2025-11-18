@@ -152,7 +152,9 @@ module.exports = class IndexController {
         try {
             const result = await admin_docentes_model.getAllTeachers()
             if (result.status === 200) {
-                teachers = result.data.teachers.map(t => ({
+                teachers = (result.data.teachers || [])
+                    .filter(t => t && t.Estado === true)
+                    .map(t => ({
                     nombre: t.Nombre,
                     slug: t.Slug,
                     cargo: t.Cargo,
@@ -204,7 +206,9 @@ module.exports = class IndexController {
         try {
             const result = await admin_noticias_model.getAllNews()
             if (result.status === 200) {
-                news = result.data.news.map(n => ({
+                news = (result.data.news || [])
+                    .filter(n => n && n.Estado === true)
+                    .map(n => ({
                     titulo: n.Titulo,
                     slug: n.Slug,
                     resumen: n.Resumen,
@@ -213,7 +217,8 @@ module.exports = class IndexController {
                 }))
             }
         } catch (e) {}
-        await res.render('noticias', { title: website_name, navigationLinks: navLinks.navigationLinks, news })
+        const heroImage = img.find(i => i.id === 'news-hero') || img[0] || null
+        await res.render('noticias', { title: website_name, navigationLinks: navLinks.navigationLinks, IscProcess: InscriptionProcess, heroImage, news })
     }
 
     static async noticiaDetalle (req, res) {
@@ -248,7 +253,9 @@ module.exports = class IndexController {
         try {
             const result = await admin_eventos_model.getAllEvents()
             if (result.status === 200) {
-                events = result.data.events.map(ev => ({
+                events = (result.data.events || [])
+                    .filter(ev => ev && ev.Estado === true)
+                    .map(ev => ({
                     titulo: ev.Titulo,
                     slug: ev.Slug,
                     fechaInicio: ev.FechaInicio,
@@ -259,7 +266,7 @@ module.exports = class IndexController {
                 }))
             }
         } catch (e) {}
-        await res.render('eventos', { title: website_name, navigationLinks: navLinks.navigationLinks, events })
+        await res.render('eventos', { title: website_name, navigationLinks: navLinks.navigationLinks, IscProcess: InscriptionProcess, events })
     }
 
     static async eventoDetalle (req, res) {
@@ -271,6 +278,25 @@ module.exports = class IndexController {
         let ev = null
         try { ev = await evento_model.findOne({ Slug: slug, Estado: true }).lean() } catch (e) {}
         if (!ev) return res.status(404).render('404', { title: 'Evento no encontrado' })
+
+        // Obtener todos los eventos activos para la vista general embebida
+        let allEvents = []
+        try {
+            const result = await admin_eventos_model.getAllEvents()
+            if (result.status === 200) {
+                allEvents = (result.data.events || [])
+                    .filter(ev2 => ev2 && ev2.Estado === true)
+                    .map(ev2 => ({
+                        titulo: ev2.Titulo,
+                        slug: ev2.Slug,
+                        fechaInicio: ev2.FechaInicio,
+                        fechaFin: ev2.FechaFin,
+                        ubicacion: ev2.Ubicacion,
+                        imageUrl: ev2.ImageUrl,
+                        descripcion: ev2.Descripcion
+                    }))
+            }
+        } catch (e) {}
         await res.render('evento-detail', {
             title: website_name,
             navigationLinks: navLinks.navigationLinks,
@@ -282,7 +308,8 @@ module.exports = class IndexController {
                 fechaFin: ev.FechaFin,
                 ubicacion: ev.Ubicacion,
                 imageUrl: ev.ImageUrl
-            }
+            },
+            allEvents
         })
     }
 

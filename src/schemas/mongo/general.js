@@ -80,6 +80,8 @@ const alumno_schema = new Schema({
     Correo: String,
     CarreraSlug: String, // reference to carrera slug (simplified)
     Estado: { type: Boolean, default: true },
+    TipoBaja: { type: String, enum: ['temporal', 'definitiva', null], default: null },
+    FechaBaja: { type: Date, default: null },
     Created_at: { type: Date, default: Date.now },
     Updated_at: { type: Date, default: Date.now },
     Aditional_info: {}

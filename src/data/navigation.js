@@ -6,12 +6,12 @@ const navigationLinks = {
         }, {
             title: 'Aspirantes',
             children: [
-                /*{
+                {
                     title: 'Proceso de Admisión',
-                    href: '#',
+                    href: '/pre-registro',
                     external: true,
                     description: 'Conoce los pasos para unirte a nuestra comunidad.'
-                },*/ {
+                }, {
                     title: 'Oferta Educativa',
                     href: '/carreras',
                     description: 'Explora todas las carreras que tenemos para ti.'

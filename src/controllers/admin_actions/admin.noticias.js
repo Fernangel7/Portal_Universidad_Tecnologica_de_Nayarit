@@ -71,7 +71,29 @@ class AdminNoticiasController {
         try {
             const { id } = req.params;
             if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
-            const result = await noticias_model.deleteNews(id);
+            const result = await noticias_model.deleteNewsPermanently(id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
+    }
+
+    static async deactivateNews(req, res) {
+        try {
+            const { id } = req.params;
+            if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
+            const result = await noticias_model.deactivateNews(id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
+    }
+
+    static async reactivateNews(req, res) {
+        try {
+            const { id } = req.params;
+            if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
+            const result = await noticias_model.reactivateNews(id);
             return res.status(result.status).json(result);
         } catch (error) {
             return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
@@ -85,6 +107,8 @@ module.exports = {
         findNewsById: AdminNoticiasController.findNewsById,
         addNews: AdminNoticiasController.addNews,
         updateNews: AdminNoticiasController.updateNews,
+        deactivateNews: AdminNoticiasController.deactivateNews,
+        reactivateNews: AdminNoticiasController.reactivateNews,
         deleteNews: AdminNoticiasController.deleteNews
     }
 }

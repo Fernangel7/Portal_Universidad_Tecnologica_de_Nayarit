@@ -196,6 +196,11 @@
                                     <input type="search" id="searchInput" placeholder="Buscar por nombre..."
                                         class="pl-8 w-full sm:w-64 h-9 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                                 </div>
+                                <select id="statusFilter" class="h-9 rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                                    <option value="all">Todos</option>
+                                    <option value="published">Publicados</option>
+                                    <option value="draft">Borradores</option>
+                                </select>
                                 <button
                                     id="button_add"
                                     class="w-full sm:w-auto mt-4 sm:mt-0 flex items-center justify-center gap-2 h-9 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md text-sm">
@@ -210,7 +215,7 @@
                             </div>
                         </div>
                         <div class="p-0">
-                            <div class="overflow-x-auto">
+                            <div class="overflow-x-auto overflow-visible pb-16">
                                 <table class="w-full text-sm">
                                     <thead class="bg-muted/50">
                                         <tr class="border-b">
@@ -231,7 +236,7 @@
                                     <tbody class="divide-y divide-border">
                                         <% if (events && events.length > 0) { %>
                                             <% events.forEach(function(ev){ %>
-                                                <tr>
+                                                <tr data-status="<%= ev.Estado ? 'published' : 'draft' %>">
                                                     <td class="p-4 font-medium"><%= ev.Titulo %></td>
                                                     <td class="p-4 hidden sm:table-cell"><%= ev.FechaInicio ? new Date(ev.FechaInicio).toLocaleDateString('es-MX') : '-' %></td>
                                                     <td class="p-4 hidden md:table-cell"><%= ev.Ubicacion || '-' %></td>
@@ -242,7 +247,45 @@
                                                     </td>
                                                     <td class="p-4 text-right space-x-2">
                                                         <a href="/admin/eventos/update/<%= ev.UUID %>" class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-block">Editar</a>
-                                                        <button onclick="deleteEvent('<%= ev.UUID %>')" class="px-3 py-1 border border-red-300 bg-red-50 hover:bg-red-100 text-red-600 rounded-md text-sm inline-block">Eliminar</button>
+                                                        <div class="relative inline-block text-left">
+                                                            <button onclick="toggleDropdown('<%= ev.UUID %>')" class="px-3 py-1 border-transparent text-destructive-foreground bg-destructive hover:bg-destructive/80 rounded-md text-sm inline-flex items-center gap-1">
+                                                                Opciones
+                                                                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                                </svg>
+                                                            </button>
+                                                            <div id="dropdown-<%= ev.UUID %>" class="hidden absolute right-0 z-50 mt-2 w-72 max-h-96 overflow-y-auto origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                                                                <div class="py-1">
+                                                                    <% if (ev.Estado) { %>
+                                                                        <button onclick="deactivateEvent('<%= ev.UUID %>')" class="text-gray-700 hover:bg-gray-100 block w-full text-left px-4 py-2 text-sm">
+                                                                            <span class="flex items-center gap-2">
+                                                                                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                                                                                </svg>
+                                                                                Desactivar
+                                                                            </span>
+                                                                        </button>
+                                                                    <% } else { %>
+                                                                        <button onclick="reactivateEvent('<%= ev.UUID %>')" class="text-green-700 hover:bg-green-50 block w-full text-left px-4 py-2 text-sm">
+                                                                            <span class="flex items-center gap-2">
+                                                                                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                                </svg>
+                                                                                Reactivar
+                                                                            </span>
+                                                                        </button>
+                                                                    <% } %>
+                                                                    <button onclick="deleteEventPermanently('<%= ev.UUID %>')" class="text-red-700 hover:bg-red-50 block w-full text-left px-4 py-2 text-sm">
+                                                                        <span class="flex items-center gap-2">
+                                                                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                            </svg>
+                                                                            Eliminar permanentemente
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             <% }) %>
@@ -305,6 +348,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const userMenuButton = document.getElementById('user-menu-button');
@@ -345,41 +389,135 @@
 
             document.getElementById('button_add').addEventListener('click', function () { window.location.href = '/admin/eventos/add';})
 
-            // Search functionality
+            // Search + status filter functionality
             const searchInput = document.getElementById('searchInput');
+            const statusFilter = document.getElementById('statusFilter');
             const tableBody = document.querySelector('tbody');
-            if (searchInput && tableBody) {
-                searchInput.addEventListener('input', function() {
-                    const searchTerm = this.value.toLowerCase().trim();
-                    const rows = tableBody.querySelectorAll('tr');
-                    rows.forEach(row => {
-                        const cells = row.querySelectorAll('td');
-                        if (cells.length > 0) {
-                            const text = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
-                            row.style.display = text.includes(searchTerm) ? '' : 'none';
-                        }
-                    });
+
+            function applyFilters() {
+                const searchTerm = (searchInput?.value || '').toLowerCase().trim();
+                const status = statusFilter?.value || 'all';
+                const rows = tableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length === 0) return;
+                    const text = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+                    const rowStatus = row.getAttribute('data-status');
+                    const matchesSearch = text.includes(searchTerm);
+                    const matchesStatus = (status === 'all') || (rowStatus === status);
+                    row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
                 });
+            }
+
+            if (searchInput) searchInput.addEventListener('input', applyFilters);
+            if (statusFilter) statusFilter.addEventListener('change', applyFilters);
+            applyFilters();
+        });
+
+        function toggleDropdown(uuid) {
+            const dropdown = document.getElementById(`dropdown-${uuid}`);
+            document.querySelectorAll('[id^="dropdown-"]').forEach(d => {
+                if (d.id !== `dropdown-${uuid}`) d.classList.add('hidden');
+            });
+            const willShow = dropdown.classList.contains('hidden');
+            dropdown.classList.toggle('hidden');
+            if (willShow) {
+                requestAnimationFrame(() => {
+                    dropdown.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+                });
+            }
+        }
+
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('[onclick^="toggleDropdown"]') && !event.target.closest('[id^="dropdown-"]')) {
+                document.querySelectorAll('[id^="dropdown-"]').forEach(d => d.classList.add('hidden'));
             }
         });
 
-        async function deleteEvent(uuid) {
-            if (!confirm('¿Estás seguro de que deseas eliminar este evento?')) return;
-            try {
-                const response = await fetch(`/admin/raw-data/eventos/delete-one/${uuid}`, {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                const result = await response.json();
-                if (result.status === 200) {
-                    alert('Evento eliminado correctamente');
-                    window.location.reload();
-                } else {
-                    alert('Error al eliminar: ' + result.msg);
+        function deactivateEvent(uuid) {
+            document.getElementById(`dropdown-${uuid}`).classList.add('hidden');
+            Swal.fire({
+                title: 'Desactivar evento',
+                text: 'Esta acción desactivará el evento. ¿Continuar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, desactivar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#0d9488',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/eventos/deactivate-one/${uuid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Desactivado', text: 'El evento fue desactivado.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo desactivar.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al desactivar el evento', icon: 'error' }));
+            });
+        }
+
+        function reactivateEvent(uuid) {
+            document.getElementById(`dropdown-${uuid}`).classList.add('hidden');
+            Swal.fire({
+                title: 'Reactivar evento',
+                text: '¿Deseas reactivar este evento?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, reactivar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#0d9488',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/eventos/reactivate-one/${uuid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' } })
+                .then(r => {
+                    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                    return r.json();
+                })
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Reactivado', text: 'El evento fue reactivado.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo reactivar.', icon: 'error' });
+                    }
+                })
+                .catch(err => Swal.fire({ title: 'Error', text: 'Error al reactivar el evento: ' + err.message, icon: 'error' }));
+            });
+        }
+
+        function deleteEventPermanently(uuid) {
+            document.getElementById(`dropdown-${uuid}`).classList.add('hidden');
+            Swal.fire({
+                title: '¿Eliminar permanentemente?',
+                html: '<p class="text-sm text-gray-600">Esta acción <strong>no se puede deshacer</strong>. El evento será eliminado de la base de datos.</p>',
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar permanentemente',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                input: 'checkbox',
+                inputPlaceholder: 'Entiendo que esta acción es irreversible',
+                inputValidator: (result) => {
+                    return !result && 'Debes confirmar que entiendes las consecuencias'
                 }
-            } catch (error) {
-                alert('Error al eliminar el evento');
-            }
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/eventos/delete-one/${uuid}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Eliminado', text: 'El evento fue eliminado permanentemente.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo eliminar.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al eliminar el evento', icon: 'error' }));
+            });
         }
     </script>
 </body>

@@ -72,7 +72,29 @@ class AdminEventosController {
         try {
             const { id } = req.params;
             if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
-            const result = await eventos_model.deleteEvent(id);
+            const result = await eventos_model.deleteEventPermanently(id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
+    }
+
+    static async deactivateEvent(req, res) {
+        try {
+            const { id } = req.params;
+            if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
+            const result = await eventos_model.deactivateEvent(id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
+    }
+
+    static async reactivateEvent(req, res) {
+        try {
+            const { id } = req.params;
+            if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
+            const result = await eventos_model.reactivateEvent(id);
             return res.status(result.status).json(result);
         } catch (error) {
             return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
@@ -86,6 +108,8 @@ module.exports = {
         findEventById: AdminEventosController.findEventById,
         addEvent: AdminEventosController.addEvent,
         updateEvent: AdminEventosController.updateEvent,
+        deactivateEvent: AdminEventosController.deactivateEvent,
+        reactivateEvent: AdminEventosController.reactivateEvent,
         deleteEvent: AdminEventosController.deleteEvent
     }
 }

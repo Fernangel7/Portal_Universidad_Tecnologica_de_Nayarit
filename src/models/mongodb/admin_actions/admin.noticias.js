@@ -10,7 +10,7 @@ const slugify = (str) => (str || '').toString().toLowerCase()
 class AdminNoticiasModel {
     static async getAllNews() {
         try {
-            const news = await noticia_model.find({ Estado: true }).sort({ Publicada_en: -1 });
+            const news = await noticia_model.find({}).sort({ Publicada_en: -1 });
             return { status: 200, msg: 'Noticias obtenidas', data: { news } };
         } catch (error) {
             return { status: 500, msg: 'Error al obtener noticias', data: { error: error.message } };
@@ -19,7 +19,7 @@ class AdminNoticiasModel {
 
     static async findNewsById(id) {
         try {
-            const item = await noticia_model.findOne({ UUID: id, Estado: true });
+            const item = await noticia_model.findOne({ UUID: id });
             if (!item) return { status: 404, msg: 'Noticia no encontrada', data: null };
             return { status: 200, msg: 'Noticia encontrada', data: { noticia: item } };
         } catch (error) {
@@ -85,6 +85,43 @@ class AdminNoticiasModel {
             return { status: 500, msg: 'Error al eliminar noticia', data: { error: error.message } };
         }
     }
+
+    static async deactivateNews(id) {
+        try {
+            const noticia = await noticia_model.findOne({ UUID: id });
+            if (!noticia) return { status: 404, msg: 'Noticia no encontrada', data: null };
+            noticia.Estado = false;
+            noticia.Updated_at = Date.now();
+            await noticia.save();
+            return { status: 200, msg: 'Noticia desactivada', data: { noticia } };
+        } catch (error) {
+            return { status: 500, msg: 'Error al desactivar noticia', data: { error: error.message } };
+        }
+    }
+
+    static async reactivateNews(id) {
+        try {
+            const noticia = await noticia_model.findOne({ UUID: id });
+            if (!noticia) return { status: 404, msg: 'Noticia no encontrada', data: null };
+            noticia.Estado = true;
+            noticia.Updated_at = Date.now();
+            await noticia.save();
+            return { status: 200, msg: 'Noticia reactivada', data: { noticia } };
+        } catch (error) {
+            return { status: 500, msg: 'Error al reactivar noticia', data: { error: error.message } };
+        }
+    }
+
+    static async deleteNewsPermanently(id) {
+        try {
+            const noticia = await noticia_model.findOne({ UUID: id });
+            if (!noticia) return { status: 404, msg: 'Noticia no encontrada', data: null };
+            await noticia_model.deleteOne({ UUID: id });
+            return { status: 200, msg: 'Noticia eliminada permanentemente', data: null };
+        } catch (error) {
+            return { status: 500, msg: 'Error al eliminar noticia permanentemente', data: { error: error.message } };
+        }
+    }
 }
 
 module.exports = {
@@ -93,6 +130,9 @@ module.exports = {
         findNewsById: AdminNoticiasModel.findNewsById,
         addNews: AdminNoticiasModel.addNews,
         updateNews: AdminNoticiasModel.updateNews,
-        deleteNews: AdminNoticiasModel.deleteNews
+        deleteNews: AdminNoticiasModel.deleteNews,
+        deactivateNews: AdminNoticiasModel.deactivateNews,
+        reactivateNews: AdminNoticiasModel.reactivateNews,
+        deleteNewsPermanently: AdminNoticiasModel.deleteNewsPermanently
     }
 }

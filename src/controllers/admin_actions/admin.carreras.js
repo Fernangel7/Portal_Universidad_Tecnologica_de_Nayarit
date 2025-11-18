@@ -147,6 +147,52 @@ class AdminCarrerasController {
         }
     }
 
+    static async deactivateCareer(req, res) {
+        try {
+            const { id } = req.params;
+            if (!id) {
+                return res.status(400).json({
+                    status: 400,
+                    msg: 'ID de carrera requerido',
+                    data: null
+                });
+            }
+
+            const result = await carreras_model.deactivateCareer(id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            console.error('Controller error deactivating career:', error);
+            return res.status(500).json({
+                status: 500,
+                msg: 'Error interno del servidor',
+                data: null
+            });
+        }
+    }
+
+    static async reactivateCareer(req, res) {
+        try {
+            const { id } = req.params;
+            if (!id) {
+                return res.status(400).json({
+                    status: 400,
+                    msg: 'ID de carrera requerido',
+                    data: null
+                });
+            }
+
+            const result = await carreras_model.reactivateCareer(id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            console.error('Controller error reactivating career:', error);
+            return res.status(500).json({
+                status: 500,
+                msg: 'Error interno del servidor',
+                data: null
+            });
+        }
+    }
+
     static async deleteCareer(req, res) {
         try {
             const { id } = req.params;
@@ -158,10 +204,10 @@ class AdminCarrerasController {
                 });
             }
 
-            const result = await carreras_model.deleteCareer(id);
+            const result = await carreras_model.deleteCareerPermanently(id);
             return res.status(result.status).json(result);
         } catch (error) {
-            console.error('Controller error deleting career:', error);
+            console.error('Controller error deleting career permanently:', error);
             return res.status(500).json({
                 status: 500,
                 msg: 'Error interno del servidor',
@@ -177,6 +223,8 @@ module.exports = {
         findCareerById: AdminCarrerasController.findCareerById,
         addCareer: AdminCarrerasController.addCareer,
         updateCareer: AdminCarrerasController.updateCareer,
+        deactivateCareer: AdminCarrerasController.deactivateCareer,
+        reactivateCareer: AdminCarrerasController.reactivateCareer,
         deleteCareer: AdminCarrerasController.deleteCareer
     }
 }

@@ -221,7 +221,7 @@
                             </div>
                         </div>
                         <div class="p-0">
-                            <div class="overflow-x-auto">
+                            <div class="overflow-x-auto overflow-visible pb-16">
                                 <table class="w-full text-sm">
                                     <thead class="bg-muted/50">
                                         <tr class="border-b">
@@ -253,7 +253,45 @@
                                                     </td>
                                                     <td class="p-4 text-right space-x-2">
                                                         <a href="/admin/carreras/update/<%= career.UUID %>" class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-block">Editar</a>
-                                                        <button onclick="deleteCareer('<%= career.UUID %>')" class="px-3 py-1 border-transparent text-destructive-foreground bg-destructive hover:bg-destructive/80 rounded-md text-sm">Eliminar</button>
+                                                        <div class="relative inline-block text-left">
+                                                            <button onclick="toggleDropdown('<%= career.UUID %>')" class="px-3 py-1 border-transparent text-destructive-foreground bg-destructive hover:bg-destructive/80 rounded-md text-sm inline-flex items-center gap-1">
+                                                                Opciones
+                                                                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                                </svg>
+                                                            </button>
+                                                            <div id="dropdown-<%= career.UUID %>" class="hidden absolute right-0 z-50 mt-2 w-72 max-h-96 overflow-y-auto origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                                                                <div class="py-1">
+                                                                    <% if (career.Estado) { %>
+                                                                        <button onclick="deactivateCareer('<%= career.UUID %>')" class="text-gray-700 hover:bg-gray-100 block w-full text-left px-4 py-2 text-sm">
+                                                                            <span class="flex items-center gap-2">
+                                                                                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                                                                                </svg>
+                                                                                Desactivar
+                                                                            </span>
+                                                                        </button>
+                                                                    <% } else { %>
+                                                                        <button onclick="reactivateCareer('<%= career.UUID %>')" class="text-green-700 hover:bg-green-50 block w-full text-left px-4 py-2 text-sm">
+                                                                            <span class="flex items-center gap-2">
+                                                                                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                                </svg>
+                                                                                Reactivar
+                                                                            </span>
+                                                                        </button>
+                                                                    <% } %>
+                                                                    <button onclick="deletePermanently('<%= career.UUID %>')" class="text-red-700 hover:bg-red-50 block w-full text-left px-4 py-2 text-sm">
+                                                                        <span class="flex items-center gap-2">
+                                                                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                            </svg>
+                                                                            Eliminar permanentemente
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             <% }); %>
@@ -377,23 +415,110 @@
             }
         });
 
-        function deleteCareer(uuid) {
+        function toggleDropdown(uuid) {
+            const dropdown = document.getElementById(`dropdown-${uuid}`);
+            // Close all other dropdowns
+            document.querySelectorAll('[id^="dropdown-"]').forEach(d => {
+                if (d.id !== `dropdown-${uuid}`) d.classList.add('hidden');
+            });
+            const willShow = dropdown.classList.contains('hidden');
+            dropdown.classList.toggle('hidden');
+            if (willShow) {
+                requestAnimationFrame(() => {
+                    dropdown.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+                });
+            }
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('[onclick^="toggleDropdown"]') && !event.target.closest('[id^="dropdown-"]')) {
+                document.querySelectorAll('[id^="dropdown-"]').forEach(d => d.classList.add('hidden'));
+            }
+        });
+
+        function deactivateCareer(uuid) {
+            document.getElementById(`dropdown-${uuid}`).classList.add('hidden');
             Swal.fire({
-                title: 'Eliminar carrera',
-                text: 'Esta acción desactivará la carrera. ¿Continuar?',
+                title: 'Desactivar carrera',
+                text: 'Esta acción desactivará la carrera pero se podrá reactivar después. ¿Continuar?',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
+                confirmButtonText: 'Sí, desactivar',
                 cancelButtonText: 'Cancelar',
                 confirmButtonColor: '#0d9488',
                 cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/carreras/deactivate-one/${uuid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Desactivada', text: 'La carrera fue desactivada correctamente.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo desactivar.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al desactivar la carrera', icon: 'error' }));
+            });
+        }
+
+        function reactivateCareer(uuid) {
+            document.getElementById(`dropdown-${uuid}`).classList.add('hidden');
+            Swal.fire({
+                title: 'Reactivar carrera',
+                text: '¿Deseas reactivar esta carrera?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, reactivar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#0d9488',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/carreras/reactivate-one/${uuid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' } })
+                .then(r => {
+                    if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+                    return r.json();
+                })
+                .then(data => {
+                    console.log('Reactivate response:', data);
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Reactivada', text: 'La carrera fue reactivada correctamente.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo reactivar.', icon: 'error' });
+                    }
+                })
+                .catch(err => {
+                    console.error('Error reactivating:', err);
+                    Swal.fire({ title: 'Error', text: 'Error al reactivar la carrera: ' + err.message, icon: 'error' });
+                });
+            });
+        }
+
+        function deletePermanently(uuid) {
+            document.getElementById(`dropdown-${uuid}`).classList.add('hidden');
+            Swal.fire({
+                title: '¿Eliminar permanentemente?',
+                html: '<p class="text-sm text-gray-600">Esta acción <strong>no se puede deshacer</strong>. La carrera y todos sus datos asociados serán eliminados de la base de datos.</p>',
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar permanentemente',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                input: 'checkbox',
+                inputPlaceholder: 'Entiendo que esta acción es irreversible',
+                inputValidator: (result) => {
+                    return !result && 'Debes confirmar que entiendes las consecuencias'
+                }
             }).then(result => {
                 if (!result.isConfirmed) return;
                 fetch(`/admin/raw-data/carreras/delete-one/${uuid}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
                 .then(r => r.json())
                 .then(data => {
                     if (data.status === 200) {
-                        Swal.fire({ title: 'Eliminada', text: 'La carrera fue desactivada.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                        Swal.fire({ title: 'Eliminada', text: 'La carrera fue eliminada permanentemente.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
                     } else {
                         Swal.fire({ title: 'Error', text: data.msg || 'No se pudo eliminar.', icon: 'error' });
                     }

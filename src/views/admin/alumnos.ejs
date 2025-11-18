@@ -136,6 +136,12 @@
             color: hsl(38 86% 30%);
         }
 
+        .badge-danger {
+            border-color: transparent;
+            background-color: hsl(0 84% 90%);
+            color: hsl(0 74% 40%);
+        }
+
         .badge-outline {
             color: hsl(var(--foreground));
             border-color: hsl(var(--border));
@@ -235,7 +241,7 @@
                             </div>
                         </div>
                         <div class="p-0">
-                            <div class="overflow-x-auto">
+                            <div class="overflow-x-auto overflow-visible pb-16">
                                 <table class="w-full text-sm">
                                     <thead class="bg-muted/50">
                                         <tr class="border-b">
@@ -258,19 +264,95 @@
                                             <% students.forEach(function(student){ %>
                                                 <tr>
                                                     <td class="p-4 font-mono text-xs"><%= student.Matricula %></td>
-                                                    <td class="p-4 font-medium"><%= student.Nombre %> <%= student.Apellidos %></td>
+                                                    <td class="p-4 font-medium">
+                                                        <%= student.Nombre %> <%= student.Apellidos %>
+                                                        <% if (!student.Estado) { %>
+                                                            <span class="ml-2 text-xs text-gray-500">(Inactivo)</span>
+                                                        <% } %>
+                                                    </td>
                                                     <td class="p-4 text-muted-foreground hidden lg:table-cell"><%= student.Correo %></td>
                                                     <td class="p-4 text-muted-foreground hidden md:table-cell"><%= student.CarreraSlug %></td>
                                                     <td class="p-4 hidden sm:table-cell">
                                                         <% if (student.Estado) { %>
-                                                            <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-success">Activo</span>
+                                                            <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-success">✓ Activo</span>
+                                                        <% } else if (student.TipoBaja === 'temporal') { %>
+                                                            <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-warning">⏸️ Baja Temporal</span>
+                                                        <% } else if (student.TipoBaja === 'definitiva') { %>
+                                                            <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-danger">❌ Baja Definitiva</span>
                                                         <% } else { %>
-                                                            <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-warning">Inactivo</span>
+                                                            <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-outline">⏸️ Inactivo</span>
                                                         <% } %>
                                                     </td>
-                                                    <td class="p-4 text-right space-x-2">
-                                                        <a href="/admin/alumnos/update/<%= student.Matricula %>" class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-block">Editar</a>
-                                                        <button onclick="deleteStudent('<%= student.Matricula %>')" class="px-3 py-1 border border-red-300 bg-red-50 hover:bg-red-100 text-red-600 rounded-md text-sm">Eliminar</button>
+                                                    <td class="p-4 text-right">
+                                                        <div class="relative inline-block text-left">
+                                                            <button onclick="toggleDropdown('dropdown-<%= student.Matricula %>')" class="px-3 py-1.5 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-flex items-center gap-1">
+                                                                Acciones
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                                                </svg>
+                                                            </button>
+                                                            <div id="dropdown-<%= student.Matricula %>" class="hidden absolute right-0 mt-2 w-72 max-h-96 overflow-y-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                                                                <div class="py-1" role="menu">
+                                                                    <a href="/admin/alumnos/update/<%= student.Matricula %>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                                                                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                                                                        </svg>
+                                                                        Editar alumno
+                                                                    </a>
+                                                                    <% if (student.Estado) { %>
+                                                                    <button onclick="temporaryLeave('<%= student.Matricula %>')" class="w-full text-left block px-4 py-2 text-sm text-yellow-700 hover:bg-yellow-50">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                                                                            <circle cx="12" cy="12" r="10"/>
+                                                                            <polyline points="12 6 12 12 16 14"/>
+                                                                        </svg>
+                                                                        Baja temporal
+                                                                    </button>
+                                                                    <button onclick="definitiveLeave('<%= student.Matricula %>')" class="w-full text-left block px-4 py-2 text-sm text-orange-700 hover:bg-orange-50">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                                                                            <path d="M3 6h18"/>
+                                                                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                                                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                                                        </svg>
+                                                                        Baja definitiva
+                                                                    </button>
+                                                                    <% } else if (student.TipoBaja === 'temporal') { %>
+                                                                    <button onclick="reactivateStudent('<%= student.Matricula %>')" class="w-full text-left block px-4 py-2 text-sm text-green-700 hover:bg-green-50">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                                                                            <polyline points="23 4 23 10 17 10"/>
+                                                                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                                                                        </svg>
+                                                                        Reactivar alumno
+                                                                    </button>
+                                                                    <button onclick="definitiveLeave('<%= student.Matricula %>')" class="w-full text-left block px-4 py-2 text-sm text-orange-700 hover:bg-orange-50">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                                                                            <path d="M3 6h18"/>
+                                                                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                                                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                                                        </svg>
+                                                                        Baja definitiva
+                                                                    </button>
+                                                                    <% } else if (!student.Estado && student.TipoBaja !== 'definitiva') { %>
+                                                                    <button onclick="reactivateStudent('<%= student.Matricula %>')" class="w-full text-left block px-4 py-2 text-sm text-green-700 hover:bg-green-50">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                                                                            <polyline points="23 4 23 10 17 10"/>
+                                                                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                                                                        </svg>
+                                                                        Reactivar alumno
+                                                                    </button>
+                                                                    <% } %>
+                                                                    <hr class="my-1">
+                                                                    <button onclick="deleteStudentPermanently('<%= student.Matricula %>')" class="w-full text-left block px-4 py-2 text-sm text-red-700 hover:bg-red-50">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                                                                            <polyline points="3 6 5 6 21 6"/>
+                                                                            <path d="m19 6-2 14H7L5 6"/>
+                                                                            <line x1="10" y1="11" x2="10" y2="17"/>
+                                                                            <line x1="14" y1="11" x2="14" y2="17"/>
+                                                                        </svg>
+                                                                        Eliminar permanentemente
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             <% }) %>
@@ -333,6 +415,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const userMenuButton = document.getElementById('user-menu-button');
@@ -371,6 +454,15 @@
             if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeSheet);
             if (mobileSheetOverlay) mobileSheetOverlay.addEventListener('click', closeSheet);
 
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.relative')) {
+                    document.querySelectorAll('[id^="dropdown-"]').forEach(dropdown => {
+                        dropdown.classList.add('hidden');
+                    });
+                }
+            });
+
             const addButton = document.getElementById('button_add');
             if(addButton){
                 addButton.addEventListener('click', function () { window.location.href = '/admin/alumnos/add';})
@@ -395,22 +487,144 @@
 
         });
 
-        async function deleteStudent(matricula) {
-            if (!confirm('¿Estás seguro de que deseas eliminar este alumno?')) return;
-            try {
-                const response = await fetch(`/admin/raw-data/alumnos/delete-one/${matricula}`, {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' }
+        function deleteStudent(matricula) {
+            Swal.fire({
+                title: 'Eliminar alumno',
+                text: 'Esta acción desactivará al alumno. ¿Continuar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#0d9488',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/alumnos/delete-one/${matricula}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Eliminado', text: 'El alumno fue desactivado.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo eliminar.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al eliminar el alumno', icon: 'error' }));
+            });
+        }
+
+        function temporaryLeave(matricula) {
+            Swal.fire({
+                title: 'Baja Temporal',
+                text: 'El alumno será dado de baja temporalmente. Podrá reincorporarse más adelante. ¿Continuar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, aplicar baja temporal',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#eab308',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/alumnos/temporary-leave/${matricula}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Baja temporal aplicada', text: 'El alumno fue dado de baja temporalmente.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo aplicar la baja temporal.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al aplicar baja temporal', icon: 'error' }));
+            });
+        }
+
+        function definitiveLeave(matricula) {
+            Swal.fire({
+                title: 'Baja Definitiva',
+                text: '⚠️ El alumno será dado de baja definitivamente. Esta acción es permanente. ¿Estás seguro?',
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, aplicar baja definitiva',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/alumnos/definitive-leave/${matricula}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Baja definitiva aplicada', text: 'El alumno fue dado de baja definitivamente.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo aplicar la baja definitiva.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al aplicar baja definitiva', icon: 'error' }));
+            });
+        }
+
+        function deleteStudentPermanently(matricula) {
+            Swal.fire({
+                title: 'Eliminar Permanentemente',
+                text: '🚨 ADVERTENCIA: El registro del alumno será eliminado completamente de la base de datos. Esta acción NO SE PUEDE DESHACER. ¿Estás absolutamente seguro?',
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar para siempre',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#7f1d1d',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/alumnos/delete-permanently/${matricula}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Eliminado', text: 'El alumno fue eliminado permanentemente.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo eliminar.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al eliminar el alumno', icon: 'error' }));
+            });
+        }
+
+        function reactivateStudent(matricula) {
+            Swal.fire({
+                title: 'Reactivar Alumno',
+                text: 'El alumno será reactivado y podrá volver a estar activo. ¿Continuar?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, reactivar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#15803d',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/alumnos/reactivate/${matricula}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Reactivado', text: 'El alumno fue reactivado exitosamente.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo reactivar.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al reactivar el alumno', icon: 'error' }));
+            });
+        }
+
+        function toggleDropdown(id) {
+            event.stopPropagation();
+            const dropdown = document.getElementById(id);
+            // Close all other dropdowns
+            document.querySelectorAll('[id^="dropdown-"]').forEach(d => {
+                if (d.id !== id) d.classList.add('hidden');
+            });
+            const willShow = dropdown.classList.contains('hidden');
+            dropdown.classList.toggle('hidden');
+            if (willShow) {
+                requestAnimationFrame(() => {
+                    dropdown.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
                 });
-                const result = await response.json();
-                if (result.status === 200) {
-                    alert('Alumno eliminado correctamente');
-                    window.location.reload();
-                } else {
-                    alert('Error al eliminar: ' + result.msg);
-                }
-            } catch (error) {
-                alert('Error al eliminar el alumno');
             }
         }
     </script>

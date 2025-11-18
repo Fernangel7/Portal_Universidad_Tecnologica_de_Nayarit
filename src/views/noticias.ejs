@@ -13,12 +13,21 @@
   <div class="flex min-h-screen flex-col">
     <%- include('templates/header.ejs', navigationLinks); %>
     <main class="flex-1">
-      <section class="relative h-72 w-full">
-        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1400&q=80" class="absolute inset-0 h-full w-full object-cover" alt="Campus" />
-        <div class="absolute inset-0 bg-black/55"></div>
-        <div class="relative z-10 flex h-full items-center justify-center flex-col text-center text-white px-4">
-          <h1 class="font-headline text-4xl md:text-5xl font-bold">Noticias</h1>
-          <p class="mt-3 max-w-2xl text-primary-foreground/90">Actualizaciones y comunicados oficiales.</p>
+      <section class="relative w-full">
+        <div class="relative h-[240px] md:h-[320px]">
+          <img src="<%= (heroImage && heroImage.imageUrl) || 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=80' %>" class="absolute inset-0 h-full w-full object-cover" alt="<%= (heroImage && heroImage.description) || 'Noticias UTNAY' %>" />
+          <div class="absolute inset-0 bg-gradient-to-b from-black/55 to-black/40"></div>
+          <div class="relative z-10 flex h-full items-center justify-center flex-col text-center text-white px-4">
+            <nav class="mb-3 text-sm text-white/85" aria-label="Breadcrumb">
+              <ol class="inline-flex items-center gap-2">
+                <li><a href="/" class="hover:underline">Inicio</a></li>
+                <li>•</li>
+                <li class="text-white/90">Noticias</li>
+              </ol>
+            </nav>
+            <h1 class="font-headline text-4xl md:text-5xl font-bold">Noticias</h1>
+            <p class="mt-3 max-w-2xl text-white/90">Actualizaciones y comunicados oficiales de la UTNAY.</p>
+          </div>
         </div>
       </section>
       <section class="py-12 md:py-16">

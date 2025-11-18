@@ -87,6 +87,30 @@ class AdminDocentesModel {
             return { status: 500, msg: 'Error al eliminar docente', data: { error: error.message } };
         }
     }
+
+    static async deleteTeacherPermanently(id) {
+        try {
+            const teacher = await docente_model.findOne({ UUID: id });
+            if (!teacher) return { status: 404, msg: 'Docente no encontrado', data: null };
+            await docente_model.deleteOne({ UUID: id });
+            return { status: 200, msg: 'Docente eliminado permanentemente', data: null };
+        } catch (error) {
+            return { status: 500, msg: 'Error al eliminar docente permanentemente', data: { error: error.message } };
+        }
+    }
+
+    static async reactivateTeacher(id) {
+        try {
+            const teacher = await docente_model.findOne({ UUID: id });
+            if (!teacher) return { status: 404, msg: 'Docente no encontrado', data: null };
+            teacher.Estado = true;
+            teacher.Updated_at = Date.now();
+            await teacher.save();
+            return { status: 200, msg: 'Docente reactivado', data: { teacher } };
+        } catch (error) {
+            return { status: 500, msg: 'Error al reactivar docente', data: { error: error.message } };
+        }
+    }
 }
 
 module.exports = {
@@ -95,6 +119,8 @@ module.exports = {
         findTeacherById: AdminDocentesModel.findTeacherById,
         addTeacher: AdminDocentesModel.addTeacher,
         updateTeacher: AdminDocentesModel.updateTeacher,
-        deleteTeacher: AdminDocentesModel.deleteTeacher
+        deleteTeacher: AdminDocentesModel.deleteTeacher,
+        deleteTeacherPermanently: AdminDocentesModel.deleteTeacherPermanently,
+        reactivateTeacher: AdminDocentesModel.reactivateTeacher
     }
 }

@@ -62,6 +62,50 @@ class AdminAlumnosController {
             return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
         }
     }
+
+    static async temporaryLeave(req, res) {
+        try {
+            const { matricula } = req.params;
+            if (!matricula) return res.status(400).json({ status: 400, msg: 'Matrícula requerida', data: null });
+            const result = await alumnos_model.temporaryLeave(matricula);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
+    }
+
+    static async definitiveLeave(req, res) {
+        try {
+            const { matricula } = req.params;
+            if (!matricula) return res.status(400).json({ status: 400, msg: 'Matrícula requerida', data: null });
+            const result = await alumnos_model.definitiveLeave(matricula);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
+    }
+
+    static async deleteStudentPermanently(req, res) {
+        try {
+            const { matricula } = req.params;
+            if (!matricula) return res.status(400).json({ status: 400, msg: 'Matrícula requerida', data: null });
+            const result = await alumnos_model.deleteStudentPermanently(matricula);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
+    }
+
+    static async reactivateStudent(req, res) {
+        try {
+            const { matricula } = req.params;
+            if (!matricula) return res.status(400).json({ status: 400, msg: 'Matrícula requerida', data: null });
+            const result = await alumnos_model.reactivateStudent(matricula);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
+    }
 }
 
 module.exports = {
@@ -70,6 +114,10 @@ module.exports = {
         findStudentByMatricula: AdminAlumnosController.findStudentByMatricula,
         addStudent: AdminAlumnosController.addStudent,
         updateStudent: AdminAlumnosController.updateStudent,
-        deleteStudent: AdminAlumnosController.deleteStudent
+        deleteStudent: AdminAlumnosController.deleteStudent,
+        temporaryLeave: AdminAlumnosController.temporaryLeave,
+        definitiveLeave: AdminAlumnosController.definitiveLeave,
+        deleteStudentPermanently: AdminAlumnosController.deleteStudentPermanently,
+        reactivateStudent: AdminAlumnosController.reactivateStudent
     }
 }

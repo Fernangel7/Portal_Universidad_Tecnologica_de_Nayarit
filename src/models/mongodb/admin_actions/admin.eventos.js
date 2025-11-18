@@ -10,7 +10,7 @@ const slugify = (str) => (str || '').toString().toLowerCase()
 class AdminEventosModel {
     static async getAllEvents() {
         try {
-            const events = await evento_model.find({ Estado: true }).sort({ FechaInicio: 1 });
+            const events = await evento_model.find({}).sort({ FechaInicio: 1 });
             return { status: 200, msg: 'Eventos obtenidos', data: { events } };
         } catch (error) {
             return { status: 500, msg: 'Error al obtener eventos', data: { error: error.message } };
@@ -83,9 +83,46 @@ class AdminEventosModel {
             event.Estado = false;
             event.Updated_at = Date.now();
             await event.save();
-            return { status: 200, msg: 'Evento eliminado', data: { event } };
+            return { status: 200, msg: 'Evento desactivado', data: { event } };
         } catch (error) {
-            return { status: 500, msg: 'Error al eliminar evento', data: { error: error.message } };
+            return { status: 500, msg: 'Error al desactivar evento', data: { error: error.message } };
+        }
+    }
+
+    static async deactivateEvent(id) {
+        try {
+            const event = await evento_model.findOne({ UUID: id });
+            if (!event) return { status: 404, msg: 'Evento no encontrado', data: null };
+            event.Estado = false;
+            event.Updated_at = Date.now();
+            await event.save();
+            return { status: 200, msg: 'Evento desactivado', data: { event } };
+        } catch (error) {
+            return { status: 500, msg: 'Error al desactivar evento', data: { error: error.message } };
+        }
+    }
+
+    static async reactivateEvent(id) {
+        try {
+            const event = await evento_model.findOne({ UUID: id });
+            if (!event) return { status: 404, msg: 'Evento no encontrado', data: null };
+            event.Estado = true;
+            event.Updated_at = Date.now();
+            await event.save();
+            return { status: 200, msg: 'Evento reactivado', data: { event } };
+        } catch (error) {
+            return { status: 500, msg: 'Error al reactivar evento', data: { error: error.message } };
+        }
+    }
+
+    static async deleteEventPermanently(id) {
+        try {
+            const event = await evento_model.findOne({ UUID: id });
+            if (!event) return { status: 404, msg: 'Evento no encontrado', data: null };
+            await evento_model.deleteOne({ UUID: id });
+            return { status: 200, msg: 'Evento eliminado permanentemente', data: null };
+        } catch (error) {
+            return { status: 500, msg: 'Error al eliminar evento permanentemente', data: { error: error.message } };
         }
     }
 }
@@ -96,6 +133,9 @@ module.exports = {
         findEventById: AdminEventosModel.findEventById,
         addEvent: AdminEventosModel.addEvent,
         updateEvent: AdminEventosModel.updateEvent,
-        deleteEvent: AdminEventosModel.deleteEvent
+        deleteEvent: AdminEventosModel.deleteEvent,
+        deactivateEvent: AdminEventosModel.deactivateEvent,
+        reactivateEvent: AdminEventosModel.reactivateEvent,
+        deleteEventPermanently: AdminEventosModel.deleteEventPermanently
     }
 }

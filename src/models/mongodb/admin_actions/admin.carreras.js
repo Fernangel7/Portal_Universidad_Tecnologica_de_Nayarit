@@ -136,7 +136,7 @@ class AdminCarrerasModel {
         }
     }
 
-    static async deleteCareer(id) {
+    static async deactivateCareer(id) {
         try {
             const career = await carrera_model.findOne({ UUID: id });
             if (!career) {
@@ -154,14 +154,74 @@ class AdminCarrerasModel {
 
             return {
                 status: 200,
-                msg: 'Carrera eliminada exitosamente',
+                msg: 'Carrera desactivada exitosamente',
                 data: { career }
             };
         } catch (error) {
-            console.error('Error deleting career:', error);
+            console.error('Error deactivating career:', error);
             return {
                 status: 500,
-                msg: 'Error al eliminar carrera',
+                msg: 'Error al desactivar carrera',
+                data: { error: error.message }
+            };
+        }
+    }
+
+    static async reactivateCareer(id) {
+        try {
+            const career = await carrera_model.findOne({ UUID: id });
+            if (!career) {
+                return {
+                    status: 404,
+                    msg: 'Carrera no encontrada',
+                    data: null
+                };
+            }
+
+            // Reactivate
+            career.Estado = true;
+            career.Updated_at = Date.now();
+            await career.save();
+
+            return {
+                status: 200,
+                msg: 'Carrera reactivada exitosamente',
+                data: { career }
+            };
+        } catch (error) {
+            console.error('Error reactivating career:', error);
+            return {
+                status: 500,
+                msg: 'Error al reactivar carrera',
+                data: { error: error.message }
+            };
+        }
+    }
+
+    static async deleteCareerPermanently(id) {
+        try {
+            const career = await carrera_model.findOne({ UUID: id });
+            if (!career) {
+                return {
+                    status: 404,
+                    msg: 'Carrera no encontrada',
+                    data: null
+                };
+            }
+
+            // Permanent delete
+            await carrera_model.deleteOne({ UUID: id });
+
+            return {
+                status: 200,
+                msg: 'Carrera eliminada permanentemente',
+                data: null
+            };
+        } catch (error) {
+            console.error('Error deleting career permanently:', error);
+            return {
+                status: 500,
+                msg: 'Error al eliminar carrera permanentemente',
                 data: { error: error.message }
             };
         }
@@ -174,6 +234,8 @@ module.exports = {
         findCareerById: AdminCarrerasModel.findCareerById,
         addCareer: AdminCarrerasModel.addCareer,
         updateCareer: AdminCarrerasModel.updateCareer,
-        deleteCareer: AdminCarrerasModel.deleteCareer
+        deactivateCareer: AdminCarrerasModel.deactivateCareer,
+        reactivateCareer: AdminCarrerasModel.reactivateCareer,
+        deleteCareerPermanently: AdminCarrerasModel.deleteCareerPermanently
     }
 }

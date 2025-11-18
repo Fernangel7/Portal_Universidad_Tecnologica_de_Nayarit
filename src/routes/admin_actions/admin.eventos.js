@@ -8,6 +8,8 @@ app.get('/get-all', async (req, res) => await eventos_controller.getAllEvents(re
 app.get('/find/:id', async (req, res) => await eventos_controller.findEventById(req, res))
 app.post('/add-one', async (req, res) => await eventos_controller.addEvent(req, res))
 app.put('/update-one/:id', async (req, res) => await eventos_controller.updateEvent(req, res))
+app.patch('/deactivate-one/:id', async (req, res) => await eventos_controller.deactivateEvent(req, res))
+app.patch('/reactivate-one/:id', async (req, res) => await eventos_controller.reactivateEvent(req, res))
 app.delete('/delete-one/:id', async (req, res) => await eventos_controller.deleteEvent(req, res))
 
 module.exports = {

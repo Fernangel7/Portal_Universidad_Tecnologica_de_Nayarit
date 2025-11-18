@@ -65,6 +65,28 @@ class AdminDocentesController {
             return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
         }
     }
+
+    static async deleteTeacherPermanently(req, res) {
+        try {
+            const { id } = req.params;
+            if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
+            const result = await docentes_model.deleteTeacherPermanently(id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
+    }
+
+    static async reactivateTeacher(req, res) {
+        try {
+            const { id } = req.params;
+            if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
+            const result = await docentes_model.reactivateTeacher(id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
+    }
 }
 
 module.exports = {
@@ -73,6 +95,8 @@ module.exports = {
         findTeacherById: AdminDocentesController.findTeacherById,
         addTeacher: AdminDocentesController.addTeacher,
         updateTeacher: AdminDocentesController.updateTeacher,
-        deleteTeacher: AdminDocentesController.deleteTeacher
+        deleteTeacher: AdminDocentesController.deleteTeacher,
+        deleteTeacherPermanently: AdminDocentesController.deleteTeacherPermanently,
+        reactivateTeacher: AdminDocentesController.reactivateTeacher
     }
 }

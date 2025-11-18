@@ -12,7 +12,7 @@ carreras_routes.get("/", async (req, res) => {
         const allProgramsHero = img.find(i => i.id === 'all-programs-hero') || img[0] || null
         
         const result = await admin_carreras_model.getAllCareers()
-        const dbPrograms = result.status === 200 ? result.data.careers : []
+        const dbPrograms = result.status === 200 ? (result.data.careers || []).filter(c => c && c.Estado === true) : []
         
         const programs = dbPrograms.map(career => {
             const s = career.Slug && career.Slug.trim() && !career.Slug.includes('://') ? career.Slug : slugify(career.Nombre)
@@ -75,7 +75,7 @@ carreras_routes.get("/:programId", async (req, res) => {
             })
         }
         
-        const dbCareers = result.data.careers
+        const dbCareers = (result.data.careers || []).filter(c => c && c.Estado === true)
         const career = dbCareers.find(c => (c.Slug && c.Slug === programId) || slugify(c.Nombre) === programId)
         
         if (!career) {

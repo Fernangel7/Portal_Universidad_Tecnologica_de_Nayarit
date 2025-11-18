@@ -8,6 +8,8 @@ app.get('/get-all', async (req, res) => await noticias_controller.getAllNews(req
 app.get('/find/:id', async (req, res) => await noticias_controller.findNewsById(req, res))
 app.post('/add-one', async (req, res) => await noticias_controller.addNews(req, res))
 app.put('/update-one/:id', async (req, res) => await noticias_controller.updateNews(req, res))
+app.patch('/deactivate-one/:id', async (req, res) => await noticias_controller.deactivateNews(req, res))
+app.patch('/reactivate-one/:id', async (req, res) => await noticias_controller.reactivateNews(req, res))
 app.delete('/delete-one/:id', async (req, res) => await noticias_controller.deleteNews(req, res))
 
 module.exports = {
