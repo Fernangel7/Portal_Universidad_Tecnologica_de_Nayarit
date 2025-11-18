@@ -229,45 +229,27 @@
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-border">
-                                        <tr>
-                                            <td class="p-4 font-medium">Feria de Empleo y Emprendimiento</td>
-                                            <td class="p-4 hidden sm:table-cell">25 de Octubre, 2024</td>
-                                            <td class="p-4 hidden md:table-cell">Gimnasio Principal</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-secondary">Publicado</span>
-                                            </td>
-                                            <td class="p-4 text-right">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4 font-medium">Competencia Nacional de Robótica</td>
-                                            <td class="p-4 hidden sm:table-cell">15 de Noviembre, 2024</td>
-                                            <td class="p-4 hidden md:table-cell">Auditorio Central</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-secondary">Publicado</span>
-                                            </td>
-                                            <td class="p-4 text-right">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4 font-medium">Concierto de Fin de Año</td>
-                                            <td class="p-4 hidden sm:table-cell">12 de Diciembre, 2024</td>
-                                            <td class="p-4 hidden md:table-cell">Teatro al Aire Libre</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-outline">Borrador</span>
-                                            </td>
-                                            <td class="p-4 text-right">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                            </td>
-                                        </tr>
+                                        <% if (events && events.length > 0) { %>
+                                            <% events.forEach(function(ev){ %>
+                                                <tr>
+                                                    <td class="p-4 font-medium"><%= ev.Titulo %></td>
+                                                    <td class="p-4 hidden sm:table-cell"><%= ev.FechaInicio ? new Date(ev.FechaInicio).toLocaleDateString('es-MX') : '-' %></td>
+                                                    <td class="p-4 hidden md:table-cell"><%= ev.Ubicacion || '-' %></td>
+                                                    <td class="p-4 hidden sm:table-cell">
+                                                        <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full <%= ev.Estado ? 'badge-secondary' : 'badge-outline' %>">
+                                                            <%= ev.Estado ? 'Publicado' : 'Borrador' %>
+                                                        </span>
+                                                    </td>
+                                                    <td class="p-4 text-right space-x-2">
+                                                        <a href="/admin/eventos/update/<%= ev.UUID %>" class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-block">Editar</a>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="5" class="p-8 text-center text-muted-foreground">No hay eventos registrados.</td>
+                                            </tr>
+                                        <% } %>
                                     </tbody>
                                 </table>
                             </div>

@@ -2,23 +2,78 @@ const noticias_model = require('../../models/mongodb/admin_actions/admin.noticia
 
 class AdminNoticiasController {
     static async getAllNews(req, res) {
-        // Logic to get all news
+        try {
+            const result = await noticias_model.getAllNews();
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
     }
 
     static async findNewsById(req, res) {
-        // Logic to find news by id
+        try {
+            const { id } = req.params;
+            if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
+            const result = await noticias_model.findNewsById(id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
     }
 
     static async addNews(req, res) {
-        // Logic to add new news
+        try {
+            const { titulo, slug, resumen, contenido, imageUrl, categoria, publicada_en, publicado } = req.body;
+            if (!titulo) return res.status(400).json({ status: 400, msg: 'Título requerido', data: null });
+            const data = {
+                Titulo: titulo,
+                Slug: slug,
+                Resumen: resumen,
+                Contenido: contenido,
+                ImageUrl: imageUrl,
+                Categoria: categoria,
+                Publicada_en: publicada_en,
+                Estado: publicado === 'on' ? true : true
+            };
+            const result = await noticias_model.addNews(data);
+            if (result.status === 201) return res.redirect('/admin/noticias');
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: { error: error.message } });
+        }
     }
 
     static async updateNews(req, res) {
-        // Logic to update news information
+        try {
+            const { id } = req.params;
+            if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
+            const { titulo, slug, resumen, contenido, imageUrl, categoria, publicada_en, publicado } = req.body;
+            const data = {};
+            if (titulo) data.Titulo = titulo;
+            if (slug) data.Slug = slug;
+            if (resumen) data.Resumen = resumen;
+            if (contenido) data.Contenido = contenido;
+            if (imageUrl) data.ImageUrl = imageUrl;
+            if (categoria) data.Categoria = categoria;
+            if (publicada_en) data.Publicada_en = publicada_en;
+            if (publicado !== undefined) data.Estado = publicado === 'on';
+            const result = await noticias_model.updateNews(id, data);
+            if (result.status === 200) return res.redirect('/admin/noticias');
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: { error: error.message } });
+        }
     }
 
     static async deleteNews(req, res) {
-        // Logic to delete news
+        try {
+            const { id } = req.params;
+            if (!id) return res.status(400).json({ status: 400, msg: 'ID requerido', data: null });
+            const result = await noticias_model.deleteNews(id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            return res.status(500).json({ status: 500, msg: 'Error interno', data: null });
+        }
     }
 }
 

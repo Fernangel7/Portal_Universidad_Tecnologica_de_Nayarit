@@ -228,47 +228,27 @@
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-border">
-                                        <tr>
-                                            <td class="p-4 font-medium">Inicia el Proceso de Admisión 2024</td>
-                                            <td class="p-4 hidden sm:table-cell">Rectoría</td>
-                                            <td class="p-4 hidden md:table-cell">15 de Julio, 2024</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-secondary">Publicado</span>
-                                            </td>
-                                            <td class="p-4 text-right">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4 font-medium">Equipo de Mecatrónica Gana Competencia Nacional
-                                            </td>
-                                            <td class="p-4 hidden sm:table-cell">Vinculación</td>
-                                            <td class="p-4 hidden md:table-cell">10 de Julio, 2024</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-secondary">Publicado</span>
-                                            </td>
-                                            <td class="p-4 text-right">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4 font-medium">Próxima Conferencia sobre Inteligencia
-                                                Artificial</td>
-                                            <td class="p-4 hidden sm:table-cell">Depto. de T.I.</td>
-                                            <td class="p-4 hidden md:table-cell">-</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-outline">Borrador</span>
-                                            </td>
-                                            <td class="p-4 text-right">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                            </td>
-                                        </tr>
+                                        <% if (news && news.length > 0) { %>
+                                            <% news.forEach(function(item){ %>
+                                                <tr>
+                                                    <td class="p-4 font-medium"><%= item.Titulo %></td>
+                                                    <td class="p-4 hidden sm:table-cell"><%= item.Categoria || '-' %></td>
+                                                    <td class="p-4 hidden md:table-cell"><%= item.Publicada_en ? new Date(item.Publicada_en).toLocaleDateString('es-MX') : '-' %></td>
+                                                    <td class="p-4 hidden sm:table-cell">
+                                                        <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full <%= item.Estado ? 'badge-secondary' : 'badge-outline' %>">
+                                                            <%= item.Estado ? 'Publicado' : 'Borrador' %>
+                                                        </span>
+                                                    </td>
+                                                    <td class="p-4 text-right space-x-2">
+                                                        <a href="/admin/noticias/update/<%= item.UUID %>" class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-block">Editar</a>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="5" class="p-8 text-center text-muted-foreground">No hay noticias registradas.</td>
+                                            </tr>
+                                        <% } %>
                                     </tbody>
                                 </table>
                             </div>

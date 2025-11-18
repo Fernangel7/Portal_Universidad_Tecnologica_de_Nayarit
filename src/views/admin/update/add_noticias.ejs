@@ -121,32 +121,51 @@
                         <h2 class="text-2xl font-headline font-bold tracking-tight">Crear Nueva Noticia</h2>
                     </div>
                     <div class="bg-card rounded-lg border shadow-sm p-6">
-                       <form class="grid gap-6">
+                       <form class="grid gap-6" action="/admin/noticias/add-one" method="POST">
                             <div class="space-y-2">
                                 <label for="news-title" class="text-sm font-medium leading-none">Título de la Noticia</label>
-                                <input id="news-title" placeholder="Ej. Inicia el Proceso de Admisión 2024" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="titulo" id="news-title" placeholder="Ej. Inicia el Proceso de Admisión 2024" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="news-slug" class="text-sm font-medium leading-none">Slug (URL opcional)</label>
+                                <input name="slug" id="news-slug" type="text" placeholder="inicia-proceso-admision-2024" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                             </div>
                             
                             <div class="space-y-2">
                                 <label for="news-content" class="text-sm font-medium leading-none">Contenido del Artículo</label>
-                                <input id="news-content" type="hidden" name="content">
+                                <input id="news-content" type="hidden" name="contenido">
                                 <trix-editor input="news-content" class="trix-content"></trix-editor>
                             </div>
 
                             <div class="space-y-2">
-                                <label for="news-image" class="text-sm font-medium leading-none">Imagen Principal</label>
-                                <input id="news-image" type="file" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium">
-                                <p class="text-xs text-muted-foreground">Sube una imagen destacada para la noticia.</p>
+                                <label for="news-image" class="text-sm font-medium leading-none">Imagen (URL)</label>
+                                <input name="imageUrl" id="news-image" type="url" placeholder="https://example.com/imagen.jpg" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <p class="text-xs text-muted-foreground">Usa una URL pública de la imagen.</p>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="news-summary" class="text-sm font-medium leading-none">Resumen Corto</label>
+                                <textarea name="resumen" id="news-summary" rows="3" placeholder="Resumen breve" class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm"></textarea>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="news-category" class="text-sm font-medium leading-none">Categoría</label>
+                                <input name="categoria" id="news-category" placeholder="Ej. Admisiones" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="news-date" class="text-sm font-medium leading-none">Fecha de Publicación</label>
+                                <input name="publicada_en" id="news-date" type="date" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                             </div>
 
                             <div class="flex items-center space-x-2">
-                                <input type="checkbox" id="news-published" class="h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                                <label for="news-published" class="text-sm font-medium leading-none">Publicar noticia inmediatamente</label>
+                                <input name="publicado" type="checkbox" id="news-published" class="h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                <label for="news-published" class="text-sm font-medium leading-none">Publicar inmediatamente</label>
                             </div>
 
                             <div class="flex justify-end gap-2">
-                                <a href="/admin/noticias" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground">Guardar como Borrador</a>
-                                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">Publicar Noticia</button>
+                                <a href="/admin/noticias" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground">Cancelar</a>
+                                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">Guardar</button>
                             </div>
                        </form>
                     </div>

@@ -108,37 +108,41 @@
                         <h2 class="text-2xl font-headline font-bold tracking-tight">Añadir Nuevo Evento</h2>
                     </div>
                     <div class="bg-card rounded-lg border shadow-sm p-6">
-                       <form class="grid gap-6">
+                       <form class="grid gap-6" action="/admin/eventos/add-one" method="POST">
                             <div class="space-y-2">
                                 <label for="event-title" class="text-sm font-medium leading-none">Título del Evento</label>
-                                <input id="event-title" placeholder="Ej. Feria de Empleo y Emprendimiento" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="titulo" id="event-title" placeholder="Ej. Feria de Empleo y Emprendimiento" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="event-slug" class="text-sm font-medium leading-none">Slug (URL opcional)</label>
+                                <input name="slug" id="event-slug" type="text" placeholder="feria-empleo-2024" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="space-y-2">
                                     <label for="event-date" class="text-sm font-medium leading-none">Fecha del Evento</label>
-                                    <input type="date" id="event-date" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                    <input name="fechaInicio" type="date" id="event-date" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                                 </div>
                                 <div class="space-y-2">
                                     <label for="event-time" class="text-sm font-medium leading-none">Hora del Evento</label>
-                                    <input type="time" id="event-time" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                    <input name="fechaFin" type="time" id="event-time" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                                 </div>
                             </div>
                             <div class="space-y-2">
                                 <label for="event-location" class="text-sm font-medium leading-none">Ubicación</label>
-                                <input id="event-location" placeholder="Ej. Auditorio Principal" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <input name="ubicacion" id="event-location" placeholder="Ej. Auditorio Principal" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                             </div>
                              <div class="space-y-2">
                                 <label for="event-description" class="text-sm font-medium leading-none">Descripción</label>
-                                <textarea id="event-description" rows="5" placeholder="Describe los detalles del evento, ponentes, actividades, etc." class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"></textarea>
+                                <textarea name="descripcion" id="event-description" rows="5" placeholder="Describe los detalles del evento, ponentes, actividades, etc." class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"></textarea>
                             </div>
                             <div class="space-y-2">
-                                <label for="event-image" class="text-sm font-medium leading-none">Imagen del Evento</label>
-                                <input id="event-image" type="file" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium">
-                                <p class="text-xs text-muted-foreground">Sube un banner o imagen promocional.</p>
+                                <label for="event-image" class="text-sm font-medium leading-none">Imagen (URL)</label>
+                                <input name="imageUrl" id="event-image" type="url" placeholder="https://example.com/banner.jpg" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                                <p class="text-xs text-muted-foreground">Usa una URL pública del banner.</p>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <input type="checkbox" id="event-published" class="h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                                <label for="event-published" class="text-sm font-medium leading-none">Publicar evento inmediatamente</label>
+                                <input name="publicado" type="checkbox" id="event-published" class="h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                <label for="event-published" class="text-sm font-medium leading-none">Publicar inmediatamente</label>
                             </div>
                             <div class="flex justify-end gap-2">
                                 <a href="/admin/eventos" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground">Cancelar</a>

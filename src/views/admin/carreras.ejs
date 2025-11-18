@@ -240,66 +240,30 @@
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-border">
-                                        <tr>
-                                            <td class="p-4 font-medium">Ingeniería Civil</td>
-                                            <td class="p-4 hidden sm:table-cell">Ingeniería</td>
-                                            <td class="p-4 hidden md:table-cell">350</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-success">Activa</span>
-                                            </td>
-                                            <td class="p-4 text-right space-x-2">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                                <button
-                                                    class="px-3 py-1 border-transparent text-destructive-foreground bg-destructive hover:bg-destructive/80 rounded-md text-sm">Eliminar</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4 font-medium">Licenciatura en Mercadotecnia</td>
-                                            <td class="p-4 hidden sm:table-cell">Ciencias Económicas</td>
-                                            <td class="p-4 hidden md:table-cell">420</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-success">Activa</span>
-                                            </td>
-                                            <td class="p-4 text-right space-x-2">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                                <button
-                                                    class="px-3 py-1 border-transparent text-destructive-foreground bg-destructive hover:bg-destructive/80 rounded-md text-sm">Eliminar</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4 font-medium">Tecnologías de la Información</td>
-                                            <td class="p-4 hidden sm:table-cell">Ingeniería</td>
-                                            <td class="p-4 hidden md:table-cell">512</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-success">Activa</span>
-                                            </td>
-                                            <td class="p-4 text-right space-x-2">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                                <button
-                                                    class="px-3 py-1 border-transparent text-destructive-foreground bg-destructive hover:bg-destructive/80 rounded-md text-sm">Eliminar</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4 font-medium">Licenciatura en Gastronomía</td>
-                                            <td class="p-4 hidden sm:table-cell">Turismo y Gastronomía</td>
-                                            <td class="p-4 hidden md:table-cell">210</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-danger">Inactiva</span>
-                                            </td>
-                                            <td class="p-4 text-right space-x-2">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                                <button
-                                                    class="px-3 py-1 border-transparent text-destructive-foreground bg-destructive hover:bg-destructive/80 rounded-md text-sm">Eliminar</button>
-                                            </td>
-                                        </tr>
+                                        <% if (careers && careers.length > 0) { %>
+                                            <% careers.forEach(function(career) { %>
+                                                <tr>
+                                                    <td class="p-4 font-medium"><%= career.Nombre %></td>
+                                                    <td class="p-4 hidden sm:table-cell"><%= career.Division || 'N/A' %></td>
+                                                    <td class="p-4 hidden md:table-cell">-</td>
+                                                    <td class="p-4 hidden sm:table-cell">
+                                                        <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full <%= career.Estado ? 'badge-success' : 'badge-danger' %>">
+                                                            <%= career.Estado ? 'Activa' : 'Inactiva' %>
+                                                        </span>
+                                                    </td>
+                                                    <td class="p-4 text-right space-x-2">
+                                                        <a href="/admin/carreras/update/<%= career.UUID %>" class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-block">Editar</a>
+                                                        <button onclick="deleteCareer('<%= career.UUID %>')" class="px-3 py-1 border-transparent text-destructive-foreground bg-destructive hover:bg-destructive/80 rounded-md text-sm">Eliminar</button>
+                                                    </td>
+                                                </tr>
+                                            <% }); %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="5" class="p-8 text-center text-muted-foreground">
+                                                    No hay carreras registradas. Haz clic en "Nueva Carrera" para agregar una.
+                                                </td>
+                                            </tr>
+                                        <% } %>
                                     </tbody>
                                 </table>
                             </div>
@@ -354,6 +318,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const userMenuButton = document.getElementById('user-menu-button');
@@ -392,8 +357,33 @@
             if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeSheet);
             if (mobileSheetOverlay) mobileSheetOverlay.addEventListener('click', closeSheet);
 
-            document.getElementById('button_add').addEventListener('click', function () { window.location.href = '/admin/carreras/add'; })
+            document.getElementById('button_add').addEventListener('click', function () { window.location.href = '/admin/carreras/add'; });
         });
+
+        function deleteCareer(uuid) {
+            Swal.fire({
+                title: 'Eliminar carrera',
+                text: 'Esta acción desactivará la carrera. ¿Continuar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#0d9488',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/carreras/delete-one/${uuid}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Eliminada', text: 'La carrera fue desactivada.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo eliminar.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al eliminar la carrera', icon: 'error' }));
+            });
+        }
     </script>
 </body>
 

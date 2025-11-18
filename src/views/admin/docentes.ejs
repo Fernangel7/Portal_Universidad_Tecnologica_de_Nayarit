@@ -244,53 +244,26 @@
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-border">
-                                        <tr>
-                                            <td class="p-4 font-medium flex items-center gap-3">
-                                                <img src="https://picsum.photos/seed/docente-1/40/40"
-                                                    class="w-8 h-8 rounded-full object-cover">
-                                                Dr. Alejandro Vargas
-                                            </td>
-                                            <td class="p-4 hidden sm:table-cell">Ingeniería Civil</td>
-                                            <td class="p-4 text-muted-foreground hidden md:table-cell">
-                                                a.vargas@universidad.edu</td>
-                                            <td class="p-4 text-muted-foreground hidden sm:table-cell">Estructuras</td>
-                                            <td class="p-4 text-right space-x-2">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4 font-medium flex items-center gap-3">
-                                                <img src="https://picsum.photos/seed/docente-2/40/40"
-                                                    class="w-8 h-8 rounded-full object-cover">
-                                                Dra. Isabela Reyes
-                                            </td>
-                                            <td class="p-4 hidden sm:table-cell">Lic. en Mercadotecnia</td>
-                                            <td class="p-4 text-muted-foreground hidden md:table-cell">
-                                                i.reyes@universidad.edu</td>
-                                            <td class="p-4 text-muted-foreground hidden sm:table-cell">Marketing Digital
-                                            </td>
-                                            <td class="p-4 text-right space-x-2">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4 font-medium flex items-center gap-3">
-                                                <img src="https://picsum.photos/seed/docente-3/40/40"
-                                                    class="w-8 h-8 rounded-full object-cover">
-                                                Dr. Sofia Navarro
-                                            </td>
-                                            <td class="p-4 hidden sm:table-cell">Tecnologías de la Información</td>
-                                            <td class="p-4 text-muted-foreground hidden md:table-cell">
-                                                s.navarro@universidad.edu</td>
-                                            <td class="p-4 text-muted-foreground hidden sm:table-cell">Inteligencia
-                                                Artificial</td>
-                                            <td class="p-4 text-right space-x-2">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                            </td>
-                                        </tr>
+                                        <% if (teachers && teachers.length > 0) { %>
+                                            <% teachers.forEach(function(t){ %>
+                                                <tr>
+                                                    <td class="p-4 font-medium flex items-center gap-3">
+                                                        <img src="<%= t.ImageUrl || 'https://picsum.photos/seed/docente-'+t.UUID+'/40/40' %>" class="w-8 h-8 rounded-full object-cover">
+                                                        <%= t.Nombre %>
+                                                    </td>
+                                                    <td class="p-4 hidden sm:table-cell"><%= t.Departamento || '-' %></td>
+                                                    <td class="p-4 text-muted-foreground hidden md:table-cell">-</td>
+                                                    <td class="p-4 text-muted-foreground hidden sm:table-cell"><%= t.Cargo || '-' %></td>
+                                                    <td class="p-4 text-right space-x-2">
+                                                        <a href="/admin/docentes/update/<%= t.UUID %>" class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-block">Editar</a>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="5" class="p-8 text-center text-muted-foreground">No hay docentes registrados.</td>
+                                            </tr>
+                                        <% } %>
                                     </tbody>
                                 </table>
                             </div>

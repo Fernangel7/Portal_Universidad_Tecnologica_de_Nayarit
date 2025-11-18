@@ -254,55 +254,31 @@
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-border">
-                                        <tr>
-                                            <td class="p-4 font-mono text-xs">202401001</td>
-                                            <td class="p-4 font-medium">Carlos Sánchez</td>
-                                            <td class="p-4 text-muted-foreground hidden lg:table-cell">
-                                                carlos.sanchez@example.com</td>
-                                            <td class="p-4 text-muted-foreground hidden md:table-cell">Ingeniería Civil
-                                            </td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-success">Activo</span>
-                                            </td>
-                                            <td class="p-4 text-right">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Ver</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4 font-mono text-xs">202302015</td>
-                                            <td class="p-4 font-medium">Laura Gómez</td>
-                                            <td class="p-4 text-muted-foreground hidden lg:table-cell">
-                                                laura.gomez@example.com</td>
-                                            <td class="p-4 text-muted-foreground hidden md:table-cell">Lic. en
-                                                Mercadotecnia</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-success">Activo</span>
-                                            </td>
-                                            <td class="p-4 text-right">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Ver</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4 font-mono text-xs">202101032</td>
-                                            <td class="p-4 font-medium">Ana Martínez</td>
-                                            <td class="p-4 text-muted-foreground hidden lg:table-cell">
-                                                ana.martinez@example.com</td>
-                                            <td class="p-4 text-muted-foreground hidden md:table-cell">Tecnologías de la
-                                                Información</td>
-                                            <td class="p-4 hidden sm:table-cell">
-                                                <span
-                                                    class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-warning">Baja
-                                                    Temporal</span>
-                                            </td>
-                                            <td class="p-4 text-right">
-                                                <button
-                                                    class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Ver</button>
-                                            </td>
-                                        </tr>
+                                        <% if (students && students.length > 0) { %>
+                                            <% students.forEach(function(student){ %>
+                                                <tr>
+                                                    <td class="p-4 font-mono text-xs"><%= student.Matricula %></td>
+                                                    <td class="p-4 font-medium"><%= student.Nombre %> <%= student.Apellidos %></td>
+                                                    <td class="p-4 text-muted-foreground hidden lg:table-cell"><%= student.Correo %></td>
+                                                    <td class="p-4 text-muted-foreground hidden md:table-cell"><%= student.CarreraSlug %></td>
+                                                    <td class="p-4 hidden sm:table-cell">
+                                                        <% if (student.Estado) { %>
+                                                            <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-success">Activo</span>
+                                                        <% } else { %>
+                                                            <span class="text-xs font-semibold inline-block py-1 px-2.5 rounded-full badge-warning">Inactivo</span>
+                                                        <% } %>
+                                                    </td>
+                                                    <td class="p-4 text-right space-x-2">
+                                                        <button class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Ver</button>
+                                                        <button onclick="confirmDeleteAlumno('<%= student.Matricula %>')" class="px-3 py-1 border border-input bg-destructive text-destructive-foreground hover:opacity-90 rounded-md text-sm">Eliminar</button>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="6" class="p-6 text-center text-muted-foreground">No hay alumnos registrados.</td>
+                                            </tr>
+                                        <% } %>
                                     </tbody>
                                 </table>
                             </div>
@@ -395,7 +371,34 @@
             if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeSheet);
             if (mobileSheetOverlay) mobileSheetOverlay.addEventListener('click', closeSheet);
 
-            document.getElementById('button_add').addEventListener('click', function () { window.location.href = '/admin/alumnos/add';})
+            const addButton = document.getElementById('button_add');
+            if(addButton){
+                addButton.addEventListener('click', function () { window.location.href = '/admin/alumnos/add';})
+            }
+
+            window.confirmDeleteAlumno = function(matricula){
+                if(!matricula) return;
+                if(typeof Swal === 'undefined'){
+                    if(confirm('¿Eliminar alumno '+ matricula +'?')){
+                        window.location.href = '/admin/alumnos/delete/' + matricula;
+                    }
+                    return;
+                }
+                Swal.fire({
+                    title: '¿Eliminar alumno?',
+                    text: 'Esta acción dará de baja al alumno (soft delete).',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/admin/alumnos/delete/' + matricula;
+                    }
+                });
+            }
         });
     </script>
 </body>
