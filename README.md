@@ -86,8 +86,10 @@ Sigue estos pasos para levantar el proyecto:
     PORT=5000
     MONGODB_URI='mongodb://localhost:27017/universidad'
     MONGO_DATABASE_NAME:'databasename'
-    JWT_SECRET_KEY=tu_secreto_muy_seguro
-    COOKIE_SECRET_KEY=tu_secreto_muy_seguro
+    BCRYPT_SALT_ROUNDS=10
+    JWT_SECRET_KEY="tu_secreto_muy_seguro"
+    COOKIE_SECRET_KEY="tu_secreto_muy_seguro"
+    HOME_FEATURED_CAREERS_MAX=6
     ```
 
 4.  **Ejecuta el proyecto:**
