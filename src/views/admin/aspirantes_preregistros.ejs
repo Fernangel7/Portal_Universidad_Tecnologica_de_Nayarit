@@ -84,8 +84,9 @@
                     <th class="p-4 text-left font-medium text-muted-foreground">Preficha</th>
                     <th class="p-4 text-left font-medium text-muted-foreground">Nombre</th>
                     <th class="p-4 text-left font-medium text-muted-foreground hidden md:table-cell">Correo</th>
+                    <th class="p-4 text-left font-medium text-muted-foreground hidden lg:table-cell">Teléfono</th>
                     <th class="p-4 text-left font-medium text-muted-foreground hidden md:table-cell">Carrera</th>
-                    <th class="p-4 text-left font-medium text-muted-foreground hidden sm:table-cell">Usuario</th>
+                    <th class="p-4 text-left font-medium text-muted-foreground hidden xl:table-cell">Escuela</th>
                     <th class="p-4 text-left font-medium text-muted-foreground hidden lg:table-cell">Fecha</th>
                     <th class="p-4 text-right font-medium text-muted-foreground">Acciones</th>
                   </tr>
@@ -93,16 +94,24 @@
                 <tbody class="divide-y divide-border">
                   <% if (aspirantes && aspirantes.length > 0) { %>
                     <% aspirantes.forEach(function(a){ %>
-                      <tr>
+                      <tr class="hover:bg-muted/30 cursor-pointer" onclick="toggleDetails('<%= a.UUID %>')">
                         <td class="p-4 font-mono text-xs"><%= a.Preficha %></td>
-                        <td class="p-4 font-medium"><%= a.Nombre %> <%= a.Apellidos || '' %></td>
+                        <td class="p-4 font-medium">
+                          <%= a.Nombre %> <%= a.Apellidos || '' %>
+                          <% if (a.CURP) { %>
+                            <div class="text-xs text-muted-foreground mt-0.5"><%= a.CURP %></div>
+                          <% } %>
+                        </td>
                         <td class="p-4 text-muted-foreground hidden md:table-cell"><%= a.Correo || '-' %></td>
+                        <td class="p-4 text-muted-foreground hidden lg:table-cell"><%= a.Telefono || '-' %></td>
                         <td class="p-4 text-muted-foreground hidden md:table-cell"><%= a.CarreraSlug || '-' %></td>
-                        <td class="p-4 text-muted-foreground hidden sm:table-cell"><%= a.Username %></td>
-                        <td class="p-4 text-muted-foreground hidden lg:table-cell"><%= (new Date(a.Created_at)).toLocaleString('es-MX') %></td>
+                        <td class="p-4 text-muted-foreground text-xs hidden xl:table-cell">
+                          <%= (a.EscuelaProcedencia && a.EscuelaProcedencia.Nombre) ? a.EscuelaProcedencia.Nombre : '-' %>
+                        </td>
+                        <td class="p-4 text-muted-foreground hidden lg:table-cell text-xs"><%= (new Date(a.Created_at)).toLocaleDateString('es-MX') %></td>
                         <td class="p-4 text-right">
                           <% if (a.Correo) { %>
-                            <a href="mailto:<%= a.Correo %>?subject=Contacto%20Pre-registro%20UTN&body=<%= encodeURIComponent('Hola ' + a.Nombre + ' ' + (a.Apellidos || '') + '\n\nTe contactamos respecto a tu pre-registro (Preficha: ' + a.Preficha + ').' + (a.CarreraSlug ? ('\nCarrera de interés: ' + a.CarreraSlug) : '') + '\n\nSi necesitas actualizar tus datos, puedes iniciar sesión en el portal de aspirantes.\n\nAtentamente,\nAdmisiones UTN') %>" class="inline-flex items-center gap-2 px-3 py-1.5 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">
+                            <a href="mailto:<%= a.Correo %>?subject=Contacto%20Pre-registro%20UTN&body=<%= encodeURIComponent('Hola ' + a.Nombre + ' ' + (a.Apellidos || '') + '\n\nTe contactamos respecto a tu pre-registro (Preficha: ' + a.Preficha + ').' + (a.CarreraSlug ? ('\nCarrera de interés: ' + a.CarreraSlug) : '') + '\n\nSi necesitas actualizar tus datos, puedes iniciar sesión en el portal de aspirantes.\n\nAtentamente,\nAdmisiones UTN') %>" class="inline-flex items-center gap-2 px-3 py-1.5 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm" onclick="event.stopPropagation()">
                               Contactar
                             </a>
                           <% } else { %>
@@ -110,10 +119,113 @@
                           <% } %>
                         </td>
                       </tr>
+                      <tr id="details-<%= a.UUID %>" class="hidden bg-muted/20">
+                        <td colspan="8" class="p-6">
+                          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                            <!-- Información Personal -->
+                            <div>
+                              <h4 class="font-semibold mb-2 text-sm">Información Personal</h4>
+                              <dl class="space-y-1 text-xs">
+                                <div><dt class="text-muted-foreground inline">Edad:</dt> <dd class="inline"><%= a.Edad || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Fecha Nac.:</dt> <dd class="inline"><%= a.FechaNacimiento ? new Date(a.FechaNacimiento).toLocaleDateString('es-MX') : '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Género:</dt> <dd class="inline"><%= a.Genero || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Estado Civil:</dt> <dd class="inline"><%= a.EstadoCivil || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Teléfono Emergencia:</dt> <dd class="inline"><%= a.TelefonoEmergencia || '-' %></dd></div>
+                              </dl>
+                            </div>
+
+                            <!-- Domicilio -->
+                            <% if (a.Domicilio) { %>
+                            <div>
+                              <h4 class="font-semibold mb-2 text-sm">Domicilio</h4>
+                              <p class="text-xs text-muted-foreground">
+                                <%= a.Domicilio.Calle %> <%= a.Domicilio.NumeroExterior %><br>
+                                <%= a.Domicilio.Colonia %>, CP <%= a.Domicilio.CodigoPostal %><br>
+                                <%= a.Domicilio.Ciudad %>, <%= a.Domicilio.Estado %>
+                              </p>
+                            </div>
+                            <% } %>
+
+                            <!-- Escuela -->
+                            <% if (a.EscuelaProcedencia && a.EscuelaProcedencia.Nombre) { %>
+                            <div>
+                              <h4 class="font-semibold mb-2 text-sm">Escuela de Procedencia</h4>
+                              <dl class="space-y-1 text-xs">
+                                <div><dt class="text-muted-foreground inline">Escuela:</dt> <dd class="inline"><%= a.EscuelaProcedencia.Nombre %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Promedio:</dt> <dd class="inline"><%= a.EscuelaProcedencia.Promedio || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Carrera:</dt> <dd class="inline"><%= a.EscuelaProcedencia.CarreraEstudiada || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Tipo:</dt> <dd class="inline"><%= a.EscuelaProcedencia.TipoEscuela || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Año Egreso:</dt> <dd class="inline"><%= a.EscuelaProcedencia.AnioEgreso || '-' %></dd></div>
+                              </dl>
+                            </div>
+                            <% } %>
+
+                            <!-- Padre -->
+                            <% if (a.Padre && a.Padre.Nombre) { %>
+                            <div>
+                              <h4 class="font-semibold mb-2 text-sm">Padre/Tutor</h4>
+                              <dl class="space-y-1 text-xs">
+                                <div><dt class="text-muted-foreground inline">Nombre:</dt> <dd class="inline"><%= a.Padre.Nombre %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Teléfono:</dt> <dd class="inline"><%= a.Padre.Telefono || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Correo:</dt> <dd class="inline"><%= a.Padre.Correo || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Ocupación:</dt> <dd class="inline"><%= a.Padre.Ocupacion || '-' %></dd></div>
+                              </dl>
+                            </div>
+                            <% } %>
+
+                            <!-- Madre -->
+                            <% if (a.Madre && a.Madre.Nombre) { %>
+                            <div>
+                              <h4 class="font-semibold mb-2 text-sm">Madre/Tutora</h4>
+                              <dl class="space-y-1 text-xs">
+                                <div><dt class="text-muted-foreground inline">Nombre:</dt> <dd class="inline"><%= a.Madre.Nombre %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Teléfono:</dt> <dd class="inline"><%= a.Madre.Telefono || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Correo:</dt> <dd class="inline"><%= a.Madre.Correo || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Ocupación:</dt> <dd class="inline"><%= a.Madre.Ocupacion || '-' %></dd></div>
+                              </dl>
+                            </div>
+                            <% } %>
+
+                            <!-- Info Socioeconómica -->
+                            <% if (a.InfoSocioeconomica) { %>
+                            <div>
+                              <h4 class="font-semibold mb-2 text-sm">Información Socioeconómica</h4>
+                              <dl class="space-y-1 text-xs">
+                                <div><dt class="text-muted-foreground inline">Trabaja:</dt> <dd class="inline"><%= a.InfoSocioeconomica.TrabajaActualmente ? 'Sí' : 'No' %></dd></div>
+                                <% if (a.InfoSocioeconomica.LugarTrabajo) { %>
+                                <div><dt class="text-muted-foreground inline">Lugar:</dt> <dd class="inline"><%= a.InfoSocioeconomica.LugarTrabajo %></dd></div>
+                                <% } %>
+                                <div><dt class="text-muted-foreground inline">Ingreso Familiar:</dt> <dd class="inline"><%= a.InfoSocioeconomica.IngresoMensual || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Vivienda:</dt> <dd class="inline"><%= a.InfoSocioeconomica.TipoVivienda || '-' %></dd></div>
+                                <div><dt class="text-muted-foreground inline">Transporte:</dt> <dd class="inline"><%= a.InfoSocioeconomica.TransporteUtiliza || '-' %></dd></div>
+                              </dl>
+                            </div>
+                            <% } %>
+                          </div>
+
+                          <!-- Información Adicional -->
+                          <% if (a.DiscapacidadOCondicion || a.RequiereApoyo || a.ComoSeEntero) { %>
+                          <div class="mt-4 pt-4 border-t">
+                            <h4 class="font-semibold mb-2 text-sm">Información Adicional</h4>
+                            <dl class="grid gap-2 md:grid-cols-2 text-xs">
+                              <% if (a.DiscapacidadOCondicion) { %>
+                              <div><dt class="text-muted-foreground inline">Discapacidad/Condición:</dt> <dd class="inline"><%= a.DiscapacidadOCondicion %></dd></div>
+                              <% } %>
+                              <% if (a.RequiereApoyo) { %>
+                              <div><dt class="text-muted-foreground inline">Tipo de Apoyo:</dt> <dd class="inline"><%= a.TipoApoyo || 'Sí' %></dd></div>
+                              <% } %>
+                              <% if (a.ComoSeEntero) { %>
+                              <div><dt class="text-muted-foreground inline">¿Cómo se enteró?:</dt> <dd class="inline"><%= a.ComoSeEntero %></dd></div>
+                              <% } %>
+                            </dl>
+                          </div>
+                          <% } %>
+                        </td>
+                      </tr>
                     <% }) %>
                   <% } else { %>
                     <tr>
-                      <td colspan="7" class="p-6 text-center text-muted-foreground">No hay pre-registros.</td>
+                      <td colspan="8" class="p-6 text-center text-muted-foreground">No hay pre-registros.</td>
                     </tr>
                   <% } %>
                 </tbody>
@@ -126,6 +238,13 @@
   </div>
 
   <script>
+    function toggleDetails(uuid) {
+      const detailsRow = document.getElementById('details-' + uuid);
+      if (detailsRow) {
+        detailsRow.classList.toggle('hidden');
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function(){
       const searchInput = document.getElementById('searchInput');
       const tbody = document.querySelector('tbody');
@@ -133,8 +252,20 @@
         searchInput.addEventListener('input', function(){
           const q = this.value.toLowerCase().trim();
           tbody.querySelectorAll('tr').forEach(tr => {
+            // Skip details rows
+            if (tr.id && tr.id.startsWith('details-')) return;
+            
             const txt = (tr.textContent || '').toLowerCase();
-            tr.style.display = txt.includes(q) ? '' : 'none';
+            const isVisible = txt.includes(q);
+            tr.style.display = isVisible ? '' : 'none';
+            
+            // Also hide the associated details row if the main row is hidden
+            const detailsRow = tr.nextElementSibling;
+            if (detailsRow && detailsRow.id && detailsRow.id.startsWith('details-')) {
+              if (!isVisible) {
+                detailsRow.style.display = 'none';
+              }
+            }
           });
         });
       }

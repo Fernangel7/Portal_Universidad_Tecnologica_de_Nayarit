@@ -10,10 +10,88 @@ const { Schema, model } = mongoose
 const aspirante_schema = new Schema({
     UUID: { type: String, required: true, unique: true },
     Preficha: { type: String, required: true, unique: true },
+    
+    // Datos personales completos
     Nombre: { type: String, required: true },
     Apellidos: { type: String, default: '' },
+    Edad: { type: Number, default: null },
+    FechaNacimiento: { type: Date, default: null },
+    Genero: { type: String, default: '' },
+    CURP: { type: String, default: '' },
+    EstadoCivil: { type: String, default: '' },
+    LugarNacimiento: { type: String, default: '' },
+    
+    // Contacto
     Correo: { type: String, default: '' },
     Telefono: { type: String, default: '' },
+    TelefonoEmergencia: { type: String, default: '' },
+    
+    // Domicilio
+    Domicilio: {
+        Calle: { type: String, default: '' },
+        NumeroExterior: { type: String, default: '' },
+        NumeroInterior: { type: String, default: '' },
+        CodigoPostal: { type: String, default: '' },
+        Colonia: { type: String, default: '' },
+        Localidad: { type: String, default: '' },
+        Ciudad: { type: String, default: '' },
+        Municipio: { type: String, default: '' },
+        Estado: { type: String, default: '' }
+    },
+    
+    // Escuela de procedencia
+    EscuelaProcedencia: {
+        Nombre: { type: String, default: '' },
+        Promedio: { type: Number, default: null },
+        CarreraEstudiada: { type: String, default: '' },
+        TipoEscuela: { type: String, default: '' }, // Publica/Privada
+        AnioEgreso: { type: Number, default: null },
+        Ciudad: { type: String, default: '' },
+        Estado: { type: String, default: '' }
+    },
+    
+    // Datos del padre/tutor
+    Padre: {
+        Nombre: { type: String, default: '' },
+        Telefono: { type: String, default: '' },
+        Correo: { type: String, default: '' },
+        Ocupacion: { type: String, default: '' },
+        VivoFinado: { type: String, default: '' }
+    },
+    
+    // Datos de la madre/tutora
+    Madre: {
+        Nombre: { type: String, default: '' },
+        Telefono: { type: String, default: '' },
+        Correo: { type: String, default: '' },
+        Ocupacion: { type: String, default: '' },
+        VivoFinado: { type: String, default: '' }
+    },
+    
+    // Datos del tutor (opcional, en caso de que no viva con padres)
+    Tutor: {
+        Nombre: { type: String, default: '' },
+        Parentesco: { type: String, default: '' },
+        Telefono: { type: String, default: '' },
+        Correo: { type: String, default: '' }
+    },
+    
+    // Información socioeconómica
+    InfoSocioeconomica: {
+        TrabajaActualmente: { type: Boolean, default: false },
+        LugarTrabajo: { type: String, default: '' },
+        IngresoMensual: { type: String, default: '' },
+        PersonasDependenEconomicamente: { type: Number, default: null },
+        TipoVivienda: { type: String, default: '' }, // Propia/Rentada/Prestada
+        TransporteUtiliza: { type: String, default: '' }
+    },
+    
+    // Información adicional
+    DiscapacidadOCondicion: { type: String, default: '' },
+    RequiereApoyo: { type: Boolean, default: false },
+    TipoApoyo: { type: String, default: '' },
+    ComoSeEntero: { type: String, default: '' }, // ¿Cómo se enteró de la universidad?
+    
     CarreraSlug: { type: String, default: '' },
     Username: { type: String, required: true, unique: true },
     Password: { type: String, required: true }, // hashed
@@ -58,10 +136,78 @@ class AspirantesModel {
             const doc = new aspirante_model_mongoose({
                 UUID: uuid,
                 Preficha: preficha,
+                // Datos personales
                 Nombre: payload.Nombre,
                 Apellidos: payload.Apellidos || '',
+                Edad: payload.Edad ? parseInt(payload.Edad) : null,
+                FechaNacimiento: payload.FechaNacimiento || null,
+                Genero: payload.Genero || '',
+                CURP: payload.CURP || '',
+                EstadoCivil: payload.EstadoCivil || '',
+                LugarNacimiento: payload.LugarNacimiento || '',
+                // Contacto
                 Correo: payload.Correo || '',
                 Telefono: payload.Telefono || '',
+                TelefonoEmergencia: payload.TelefonoEmergencia || '',
+                // Domicilio
+                Domicilio: {
+                    Calle: payload.DomicilioCalle || '',
+                    NumeroExterior: payload.DomicilioNumeroExterior || '',
+                    NumeroInterior: payload.DomicilioNumeroInterior || '',
+                    CodigoPostal: payload.DomicilioCodigoPostal || '',
+                    Colonia: payload.DomicilioColonia || '',
+                    Localidad: payload.DomicilioLocalidad || '',
+                    Ciudad: payload.DomicilioCiudad || '',
+                    Municipio: payload.DomicilioMunicipio || '',
+                    Estado: payload.DomicilioEstado || ''
+                },
+                // Escuela de procedencia
+                EscuelaProcedencia: {
+                    Nombre: payload.EscuelaNombre || '',
+                    Promedio: payload.EscuelaPromedio ? parseFloat(payload.EscuelaPromedio) : null,
+                    CarreraEstudiada: payload.EscuelaCarrera || '',
+                    TipoEscuela: payload.EscuelaTipo || '',
+                    AnioEgreso: payload.EscuelaAnioEgreso ? parseInt(payload.EscuelaAnioEgreso) : null,
+                    Ciudad: payload.EscuelaCiudad || '',
+                    Estado: payload.EscuelaEstado || ''
+                },
+                // Datos del padre
+                Padre: {
+                    Nombre: payload.PadreNombre || '',
+                    Telefono: payload.PadreTelefono || '',
+                    Correo: payload.PadreCorreo || '',
+                    Ocupacion: payload.PadreOcupacion || '',
+                    VivoFinado: payload.PadreVivoFinado || ''
+                },
+                // Datos de la madre
+                Madre: {
+                    Nombre: payload.MadreNombre || '',
+                    Telefono: payload.MadreTelefono || '',
+                    Correo: payload.MadreCorreo || '',
+                    Ocupacion: payload.MadreOcupacion || '',
+                    VivoFinado: payload.MadreVivoFinado || ''
+                },
+                // Datos del tutor
+                Tutor: {
+                    Nombre: payload.TutorNombre || '',
+                    Parentesco: payload.TutorParentesco || '',
+                    Telefono: payload.TutorTelefono || '',
+                    Correo: payload.TutorCorreo || ''
+                },
+                // Información socioeconómica
+                InfoSocioeconomica: {
+                    TrabajaActualmente: payload.TrabajaActualmente === 'true' || payload.TrabajaActualmente === true,
+                    LugarTrabajo: payload.LugarTrabajo || '',
+                    IngresoMensual: payload.IngresoMensual || '',
+                    PersonasDependenEconomicamente: payload.PersonasDependenEconomicamente ? parseInt(payload.PersonasDependenEconomicamente) : null,
+                    TipoVivienda: payload.TipoVivienda || '',
+                    TransporteUtiliza: payload.TransporteUtiliza || ''
+                },
+                // Información adicional
+                DiscapacidadOCondicion: payload.DiscapacidadOCondicion || '',
+                RequiereApoyo: payload.RequiereApoyo === 'true' || payload.RequiereApoyo === true,
+                TipoApoyo: payload.TipoApoyo || '',
+                ComoSeEntero: payload.ComoSeEntero || '',
                 CarreraSlug: payload.CarreraSlug || '',
                 Username: username,
                 Password: hash,
@@ -128,13 +274,72 @@ class AspirantesModel {
             const doc = await aspirante_model_mongoose.findOne({ UUID: uuid })
             if (!doc) return { status: 404, msg: 'No encontrado' }
 
-            const fields = ['Nombre', 'Apellidos', 'Correo', 'Telefono', 'CarreraSlug']
-            fields.forEach(k => {
+            // Actualizar campos básicos
+            const basicFields = ['Nombre', 'Apellidos', 'Correo', 'Telefono', 'CarreraSlug', 
+                                'Genero', 'CURP', 'EstadoCivil', 'LugarNacimiento', 'TelefonoEmergencia',
+                                'DiscapacidadOCondicion', 'TipoApoyo', 'ComoSeEntero']
+            basicFields.forEach(k => {
                 if (payload[k] !== undefined) doc[k] = payload[k]
             })
+
+            // Actualizar campos numéricos
+            if (payload.Edad !== undefined) doc.Edad = payload.Edad ? parseInt(payload.Edad) : null
+            if (payload.FechaNacimiento !== undefined) doc.FechaNacimiento = payload.FechaNacimiento || null
+            if (payload.RequiereApoyo !== undefined) doc.RequiereApoyo = payload.RequiereApoyo === 'true' || payload.RequiereApoyo === true
+
+            // Actualizar Domicilio
+            if (!doc.Domicilio) doc.Domicilio = {}
+            const domicilioFields = ['Calle', 'NumeroExterior', 'NumeroInterior', 'CodigoPostal', 'Colonia', 'Localidad', 'Ciudad', 'Municipio', 'Estado']
+            domicilioFields.forEach(field => {
+                const key = `Domicilio${field}`
+                if (payload[key] !== undefined) doc.Domicilio[field] = payload[key]
+            })
+
+            // Actualizar Escuela de Procedencia
+            if (!doc.EscuelaProcedencia) doc.EscuelaProcedencia = {}
+            if (payload.EscuelaNombre !== undefined) doc.EscuelaProcedencia.Nombre = payload.EscuelaNombre
+            if (payload.EscuelaPromedio !== undefined) doc.EscuelaProcedencia.Promedio = payload.EscuelaPromedio ? parseFloat(payload.EscuelaPromedio) : null
+            if (payload.EscuelaCarrera !== undefined) doc.EscuelaProcedencia.CarreraEstudiada = payload.EscuelaCarrera
+            if (payload.EscuelaTipo !== undefined) doc.EscuelaProcedencia.TipoEscuela = payload.EscuelaTipo
+            if (payload.EscuelaAnioEgreso !== undefined) doc.EscuelaProcedencia.AnioEgreso = payload.EscuelaAnioEgreso ? parseInt(payload.EscuelaAnioEgreso) : null
+            if (payload.EscuelaCiudad !== undefined) doc.EscuelaProcedencia.Ciudad = payload.EscuelaCiudad
+            if (payload.EscuelaEstado !== undefined) doc.EscuelaProcedencia.Estado = payload.EscuelaEstado
+
+            // Actualizar Padre
+            if (!doc.Padre) doc.Padre = {}
+            const padreFields = ['Nombre', 'Telefono', 'Correo', 'Ocupacion', 'VivoFinado']
+            padreFields.forEach(field => {
+                const key = `Padre${field}`
+                if (payload[key] !== undefined) doc.Padre[field] = payload[key]
+            })
+
+            // Actualizar Madre
+            if (!doc.Madre) doc.Madre = {}
+            const madreFields = ['Nombre', 'Telefono', 'Correo', 'Ocupacion', 'VivoFinado']
+            madreFields.forEach(field => {
+                const key = `Madre${field}`
+                if (payload[key] !== undefined) doc.Madre[field] = payload[key]
+            })
+
+            // Actualizar Tutor
+            if (!doc.Tutor) doc.Tutor = {}
+            if (payload.TutorNombre !== undefined) doc.Tutor.Nombre = payload.TutorNombre
+            if (payload.TutorParentesco !== undefined) doc.Tutor.Parentesco = payload.TutorParentesco
+            if (payload.TutorTelefono !== undefined) doc.Tutor.Telefono = payload.TutorTelefono
+            if (payload.TutorCorreo !== undefined) doc.Tutor.Correo = payload.TutorCorreo
+
+            // Actualizar Info Socioeconómica
+            if (!doc.InfoSocioeconomica) doc.InfoSocioeconomica = {}
+            if (payload.TrabajaActualmente !== undefined) doc.InfoSocioeconomica.TrabajaActualmente = payload.TrabajaActualmente === 'true' || payload.TrabajaActualmente === true
+            if (payload.LugarTrabajo !== undefined) doc.InfoSocioeconomica.LugarTrabajo = payload.LugarTrabajo
+            if (payload.IngresoMensual !== undefined) doc.InfoSocioeconomica.IngresoMensual = payload.IngresoMensual
+            if (payload.PersonasDependenEconomicamente !== undefined) doc.InfoSocioeconomica.PersonasDependenEconomicamente = payload.PersonasDependenEconomicamente ? parseInt(payload.PersonasDependenEconomicamente) : null
+            if (payload.TipoVivienda !== undefined) doc.InfoSocioeconomica.TipoVivienda = payload.TipoVivienda
+            if (payload.TransporteUtiliza !== undefined) doc.InfoSocioeconomica.TransporteUtiliza = payload.TransporteUtiliza
+
             doc.Updated_at = Date.now()
             await doc.save()
-            return { status: 200, msg: 'Actualizado', data: { aspirante: { UUID: doc.UUID, Preficha: doc.Preficha, Nombre: doc.Nombre, Apellidos: doc.Apellidos, Correo: doc.Correo, Telefono: doc.Telefono, CarreraSlug: doc.CarreraSlug, Username: doc.Username } } }
+            return { status: 200, msg: 'Actualizado', data: { aspirante: doc } }
         } catch (error) {
             return { status: 500, msg: 'Error al actualizar', data: { error: error.message } }
         }

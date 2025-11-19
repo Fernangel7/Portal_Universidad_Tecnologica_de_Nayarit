@@ -60,23 +60,148 @@
 				</div>
 			</div>
 
-			<div class="grid gap-6 md:grid-cols-2">
+			<div class="grid gap-6">
+				<!-- Datos Personales -->
 				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
-					<h2 class="font-headline text-xl font-semibold mb-4">Datos del Aspirante</h2>
-					<dl class="space-y-2">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Datos Personales</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
 						<div><dt class="text-muted-foreground text-sm">Preficha</dt><dd class="font-medium"><%= aspirante.Preficha %></dd></div>
-						<div><dt class="text-muted-foreground text-sm">Nombre</dt><dd class="font-medium"><%= aspirante.Nombre %> <%= aspirante.Apellidos %></dd></div>
-						<div><dt class="text-muted-foreground text-sm">Correo</dt><dd class="font-medium"><%= aspirante.Correo || '-' %></dd></div>
-						<div><dt class="text-muted-foreground text-sm">Teléfono</dt><dd class="font-medium"><%= aspirante.Telefono || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Nombre Completo</dt><dd class="font-medium"><%= aspirante.Nombre %> <%= aspirante.Apellidos %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">CURP</dt><dd class="font-medium"><%= aspirante.CURP || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Fecha de Nacimiento</dt><dd class="font-medium"><%= aspirante.FechaNacimiento ? new Date(aspirante.FechaNacimiento).toLocaleDateString('es-MX') : '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Edad</dt><dd class="font-medium"><%= aspirante.Edad || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Género</dt><dd class="font-medium"><%= aspirante.Genero || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Estado Civil</dt><dd class="font-medium"><%= aspirante.EstadoCivil || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Lugar de Nacimiento</dt><dd class="font-medium"><%= aspirante.LugarNacimiento || '-' %></dd></div>
 					</dl>
 				</div>
+
+				<!-- Contacto -->
 				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
-					<h2 class="font-headline text-xl font-semibold mb-4">Programa de Interés</h2>
-					<dl class="space-y-2">
-						<div><dt class="text-muted-foreground text-sm">Carrera</dt><dd class="font-medium"><%= aspirante.CarreraSlug || '-' %></dd></div>
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Información de Contacto</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<div><dt class="text-muted-foreground text-sm">Correo</dt><dd class="font-medium"><%= aspirante.Correo || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Teléfono</dt><dd class="font-medium"><%= aspirante.Telefono || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Teléfono de Emergencia</dt><dd class="font-medium"><%= aspirante.TelefonoEmergencia || '-' %></dd></div>
 						<div><dt class="text-muted-foreground text-sm">Usuario</dt><dd class="font-medium"><%= aspirante.Username %></dd></div>
 					</dl>
 				</div>
+
+				<!-- Domicilio -->
+				<% if (aspirante.Domicilio) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Domicilio</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<div class="md:col-span-2"><dt class="text-muted-foreground text-sm">Dirección</dt><dd class="font-medium"><%= aspirante.Domicilio.Calle || '' %> <%= aspirante.Domicilio.NumeroExterior || '' %> <%= aspirante.Domicilio.NumeroInterior ? 'Int. ' + aspirante.Domicilio.NumeroInterior : '' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Colonia</dt><dd class="font-medium"><%= aspirante.Domicilio.Colonia || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Código Postal</dt><dd class="font-medium"><%= aspirante.Domicilio.CodigoPostal || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Ciudad/Localidad</dt><dd class="font-medium"><%= aspirante.Domicilio.Ciudad || aspirante.Domicilio.Localidad || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Municipio</dt><dd class="font-medium"><%= aspirante.Domicilio.Municipio || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Estado</dt><dd class="font-medium"><%= aspirante.Domicilio.Estado || '-' %></dd></div>
+					</dl>
+				</div>
+				<% } %>
+
+				<!-- Programa de Interés -->
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Programa de Interés</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<div><dt class="text-muted-foreground text-sm">Carrera</dt><dd class="font-medium"><%= aspirante.CarreraSlug || '-' %></dd></div>
+					</dl>
+				</div>
+
+				<!-- Escuela de Procedencia -->
+				<% if (aspirante.EscuelaProcedencia) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Escuela de Procedencia</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<div class="md:col-span-2"><dt class="text-muted-foreground text-sm">Nombre de la Escuela</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.Nombre || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Promedio</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.Promedio || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Tipo</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.TipoEscuela || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Carrera/Especialidad</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.CarreraEstudiada || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Año de Egreso</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.AnioEgreso || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Ciudad</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.Ciudad || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Estado</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.Estado || '-' %></dd></div>
+					</dl>
+				</div>
+				<% } %>
+
+				<!-- Información Familiar -->
+				<% if (aspirante.Padre || aspirante.Madre || aspirante.Tutor) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Información Familiar</h2>
+					<div class="space-y-6">
+						<% if (aspirante.Padre && aspirante.Padre.Nombre) { %>
+						<div>
+							<h3 class="font-semibold mb-2 text-sm text-accent">Padre o Tutor</h3>
+							<dl class="grid gap-3 md:grid-cols-2">
+								<div><dt class="text-muted-foreground text-sm">Nombre</dt><dd class="font-medium text-sm"><%= aspirante.Padre.Nombre %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Teléfono</dt><dd class="font-medium text-sm"><%= aspirante.Padre.Telefono || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Correo</dt><dd class="font-medium text-sm"><%= aspirante.Padre.Correo || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Ocupación</dt><dd class="font-medium text-sm"><%= aspirante.Padre.Ocupacion || '-' %></dd></div>
+							</dl>
+						</div>
+						<% } %>
+						<% if (aspirante.Madre && aspirante.Madre.Nombre) { %>
+						<div>
+							<h3 class="font-semibold mb-2 text-sm text-accent">Madre o Tutora</h3>
+							<dl class="grid gap-3 md:grid-cols-2">
+								<div><dt class="text-muted-foreground text-sm">Nombre</dt><dd class="font-medium text-sm"><%= aspirante.Madre.Nombre %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Teléfono</dt><dd class="font-medium text-sm"><%= aspirante.Madre.Telefono || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Correo</dt><dd class="font-medium text-sm"><%= aspirante.Madre.Correo || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Ocupación</dt><dd class="font-medium text-sm"><%= aspirante.Madre.Ocupacion || '-' %></dd></div>
+							</dl>
+						</div>
+						<% } %>
+						<% if (aspirante.Tutor && aspirante.Tutor.Nombre) { %>
+						<div>
+							<h3 class="font-semibold mb-2 text-sm text-accent">Tutor Legal</h3>
+							<dl class="grid gap-3 md:grid-cols-2">
+								<div><dt class="text-muted-foreground text-sm">Nombre</dt><dd class="font-medium text-sm"><%= aspirante.Tutor.Nombre %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Parentesco</dt><dd class="font-medium text-sm"><%= aspirante.Tutor.Parentesco || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Teléfono</dt><dd class="font-medium text-sm"><%= aspirante.Tutor.Telefono || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Correo</dt><dd class="font-medium text-sm"><%= aspirante.Tutor.Correo || '-' %></dd></div>
+							</dl>
+						</div>
+						<% } %>
+					</div>
+				</div>
+				<% } %>
+
+				<!-- Información Socioeconómica -->
+				<% if (aspirante.InfoSocioeconomica) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Información Socioeconómica</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<div><dt class="text-muted-foreground text-sm">Trabaja actualmente</dt><dd class="font-medium"><%= aspirante.InfoSocioeconomica.TrabajaActualmente ? 'Sí' : 'No' %></dd></div>
+						<% if (aspirante.InfoSocioeconomica.TrabajaActualmente) { %>
+						<div><dt class="text-muted-foreground text-sm">Lugar de Trabajo</dt><dd class="font-medium"><%= aspirante.InfoSocioeconomica.LugarTrabajo || '-' %></dd></div>
+						<% } %>
+						<div><dt class="text-muted-foreground text-sm">Ingreso Mensual Familiar</dt><dd class="font-medium"><%= aspirante.InfoSocioeconomica.IngresoMensual || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Tipo de Vivienda</dt><dd class="font-medium"><%= aspirante.InfoSocioeconomica.TipoVivienda || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Transporte</dt><dd class="font-medium"><%= aspirante.InfoSocioeconomica.TransporteUtiliza || '-' %></dd></div>
+					</dl>
+				</div>
+				<% } %>
+
+				<!-- Información Adicional -->
+				<% if (aspirante.DiscapacidadOCondicion || aspirante.RequiereApoyo || aspirante.ComoSeEntero) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Información Adicional</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<% if (aspirante.DiscapacidadOCondicion) { %>
+						<div class="md:col-span-2"><dt class="text-muted-foreground text-sm">Discapacidad o Condición Especial</dt><dd class="font-medium"><%= aspirante.DiscapacidadOCondicion %></dd></div>
+						<% } %>
+						<% if (aspirante.RequiereApoyo) { %>
+						<div><dt class="text-muted-foreground text-sm">Requiere Apoyo</dt><dd class="font-medium">Sí</dd></div>
+						<div><dt class="text-muted-foreground text-sm">Tipo de Apoyo</dt><dd class="font-medium"><%= aspirante.TipoApoyo || '-' %></dd></div>
+						<% } %>
+						<% if (aspirante.ComoSeEntero) { %>
+						<div><dt class="text-muted-foreground text-sm">¿Cómo se enteró de la UTN?</dt><dd class="font-medium"><%= aspirante.ComoSeEntero %></dd></div>
+						<% } %>
+					</dl>
+				</div>
+				<% } %>
 			</div>
 		</div>
 	</section>
