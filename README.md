@@ -74,7 +74,6 @@ Sigue estos pasos para levantar el proyecto:
 
 2.  **Instala dependencias del Servidor:**
     ```bash
-    cd src
     npm install
     ```
 
@@ -94,7 +93,6 @@ Sigue estos pasos para levantar el proyecto:
 4.  **Ejecuta el proyecto:**
     * Para iniciar el servidor:
         ```bash
-        cd src
         npm run start
         ```
 
