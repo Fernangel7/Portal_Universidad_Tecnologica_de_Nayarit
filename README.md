@@ -88,7 +88,7 @@ Sigue estos pasos para levantar el proyecto:
     MONGO_DATABASE_NAME:'databasename'
     BCRYPT_SALT_ROUNDS=10
     JWT_SECRET_KEY="tu_secreto_muy_seguro"
-    COOKIE_SECRET_KEY="tu_secreto_muy_seguro"
+    COOKIE_PARSER_SECRET_KEY="tu_secreto_muy_seguro"
     HOME_FEATURED_CAREERS_MAX=6
     ```
 
