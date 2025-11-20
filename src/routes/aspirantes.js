@@ -21,6 +21,9 @@ app.post('/form/pre-register', async (req, res) => await aspirantes.pre_register
 app.get('/form/pre-register/edit', AspiranteUnauthorized, async (req, res) => await aspirantes.preRegisterEdit(req, res))
 app.post('/form/pre-register/edit', AspiranteUnauthorized, async (req, res) => await aspirantes.pre_register_update(req, res))
 
+// Eliminar preficha (aspirante autenticado)
+app.delete('/preficha', AspiranteUnauthorized, async (req, res) => await aspirantes.preficha_delete(req, res))
+
 app.get('/logout', AspiranteUnauthorized, async (req, res) => {
     res.clearCookie('aspiranteToken')
     res.redirect('/aspirantes/login')

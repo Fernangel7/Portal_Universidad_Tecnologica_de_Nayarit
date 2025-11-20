@@ -110,13 +110,21 @@
                         </td>
                         <td class="p-4 text-muted-foreground hidden lg:table-cell text-xs"><%= (new Date(a.Created_at)).toLocaleDateString('es-MX') %></td>
                         <td class="p-4 text-right">
-                          <% if (a.Correo) { %>
-                            <a href="mailto:<%= a.Correo %>?subject=Contacto%20Pre-registro%20UTN&body=<%= encodeURIComponent('Hola ' + a.Nombre + ' ' + (a.Apellidos || '') + '\n\nTe contactamos respecto a tu pre-registro (Preficha: ' + a.Preficha + ').' + (a.CarreraSlug ? ('\nCarrera de interés: ' + a.CarreraSlug) : '') + '\n\nSi necesitas actualizar tus datos, puedes iniciar sesión en el portal de aspirantes.\n\nAtentamente,\nAdmisiones UTN') %>" class="inline-flex items-center gap-2 px-3 py-1.5 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm" onclick="event.stopPropagation()">
-                              Contactar
-                            </a>
-                          <% } else { %>
-                            <span class="text-sm text-muted-foreground">—</span>
-                          <% } %>
+                          <div class="flex items-center justify-end gap-2">
+                            <% if (a.Correo) { %>
+                              <a href="mailto:<%= a.Correo %>?subject=Contacto%20Pre-registro%20UTN&body=<%= encodeURIComponent('Hola ' + a.Nombre + ' ' + (a.Apellidos || '') + '\n\nTe contactamos respecto a tu pre-registro (Preficha: ' + a.Preficha + ').' + (a.CarreraSlug ? ('\nCarrera de interés: ' + a.CarreraSlug) : '') + '\n\nSi necesitas actualizar tus datos, puedes iniciar sesión en el portal de aspirantes.\n\nAtentamente,\nAdmisiones UTN') %>" class="inline-flex items-center gap-2 px-3 py-1.5 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm" onclick="event.stopPropagation()">
+                                Contactar
+                              </a>
+                            <% } %>
+                            <button onclick="deleteAspirante(event, '<%= a.UUID %>', '<%= a.Preficha %>')" class="inline-flex items-center gap-2 px-3 py-1.5 border border-input bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-md text-sm" title="Eliminar pre-registro">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 6h18"></path>
+                                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                              </svg>
+                              Eliminar
+                            </button>
+                          </div>
                         </td>
                       </tr>
                       <tr id="details-<%= a.UUID %>" class="hidden bg-muted/20">
@@ -242,6 +250,35 @@
       const detailsRow = document.getElementById('details-' + uuid);
       if (detailsRow) {
         detailsRow.classList.toggle('hidden');
+      }
+    }
+
+    async function deleteAspirante(event, uuid, preficha) {
+      event.stopPropagation();
+      
+      if (!confirm(`¿Estás seguro de eliminar la preficha ${preficha}?\n\nEsta acción no se puede deshacer.`)) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/admin/aspirantes/pre-registros/${uuid}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.status === 200) {
+          alert('Pre-registro eliminado exitosamente');
+          window.location.reload();
+        } else {
+          alert(`Error: ${result.message || 'No se pudo eliminar el pre-registro'}`);
+        }
+      } catch (error) {
+        console.error('Error al eliminar:', error);
+        alert('Error al conectar con el servidor');
       }
     }
 

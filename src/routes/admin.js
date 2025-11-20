@@ -62,6 +62,7 @@ app.get('/informes_financieros', UnauthorizedAccess, async (req, res) => await a
 
 // Pre-registros de aspirantes
 app.get('/aspirantes/pre-registros', UnauthorizedAccess, async (req, res) => await admin_render_controller.aspirantes_preregistros(req, res))
+app.delete('/aspirantes/pre-registros/:uuid', UnauthorizedAccess, async (req, res) => await admin_mongo_controller.delete_aspirante(req, res))
 
 app.get('/logout', UnauthorizedAccess, async (req, res) => {
     res.clearCookie('refreshToken')

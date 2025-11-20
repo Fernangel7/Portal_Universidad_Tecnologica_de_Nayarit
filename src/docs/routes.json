@@ -31,7 +31,8 @@
     { "method": "GET", "url": "/aspirantes/login", "view_name": "login_aspirante", "middlewares": [] },
     { "method": "GET", "url": "/aspirantes/dashboard", "view_name": "dashboard_aspirante", "middlewares": ["AspiranteUnauthorized"] },
     { "method": "GET", "url": "/aspirantes/form/pre-register", "view_name": "from_pre_registro", "middlewares": [] },
-    { "method": "GET", "url": "/aspirantes/form/pre-register/edit", "view_name": "from_pre_registro", "middlewares": ["AspiranteUnauthorized"] }
+    { "method": "GET", "url": "/aspirantes/form/pre-register/edit", "view_name": "from_pre_registro", "middlewares": ["AspiranteUnauthorized"] },
+    { "method": "DELETE", "url": "/aspirantes/preficha", "view_name": "[JSON] preficha_delete", "middlewares": ["AspiranteUnauthorized"] }
   ],
   "admin": [
     { "method": "GET", "url": "/admin/login", "view_name": "admin/login", "middlewares": ["UnauthorizedAccess"] },

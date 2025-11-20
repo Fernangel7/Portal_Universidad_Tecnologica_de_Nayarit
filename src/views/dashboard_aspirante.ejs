@@ -56,16 +56,21 @@
 				<h1 class="font-headline text-3xl font-bold tracking-tight">Mi Preficha</h1>
 				<div class="flex gap-2">
 					<a href="/aspirantes/form/pre-register/edit" class="inline-flex items-center justify-center rounded-md border border-input px-4 py-2 text-sm hover:bg-secondary/60">Editar</a>
+					<% if (aspirante.Preficha && !aspirante.Preficha.startsWith('__DELETED__')) { %>
+					<button id="deletePrefichaBtn" type="button" class="inline-flex items-center justify-center rounded-md border border-input bg-destructive text-destructive-foreground px-4 py-2 text-sm hover:bg-destructive/90" title="Eliminar Preficha">
+						Eliminar Preficha
+					</button>
+					<% } %>
 					<a href="/aspirantes/logout" class="inline-flex items-center justify-center rounded-md bg-destructive text-destructive-foreground px-4 py-2 text-sm hover:bg-destructive/90">Salir</a>
 				</div>
 			</div>
 
 			<div class="grid gap-6">
 				<!-- Datos Personales -->
-				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6" id="prefichaPanel">
 					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Datos Personales</h2>
 					<dl class="grid gap-4 md:grid-cols-2">
-						<div><dt class="text-muted-foreground text-sm">Preficha</dt><dd class="font-medium"><%= aspirante.Preficha %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Preficha</dt><dd class="font-medium" id="prefichaValue"><%= (aspirante.Preficha && !aspirante.Preficha.startsWith('__DELETED__')) ? aspirante.Preficha : '—' %></dd></div>
 						<div><dt class="text-muted-foreground text-sm">Nombre Completo</dt><dd class="font-medium"><%= aspirante.Nombre %> <%= aspirante.Apellidos %></dd></div>
 						<div><dt class="text-muted-foreground text-sm">CURP</dt><dd class="font-medium"><%= aspirante.CURP || '-' %></dd></div>
 						<div><dt class="text-muted-foreground text-sm">Fecha de Nacimiento</dt><dd class="font-medium"><%= aspirante.FechaNacimiento ? new Date(aspirante.FechaNacimiento).toLocaleDateString('es-MX') : '-' %></dd></div>
@@ -205,6 +210,36 @@
 			</div>
 		</div>
 	</section>
+
+	<script>
+		(function(){
+			const btn = document.getElementById('deletePrefichaBtn')
+			if (!btn) return
+			btn.addEventListener('click', async () => {
+				if (!confirm('¿Seguro que deseas eliminar tu Preficha?\nEsta acción no se puede deshacer.')) return
+				btn.disabled = true
+				btn.textContent = 'Eliminando...'
+				try {
+					const res = await fetch('/aspirantes/preficha', { method: 'DELETE', headers: { 'Accept': 'application/json' }, credentials: 'same-origin' })
+					const data = await res.json().catch(()=>({}))
+					if (res.ok && data.status === 200) {
+						// Cerrar sesión y redirigir al login
+						const redirectTo = (data && data.redirect) ? data.redirect : '/aspirantes/login'
+						window.location.assign(redirectTo)
+					} else {
+						const details = (data && (data.data?.error || data.data?.message)) ? `\nDetalle: ${data.data.error || data.data.message}` : ''
+						alert('No se pudo eliminar la Preficha: ' + (data.message || res.status) + details)
+						btn.disabled = false
+						btn.textContent = 'Eliminar Preficha'
+					}
+				} catch (e) {
+					alert('Error de conexión al eliminar la Preficha')
+					btn.disabled = false
+					btn.textContent = 'Eliminar Preficha'
+				}
+			})
+		})();
+	</script>
 
 	<%- include("./templates/footer.ejs", { title: title }) %>
 </body>

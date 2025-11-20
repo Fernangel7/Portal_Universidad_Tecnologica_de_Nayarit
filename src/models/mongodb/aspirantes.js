@@ -9,7 +9,8 @@ const { Schema, model } = mongoose
 
 const aspirante_schema = new Schema({
     UUID: { type: String, required: true, unique: true },
-    Preficha: { type: String, required: true, unique: true },
+    // Preficha ahora opcional para permitir eliminación por parte del aspirante
+    Preficha: { type: String, required: false, unique: true, sparse: true },
     
     // Datos personales completos
     Nombre: { type: String, required: true },
@@ -353,6 +354,51 @@ class AspirantesModel {
             return { status: 500, msg: 'Error al listar aspirantes', data: { error: error.message } }
         }
     }
+
+    static async removePreficha(uuid) {
+        try {
+            const doc = await aspirante_model_mongoose.findOne({ UUID: uuid })
+            if (!doc) return { status: 404, msg: 'Aspirante no encontrado' }
+            if (!doc.Preficha) {
+                return { status: 200, msg: 'Preficha ya eliminada', data: { aspirante: { UUID: doc.UUID, Preficha: null } } }
+            }
+
+            // Intentar $unset (ideal si el índice es unique+sparse)
+            try {
+                await aspirante_model_mongoose.updateOne(
+                    { UUID: uuid },
+                    { $unset: { Preficha: "" }, $set: { Updated_at: Date.now() } }
+                )
+                return { status: 200, msg: 'Preficha eliminada', data: { aspirante: { UUID: doc.UUID, Preficha: null } } }
+            } catch (err) {
+                // Si hay conflicto por índice único no-sparse (E11000), usar "tombstone" único
+                if (err && (err.code === 11000 || err.codeName === 'DuplicateKey')) {
+                    const tombstone = `__DELETED__:${uuid}:${Date.now()}`
+                    await aspirante_model_mongoose.updateOne(
+                        { UUID: uuid },
+                        { $set: { Preficha: tombstone, Updated_at: Date.now() } }
+                    )
+                    return { status: 200, msg: 'Preficha eliminada', data: { aspirante: { UUID: doc.UUID, Preficha: null } } }
+                }
+                // Re-propagar otros errores al catch externo
+                throw err
+            }
+        } catch (error) {
+            return { status: 500, msg: 'Error al eliminar preficha', data: { error: error.message } }
+        }
+    }
+
+    static async deleteByUUID(uuid) {
+        try {
+            const result = await aspirante_model_mongoose.deleteOne({ UUID: uuid })
+            if (result.deletedCount === 0) {
+                return { status: 404, msg: 'Aspirante no encontrado' }
+            }
+            return { status: 200, msg: 'Aspirante eliminado correctamente' }
+        } catch (error) {
+            return { status: 500, msg: 'Error al eliminar aspirante', data: { error: error.message } }
+        }
+    }
 }
 
 module.exports = {
@@ -361,6 +407,8 @@ module.exports = {
         loginVerify: AspirantesModel.loginVerify,
         getByUUID: AspirantesModel.getByUUID,
         updatePreRegistro: AspirantesModel.updatePreRegistro,
-        listAll: AspirantesModel.listAll
+        listAll: AspirantesModel.listAll,
+        removePreficha: AspirantesModel.removePreficha,
+        deleteByUUID: AspirantesModel.deleteByUUID
     }
 }

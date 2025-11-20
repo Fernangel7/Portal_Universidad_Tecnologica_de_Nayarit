@@ -55,7 +55,7 @@ class AspirantesMongoController {
             res.cookie('aspiranteToken', token, {
                 signed: true,
                 httpOnly: true,
-                secure: true,
+                secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
                 maxAge: 30 * 24 * 60 * 60 * 1000
             })
@@ -100,6 +100,22 @@ class AspirantesMongoController {
             return res.status(401).render('401', { title: '401 - Unauthorized' })
         }
     }
+
+    static async preficha_delete(req, res) {
+        try {
+            const token = req.signedCookies.aspiranteToken
+            const decoded = jwt.verify(token, JWT_SECRET_KEY)
+            const result = await aspirantes.removePreficha(decoded.UUID)
+            if (result.status === 200) {
+                const secureCookie = process.env.NODE_ENV === 'production'
+                res.clearCookie('aspiranteToken', { httpOnly: true, sameSite: 'strict', secure: secureCookie })
+                return res.status(200).json({ status: 200, message: result.msg, redirect: '/aspirantes/login' })
+            }
+            return res.status(result.status).json({ status: result.status, message: result.msg, data: result.data || null })
+        } catch (e) {
+            return res.status(401).json({ status: 401, message: 'No autorizado' })
+        }
+    }
 }
 
 module.exports = {
@@ -110,6 +126,7 @@ module.exports = {
         preRegisterEdit: AspirantesRenderController.preRegisterEdit,
         login_verify: AspirantesMongoController.login_verify,
         pre_register_create: AspirantesMongoController.pre_register_create,
-        pre_register_update: AspirantesMongoController.pre_register_update
+        pre_register_update: AspirantesMongoController.pre_register_update,
+        preficha_delete: AspirantesMongoController.preficha_delete
     }
 }

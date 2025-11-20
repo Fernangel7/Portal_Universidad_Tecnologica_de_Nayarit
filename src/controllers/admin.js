@@ -318,6 +318,29 @@ class admin_render_controller {
 }
 
 class admin_mongo_controller {
+    static async delete_aspirante(req, res) {
+        try {
+            const { uuid } = req.params
+            if (!uuid) {
+                return res.status(400).json({
+                    status: 400,
+                    message: 'UUID requerido'
+                })
+            }
+
+            const result = await aspirantes_model.deleteByUUID(uuid)
+            return res.status(result.status).json({
+                status: result.status,
+                message: result.msg
+            })
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: 'Error al eliminar aspirante',
+                error: error.message
+            })
+        }
+    }
     static async login_verify(req, res) {
         if (!req.body)
             return res.status(200).json({
