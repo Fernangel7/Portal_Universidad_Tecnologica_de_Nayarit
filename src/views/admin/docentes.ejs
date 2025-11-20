@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --background: 165 60% 97%;
@@ -38,193 +41,334 @@
             font-family: 'Inter', sans-serif;
             background-color: hsl(var(--muted) / 0.4);
         }
+
         .font-headline {
             font-family: 'PT Sans', sans-serif;
         }
-        .bg-background { background-color: hsl(var(--background)); }
-        .bg-primary { background-color: hsl(var(--primary)); }
-        .text-primary { color: hsl(var(--primary)); }
-        .text-primary-foreground { color: hsl(var(--primary-foreground)); }
-        .bg-muted\/40 { background-color: hsl(var(--muted), 0.4); }
-        .border-b { border-bottom-width: 1px; }
-        .border-r { border-right-width: 1px; }
-        .border-border { border-color: hsl(var(--border)); }
-        .text-muted-foreground { color: hsl(var(--muted-foreground)); }
-        .text-foreground { color: hsl(var(--foreground)); }
-        .bg-card { background-color: hsl(var(--card)); }
-        .bg-muted { background-color: hsl(var(--muted)); }
-        .text-card-foreground { color: hsl(var(--card-foreground)); }
-        .shadow-sm { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
-        .rounded-lg { border-radius: var(--radius); }
-        .rounded-md { border-radius: calc(var(--radius) - 2px); }
-        .rounded-full { border-radius: 9999px; }
-        .border { border-width: 1px; }
+
+        .bg-background {
+            background-color: hsl(var(--background));
+        }
+
+        .bg-primary {
+            background-color: hsl(var(--primary));
+        }
+
+        .text-primary {
+            color: hsl(var(--primary));
+        }
+
+        .text-primary-foreground {
+            color: hsl(var(--primary-foreground));
+        }
+
+        .bg-muted\/40 {
+            background-color: hsl(var(--muted), 0.4);
+        }
+
+        .border-b {
+            border-bottom-width: 1px;
+        }
+
+        .border-r {
+            border-right-width: 1px;
+        }
+
+        .border-border {
+            border-color: hsl(var(--border));
+        }
+
+        .text-muted-foreground {
+            color: hsl(var(--muted-foreground));
+        }
+
+        .text-foreground {
+            color: hsl(var(--foreground));
+        }
+
+        .bg-card {
+            background-color: hsl(var(--card));
+        }
+
+        .bg-muted {
+            background-color: hsl(var(--muted));
+        }
+
+        .text-card-foreground {
+            color: hsl(var(--card-foreground));
+        }
+
+        .shadow-sm {
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        .rounded-lg {
+            border-radius: var(--radius);
+        }
+
+        .rounded-md {
+            border-radius: calc(var(--radius) - 2px);
+        }
+
+        .rounded-full {
+            border-radius: 9999px;
+        }
+
+        .border {
+            border-width: 1px;
+        }
+
         .badge-secondary {
             border-color: transparent;
             background-color: hsl(var(--secondary));
             color: hsl(var(--secondary-foreground));
         }
+
         .badge-success {
             border-color: transparent;
             background-color: hsl(142 71% 85%);
             color: hsl(142 81% 25%);
         }
-         .badge-danger {
+
+        .badge-danger {
             border-color: transparent;
             background-color: hsl(0 84% 90%);
             color: hsl(0 74% 40%);
         }
+
         .badge-outline {
             color: hsl(var(--foreground));
-             border-color: hsl(var(--border));
+            border-color: hsl(var(--border));
         }
+
         /* Mobile sheet styles */
         .sheet-content {
             transform: translateX(-100%);
             transition: transform 0.3s ease-in-out;
         }
+
         .sheet-open .sheet-content {
             transform: translateX(0);
         }
+
         .sheet-overlay {
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
             pointer-events: none;
         }
+
         .sheet-open .sheet-overlay {
             opacity: 1;
             pointer-events: auto;
         }
     </style>
 </head>
+
 <body class="antialiased">
     <div class="relative min-h-screen w-full md:flex">
         <!-- Sidebar for Desktop -->
         <%- include('./templates/left_menu.ejs', { hovered: 5 }) %>
 
-        <!-- Main Content -->
-        <div class="flex flex-col flex-1">
-            <header class="flex h-14 items-center gap-4 border-b bg-background px-4 md:px-6">
-                <!-- Mobile Menu Trigger -->
-                <button id="mobile-menu-trigger" class="md:hidden p-2 -ml-2 text-muted-foreground">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-                    <span class="sr-only">Toggle Menu</span>
-                </button>
-                
-                <div class="flex-1">
-                    <h1 class="font-semibold text-lg">Gestión de Docentes</h1>
-                </div>
-
-                <!-- User Dropdown -->
-                <div class="relative">
-                    <button id="user-menu-button" class="overflow-hidden rounded-full w-8 h-8">
-                        <img src="https://picsum.photos/seed/admin-avatar/40/40" alt="Admin">
+            <!-- Main Content -->
+            <div class="flex flex-col flex-1">
+                <header class="flex h-14 items-center gap-4 border-b bg-background px-4 md:px-6">
+                    <!-- Mobile Menu Trigger -->
+                    <button id="mobile-menu-trigger" class="md:hidden p-2 -ml-2 text-muted-foreground">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="h-6 w-6">
+                            <line x1="4" x2="20" y1="12" y2="12" />
+                            <line x1="4" x2="20" y1="6" y2="6" />
+                            <line x1="4" x2="20" y1="18" y2="18" />
+                        </svg>
+                        <span class="sr-only">Toggle Menu</span>
                     </button>
-                    <div id="user-menu" class="hidden absolute right-0 mt-2 w-48 bg-background rounded-md shadow-lg border border-border py-1 z-50">
-                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Mi Cuenta</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Configuración</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Soporte</a>
-                        <hr class="my-1 border-border">
-                        <a href="#" class="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted">Cerrar Sesión</a>
+
+                    <div class="flex-1">
+                        <h1 class="font-semibold text-lg">Gestión de Docentes</h1>
                     </div>
-                </div>
-            </header>
-            
-            <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 md:gap-8">
-                <div class="bg-card rounded-lg border shadow-sm">
-                    <div class="flex flex-col sm:flex-row items-center justify-between p-6">
-                        <div>
-                            <h3 class="text-xl font-headline font-semibold">Cuerpo Docente</h3>
-                            <p class="text-sm text-muted-foreground">Administra los perfiles del personal académico.</p>
+
+                    <!-- User Dropdown -->
+                    <%- include('./templates/dropdown_user.ejs') %>
+                </header>
+
+                <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 md:gap-8">
+                    <div class="bg-card rounded-lg border shadow-sm">
+                        <div class="flex flex-col sm:flex-row items-center justify-between p-6">
+                            <div>
+                                <h3 class="text-xl font-headline font-semibold">Cuerpo Docente</h3>
+                                <p class="text-sm text-muted-foreground">Administra los perfiles del personal académico.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2 mt-4 sm:mt-0">
+                                <div class="relative">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                                        <circle cx="11" cy="11" r="8" />
+                                        <path d="m21 21-4.3-4.3" />
+                                    </svg>
+                                    <input type="search" id="searchInput" placeholder="Buscar por nombre..."
+                                        class="pl-8 w-full sm:w-64 h-9 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                </div>
+                                <button
+                                    id="button_add"
+                                    class="w-full sm:w-auto mt-4 sm:mt-0 flex items-center justify-center gap-2 h-9 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md text-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="h-4 w-4">
+                                        <path d="M5 12h14" />
+                                        <path d="M12 5v14" />
+                                    </svg>
+                                    Añadir Docente
+                                </button>
+                            </div>
                         </div>
-                        <button class="w-full sm:w-auto mt-4 sm:mt-0 flex items-center justify-center gap-2 h-9 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                            Añadir Docente
-                        </button>
-                    </div>
-                    <div class="p-0">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-sm">
-                                <thead class="bg-muted/50">
-                                    <tr class="border-b">
-                                        <th class="p-4 text-left font-medium text-muted-foreground">Nombre</th>
-                                        <th class="p-4 text-left font-medium text-muted-foreground hidden sm:table-cell">Departamento</th>
-                                        <th class="p-4 text-left font-medium text-muted-foreground hidden md:table-cell">Email</th>
-                                        <th class="p-4 text-left font-medium text-muted-foreground hidden sm:table-cell">Especialidad</th>
-                                        <th class="p-4 text-right font-medium text-muted-foreground">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-border">
-                                    <tr>
-                                        <td class="p-4 font-medium flex items-center gap-3">
-                                            <img src="https://picsum.photos/seed/docente-1/40/40" class="w-8 h-8 rounded-full object-cover">
-                                            Dr. Alejandro Vargas
-                                        </td>
-                                        <td class="p-4 hidden sm:table-cell">Ingeniería Civil</td>
-                                        <td class="p-4 text-muted-foreground hidden md:table-cell">a.vargas@universidad.edu</td>
-                                        <td class="p-4 text-muted-foreground hidden sm:table-cell">Estructuras</td>
-                                        <td class="p-4 text-right space-x-2">
-                                            <button class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-4 font-medium flex items-center gap-3">
-                                            <img src="https://picsum.photos/seed/docente-2/40/40" class="w-8 h-8 rounded-full object-cover">
-                                            Dra. Isabela Reyes
-                                        </td>
-                                        <td class="p-4 hidden sm:table-cell">Lic. en Mercadotecnia</td>
-                                        <td class="p-4 text-muted-foreground hidden md:table-cell">i.reyes@universidad.edu</td>
-                                        <td class="p-4 text-muted-foreground hidden sm:table-cell">Marketing Digital</td>
-                                        <td class="p-4 text-right space-x-2">
-                                            <button class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-4 font-medium flex items-center gap-3">
-                                            <img src="https://picsum.photos/seed/docente-3/40/40" class="w-8 h-8 rounded-full object-cover">
-                                            Dr. Sofia Navarro
-                                        </td>
-                                        <td class="p-4 hidden sm:table-cell">Tecnologías de la Información</td>
-                                        <td class="p-4 text-muted-foreground hidden md:table-cell">s.navarro@universidad.edu</td>
-                                        <td class="p-4 text-muted-foreground hidden sm:table-cell">Inteligencia Artificial</td>
-                                        <td class="p-4 text-right space-x-2">
-                                            <button class="px-3 py-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm">Editar</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="p-0">
+                            <div class="overflow-x-auto overflow-visible pb-16">
+                                <table class="w-full text-sm">
+                                    <thead class="bg-muted/50">
+                                        <tr class="border-b">
+                                            <th class="p-4 text-left font-medium text-muted-foreground">Nombre</th>
+                                            <th
+                                                class="p-4 text-left font-medium text-muted-foreground hidden sm:table-cell">
+                                                Departamento</th>
+                                            <th
+                                                class="p-4 text-left font-medium text-muted-foreground hidden md:table-cell">
+                                                Email</th>
+                                            <th
+                                                class="p-4 text-left font-medium text-muted-foreground hidden sm:table-cell">
+                                                Especialidad</th>
+                                            <th class="p-4 text-right font-medium text-muted-foreground">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-border">
+                                        <% if (teachers && teachers.length > 0) { %>
+                                            <% teachers.forEach(function(t){ %>
+                                                <tr class="<%= !t.Estado ? 'bg-gray-50 opacity-75' : '' %>">
+                                                    <td class="p-4 font-medium flex items-center gap-3">
+                                                        <img src="<%= t.ImageUrl || 'https://picsum.photos/seed/docente-'+t.UUID+'/40/40' %>" class="w-8 h-8 rounded-full object-cover <%= !t.Estado ? 'grayscale' : '' %>">
+                                                        <div>
+                                                            <%= t.Nombre %>
+                                                            <% if (!t.Estado) { %>
+                                                                <span class="ml-2 text-xs font-semibold inline-block py-0.5 px-2 rounded-full bg-gray-200 text-gray-600">⏸️ Desactivado</span>
+                                                            <% } %>
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-4 hidden sm:table-cell"><%= t.Departamento || '-' %></td>
+                                                    <td class="p-4 text-muted-foreground hidden md:table-cell">-</td>
+                                                    <td class="p-4 text-muted-foreground hidden sm:table-cell"><%= t.Cargo || '-' %></td>
+                                                    <td class="p-4 text-right">
+                                                        <div class="relative inline-block text-left">
+                                                            <button onclick="toggleDropdown('dropdown-<%= t.UUID %>')" class="px-3 py-1.5 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm inline-flex items-center gap-1">
+                                                                Acciones
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                                                </svg>
+                                                            </button>
+                                                            <div id="dropdown-<%= t.UUID %>" class="hidden absolute right-0 mt-2 w-72 max-h-96 overflow-y-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                                                                <div class="py-1" role="menu">
+                                                                    <a href="/admin/docentes/update/<%= t.UUID %>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                                                                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                                                                        </svg>
+                                                                        Editar docente
+                                                                    </a>
+                                                                    <% if (t.Estado) { %>
+                                                                    <button onclick="deleteTeacher('<%= t.UUID %>')" class="w-full text-left block px-4 py-2 text-sm text-yellow-700 hover:bg-yellow-50">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                                                                            <circle cx="12" cy="12" r="10"/>
+                                                                            <line x1="15" y1="9" x2="9" y2="15"/>
+                                                                            <line x1="9" y1="9" x2="15" y2="15"/>
+                                                                        </svg>
+                                                                        Desactivar docente
+                                                                    </button>
+                                                                    <% } else { %>
+                                                                    <button onclick="reactivateTeacher('<%= t.UUID %>')" class="w-full text-left block px-4 py-2 text-sm text-green-700 hover:bg-green-50">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                                                                            <polyline points="23 4 23 10 17 10"/>
+                                                                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                                                                        </svg>
+                                                                        Reactivar docente
+                                                                    </button>
+                                                                    <% } %>
+                                                                    <hr class="my-1">
+                                                                    <button onclick="deleteTeacherPermanently('<%= t.UUID %>')" class="w-full text-left block px-4 py-2 text-sm text-red-700 hover:bg-red-50">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                                                                            <polyline points="3 6 5 6 21 6"/>
+                                                                            <path d="m19 6-2 14H7L5 6"/>
+                                                                            <line x1="10" y1="11" x2="10" y2="17"/>
+                                                                            <line x1="14" y1="11" x2="14" y2="17"/>
+                                                                        </svg>
+                                                                        Eliminar permanentemente
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="5" class="p-8 text-center text-muted-foreground">No hay docentes registrados.</td>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </main>
-        </div>
+                </main>
+            </div>
     </div>
 
     <!-- Mobile Sidebar -->
     <div id="mobile-sheet" class="md:hidden fixed inset-0 z-40 hidden">
         <div id="mobile-sheet-overlay" class="sheet-overlay fixed inset-0 bg-black/60"></div>
         <div class="sheet-content relative flex flex-col w-64 h-full bg-background z-50">
-             <div class="flex items-center justify-between border-b border-border p-4 h-14">
+            <div class="flex items-center justify-between border-b border-border p-4 h-14">
                 <div class="flex items-center gap-2 font-semibold">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M4.18 4.18A2 2 0 0 0 3 6v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-1.18-1.82L13 2.18a2 2 0 0 0-2 0L4.18 4.18Z"/><path d="M12 22V10"/><path d="m17 14-5-3-5 3"/><path d="M12 10v4"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="h-6 w-6">
+                        <path
+                            d="M4.18 4.18A2 2 0 0 0 3 6v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-1.18-1.82L13 2.18a2 2 0 0 0-2 0L4.18 4.18Z" />
+                        <path d="M12 22V10" />
+                        <path d="m17 14-5-3-5 3" />
+                        <path d="M12 10v4" />
+                    </svg>
                     <span>Universidad Inc</span>
                 </div>
-                 <button id="mobile-menu-close" class="p-2">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                 </button>
+                <button id="mobile-menu-close" class="p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="h-6 w-6">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
             </div>
             <nav class="flex flex-col p-2 space-y-1">
-                <a href="/admin-dashboard.html" class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <a href="/admin-dashboard.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="h-5 w-5">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
                     Dashboard
                 </a>
-                <a href="/admin-informacion.html" class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                <a href="/admin-informacion.html"
+                    class="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                     Información General
                 </a>
             </nav>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const userMenuButton = document.getElementById('user-menu-button');
@@ -245,7 +389,7 @@
                     }
                 });
             }
-            
+
             function openSheet() {
                 if (mobileSheet) mobileSheet.classList.remove('hidden');
                 setTimeout(() => {
@@ -254,7 +398,7 @@
             }
             function closeSheet() {
                 if (mobileSheet) mobileSheet.classList.remove('sheet-open');
-                 setTimeout(() => {
+                setTimeout(() => {
                     if (mobileSheet) mobileSheet.classList.add('hidden');
                 }, 300);
             }
@@ -262,7 +406,127 @@
             if (mobileMenuTrigger) mobileMenuTrigger.addEventListener('click', openSheet);
             if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeSheet);
             if (mobileSheetOverlay) mobileSheetOverlay.addEventListener('click', closeSheet);
+
+            document.getElementById('button_add').addEventListener('click', function () { window.location.href = '/admin/docentes/add'; })
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.relative')) {
+                    document.querySelectorAll('[id^="dropdown-"]').forEach(dropdown => {
+                        dropdown.classList.add('hidden');
+                    });
+                }
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            const tableBody = document.querySelector('tbody');
+            if (searchInput && tableBody) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    const rows = tableBody.querySelectorAll('tr');
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td');
+                        if (cells.length > 0) {
+                            const text = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+                            row.style.display = text.includes(searchTerm) ? '' : 'none';
+                        }
+                    });
+                });
+            }
         });
+
+        function deleteTeacher(uuid) {
+            Swal.fire({
+                title: 'Desactivar docente',
+                text: 'Esta acción desactivará al docente temporalmente. ¿Continuar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, desactivar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#eab308',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/docentes/delete-one/${uuid}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Desactivado', text: 'El docente fue desactivado.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo desactivar.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al desactivar el docente', icon: 'error' }));
+            });
+        }
+
+        function deleteTeacherPermanently(uuid) {
+            Swal.fire({
+                title: 'Eliminar permanentemente',
+                text: '⚠️ Esta acción NO SE PUEDE DESHACER. El docente será eliminado de la base de datos. ¿Estás seguro?',
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar permanentemente',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/docentes/delete-permanently/${uuid}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Eliminado', text: 'El docente fue eliminado permanentemente.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo eliminar.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al eliminar el docente', icon: 'error' }));
+            });
+        }
+
+        function reactivateTeacher(uuid) {
+            Swal.fire({
+                title: 'Reactivar Docente',
+                text: 'El docente será reactivado y volverá a estar disponible. ¿Continuar?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, reactivar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#15803d',
+                cancelButtonColor: '#6b7280'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/raw-data/docentes/reactivate/${uuid}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        Swal.fire({ title: 'Reactivado', text: 'El docente fue reactivado exitosamente.', icon: 'success', timer: 1400, showConfirmButton: false }).then(() => location.reload());
+                    } else {
+                        Swal.fire({ title: 'Error', text: data.msg || 'No se pudo reactivar.', icon: 'error' });
+                    }
+                })
+                .catch(() => Swal.fire({ title: 'Error', text: 'Error al reactivar el docente', icon: 'error' }));
+            });
+        }
+
+        function toggleDropdown(id) {
+            event.stopPropagation();
+            const dropdown = document.getElementById(id);
+            // Close all other dropdowns
+            document.querySelectorAll('[id^="dropdown-"]').forEach(d => {
+                if (d.id !== id) d.classList.add('hidden');
+            });
+            const willShow = dropdown.classList.contains('hidden');
+            dropdown.classList.toggle('hidden');
+            if (willShow) {
+                requestAnimationFrame(() => {
+                    dropdown.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+                });
+            }
+        }
     </script>
 </body>
+
 </html>

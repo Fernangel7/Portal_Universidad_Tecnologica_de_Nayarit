@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><%= title %> - Acceso Aspirante</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					fontFamily: {
+						body: ['Inter', 'sans-serif'],
+						headline: ['PT Sans', 'sans-serif'],
+					},
+					colors: {
+						background: 'hsl(165 60% 97%)',
+						foreground: 'hsl(171 80% 10%)',
+						card: 'hsl(165 60% 97%)',
+						'card-foreground': 'hsl(171 80% 10%)',
+						popover: 'hsl(165 60% 97%)',
+						'popover-foreground': 'hsl(171 80% 10%)',
+						primary: 'hsl(171 95% 27%)',
+						'primary-foreground': 'hsl(171 25% 95%)',
+						secondary: 'hsl(169 53% 90%)',
+						'secondary-foreground': 'hsl(171 95% 27%)',
+						muted: 'hsl(169 53% 94%)',
+						'muted-foreground': 'hsl(171 40% 30%)',
+						accent: 'hsl(169 53% 41%)',
+						'accent-foreground': 'hsl(171 25% 98%)',
+						destructive: 'hsl(0 84.2% 60.2%)',
+						'destructive-foreground': 'hsl(0 0% 98%)',
+						border: 'hsl(171 20% 88%)',
+						input: 'hsl(171 20% 88%)',
+						ring: 'hsl(171 95% 27%)',
+					},
+					borderRadius: {
+						lg: '0.5rem',
+						md: 'calc(0.5rem - 2px)',
+						sm: 'calc(0.5rem - 4px)',
+					},
+				},
+			},
+		}
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-body antialiased bg-muted/40 min-h-screen flex items-center justify-center p-4">
+	<!-- Contenedor de notificaciones -->
+	<div id="notification-container" class="fixed top-4 right-4 z-50 space-y-2 max-w-md"></div>
+
+	<div class="w-full max-w-sm">
+		<div class="bg-card text-card-foreground rounded-lg border border-input shadow-lg">
+			<div class="p-6 space-y-1">
+				<h3 class="font-headline text-2xl font-semibold tracking-tight">Acceso de Aspirante</h3>
+				<p class="text-sm text-muted-foreground">Ingresa con tu usuario y contraseña</p>
+			</div>
+			<div class="p-6 pt-0 space-y-4">
+				<!-- Alerta de error inline -->
+				<div id="error-alert" class="hidden rounded-md border border-destructive/30 bg-red-50 p-3">
+					<div class="flex items-start gap-3">
+						<svg class="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+						</svg>
+						<div class="flex-1">
+							<h4 class="text-sm font-medium text-red-800" id="error-title">Error de inicio de sesión</h4>
+							<p class="text-sm text-red-700 mt-1" id="error-message"></p>
+						</div>
+						<button onclick="hideError()" class="text-red-400 hover:text-red-600">
+							<svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+							</svg>
+						</button>
+					</div>
+				</div>
+
+				<div class="space-y-2">
+					<label for="username" class="text-sm font-medium leading-none">Usuario</label>
+					<input type="text" id="username" placeholder="usuario" class="form-input w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition">
+				</div>
+				<div class="space-y-2">
+					<label for="password" class="text-sm font-medium leading-none">Contraseña</label>
+					<input type="password" id="password" placeholder="********" class="form-input w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition">
+				</div>
+				<button id="btn-login" class="w-full h-10 inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+					<span id="btn-text">Iniciar Sesión</span>
+					<svg id="btn-spinner" class="hidden animate-spin ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+						<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+						<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+					</svg>
+				</button>
+			</div>
+			<div class="p-6 pt-0 text-sm text-muted-foreground">
+				¿Aún no tienes usuario? <a href="/aspirantes/form/pre-register" class="text-primary underline-offset-4 hover:underline">Realiza tu pre-registro</a>
+			</div>
+		</div>
+		<a class="text-sm text-muted-foreground block text-center mt-5" href="/">Volver al Inicio</a>
+	</div>
+
+	<script>
+		// Funciones de utilidad para alertas
+		function showError(message, title = 'Error de inicio de sesión') {
+			const errorAlert = document.getElementById('error-alert');
+			const errorTitle = document.getElementById('error-title');
+			const errorMessage = document.getElementById('error-message');
+			
+			errorTitle.textContent = title;
+			errorMessage.textContent = message;
+			errorAlert.classList.remove('hidden');
+			
+			// Hacer scroll al error
+			errorAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+		}
+
+		function hideError() {
+			const errorAlert = document.getElementById('error-alert');
+			errorAlert.classList.add('hidden');
+		}
+
+		function showNotification(message, type = 'error') {
+			const container = document.getElementById('notification-container');
+			const notification = document.createElement('div');
+			
+			const colors = {
+				error: 'bg-red-50 border-red-200 text-red-800',
+				success: 'bg-green-50 border-green-200 text-green-800',
+				warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
+				info: 'bg-blue-50 border-blue-200 text-blue-800'
+			};
+
+			const icons = {
+				error: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />',
+				success: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />',
+				warning: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />',
+				info: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />'
+			};
+			
+			notification.className = `${colors[type]} border rounded-lg shadow-lg p-4 flex items-start gap-3 transform transition-all duration-300 translate-x-full opacity-0`;
+			notification.innerHTML = `
+				<svg class="h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					${icons[type]}
+				</svg>
+				<p class="text-sm font-medium flex-1">${message}</p>
+				<button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-gray-600">
+					<svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+					</svg>
+				</button>
+			`;
+			
+			container.appendChild(notification);
+			
+			// Animación de entrada
+			setTimeout(() => {
+				notification.classList.remove('translate-x-full', 'opacity-0');
+			}, 10);
+			
+			// Auto-remover después de 5 segundos
+			setTimeout(() => {
+				notification.classList.add('translate-x-full', 'opacity-0');
+				setTimeout(() => notification.remove(), 300);
+			}, 5000);
+		}
+
+		function setLoading(isLoading) {
+			const btn = document.getElementById('btn-login');
+			const btnText = document.getElementById('btn-text');
+			const btnSpinner = document.getElementById('btn-spinner');
+			
+			if (isLoading) {
+				btn.disabled = true;
+				btnText.textContent = 'Iniciando sesión...';
+				btnSpinner.classList.remove('hidden');
+			} else {
+				btn.disabled = false;
+				btnText.textContent = 'Iniciar Sesión';
+				btnSpinner.classList.add('hidden');
+			}
+		}
+
+		// Manejador de login
+		async function handleLogin() {
+			hideError();
+			
+			const username = document.getElementById('username').value?.trim() || '';
+			const password = document.getElementById('password').value || '';
+			
+			// Validaciones
+			if (!username) {
+				showError('Por favor ingresa tu usuario.', 'Campo requerido');
+				showNotification('El campo de usuario es obligatorio', 'warning');
+				document.getElementById('username').focus();
+				return;
+			}
+			
+			if (!password) {
+				showError('Por favor ingresa tu contraseña.', 'Campo requerido');
+				showNotification('El campo de contraseña es obligatorio', 'warning');
+				document.getElementById('password').focus();
+				return;
+			}
+			
+			setLoading(true);
+			
+			try {
+				const res = await axios.post('/aspirantes/login/verify', { username, password }, { timeout: 15000 });
+				
+				if (res.data.status === 200) {
+					showNotification('¡Inicio de sesión exitoso! Redirigiendo...', 'success');
+					setTimeout(() => {
+						window.location.href = '/aspirantes/dashboard';
+					}, 500);
+				} else {
+					// Error de credenciales
+					const errorMsg = res.data.message || 'Las credenciales ingresadas son incorrectas. Por favor verifica tu usuario y contraseña.';
+					showError(errorMsg, 'Credenciales incorrectas');
+					showNotification('Usuario o contraseña incorrectos', 'error');
+					
+					// Limpiar contraseña y enfocar
+					document.getElementById('password').value = '';
+					document.getElementById('password').focus();
+				}
+			} catch (e) {
+				console.error('Error en login:', e);
+				
+				let errorMsg = 'No se pudo conectar con el servidor. Por favor verifica tu conexión e intenta nuevamente.';
+				
+				if (e.code === 'ECONNABORTED' || e.message.includes('timeout')) {
+					errorMsg = 'La solicitud tomó demasiado tiempo. Por favor intenta nuevamente.';
+				} else if (e.response) {
+					if (e.response.status === 401) {
+						errorMsg = 'Usuario o contraseña incorrectos. Si olvidaste tu contraseña, contacta con el área de admisiones.';
+					} else if (e.response.status >= 500) {
+						errorMsg = 'Error en el servidor. Por favor intenta nuevamente en unos momentos.';
+					}
+				}
+				
+				showError(errorMsg, 'Error de conexión');
+				showNotification('Error al conectar con el servidor', 'error');
+			} finally {
+				setLoading(false);
+			}
+		}
+
+		// Event listeners
+		document.getElementById('btn-login').addEventListener('click', handleLogin);
+		
+		// Enter key para enviar
+		document.getElementById('username').addEventListener('keypress', (e) => {
+			if (e.key === 'Enter') {
+				document.getElementById('password').focus();
+			}
+		});
+		
+		document.getElementById('password').addEventListener('keypress', (e) => {
+			if (e.key === 'Enter') {
+				handleLogin();
+			}
+		});
+
+		// Limpiar error al escribir
+		document.getElementById('username').addEventListener('input', hideError);
+		document.getElementById('password').addEventListener('input', hideError);
+	</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transparencia - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            headline: ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(165 60% 97%)',
+            foreground: 'hsl(171 80% 10%)',
+            card: 'hsl(165 60% 97%)',
+            'card-foreground': 'hsl(171 80% 10%)',
+            primary: 'hsl(171 95% 27%)',
+            'primary-foreground': 'hsl(171 25% 95%)',
+            secondary: 'hsl(169 53% 90%)',
+            'secondary-foreground': 'hsl(171 95% 27%)',
+            muted: 'hsl(169 53% 94%)',
+            'muted-foreground': 'hsl(171 40% 30%)',
+            accent: 'hsl(169 53% 41%)',
+            border: 'hsl(171 20% 88%)',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="font-body antialiased bg-background text-foreground">
+  <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: title }) %>
+
+  <%- include("./templates/page_header.ejs", { 
+    pageTitle: "Transparencia y Acceso a la Información",
+    pageDescription: "Información pública y rendición de cuentas",
+    breadcrumbs: [
+      { title: "Inicio", href: "/" },
+      { title: "Legal", href: "#" },
+      { title: "Transparencia", href: null }
+    ],
+    heroImage: heroImage
+  }) %>
+
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <div class="prose prose-lg max-w-none mb-12">
+        <p class="text-lg text-muted-foreground leading-relaxed">
+          La Universidad Tecnológica de Nayarit está comprometida con la transparencia y el acceso a la información 
+          pública, en cumplimiento con la Ley General de Transparencia y Acceso a la Información Pública y la 
+          Ley de Transparencia del Estado de Nayarit.
+        </p>
+      </div>
+
+      <div class="grid gap-8 mb-16 md:grid-cols-2 lg:grid-cols-3">
+        
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </div>
+          <h3 class="font-headline text-xl font-semibold mb-2">Marco Normativo</h3>
+          <p class="text-muted-foreground mb-4">
+            Consulta las leyes, reglamentos y lineamientos que rigen nuestra institución.
+          </p>
+          <a href="#" class="text-sm font-medium text-primary hover:underline inline-flex items-center">
+            Ver documentos
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+              <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <h3 class="font-headline text-xl font-semibold mb-2">Estructura Organizacional</h3>
+          <p class="text-muted-foreground mb-4">
+            Organigrama, directorio y funciones de las áreas administrativas.
+          </p>
+          <a href="#" class="text-sm font-medium text-primary hover:underline inline-flex items-center">
+            Ver estructura
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+              <line x1="12" x2="12" y1="2" y2="22"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <h3 class="font-headline text-xl font-semibold mb-2">Presupuesto y Gasto</h3>
+          <p class="text-muted-foreground mb-4">
+            Información sobre presupuesto asignado, ejercicio y comprobación del gasto.
+          </p>
+          <a href="/informes-financieros" class="text-sm font-medium text-primary hover:underline inline-flex items-center">
+            Ver información
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="font-headline text-xl font-semibold mb-2">Convocatorias y Concursos</h3>
+          <p class="text-muted-foreground mb-4">
+            Convocatorias para plazas docentes, administrativas y licitaciones públicas.
+          </p>
+          <a href="#" class="text-sm font-medium text-primary hover:underline inline-flex items-center">
+            Ver convocatorias
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <h3 class="font-headline text-xl font-semibold mb-2">Infraestructura</h3>
+          <p class="text-muted-foreground mb-4">
+            Información sobre instalaciones, equipamiento y bienes inmuebles.
+          </p>
+          <a href="#" class="text-sm font-medium text-primary hover:underline inline-flex items-center">
+            Ver detalles
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 hover:shadow-lg transition-shadow">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <h3 class="font-headline text-xl font-semibold mb-2">Indicadores y Estadísticas</h3>
+          <p class="text-muted-foreground mb-4">
+            Matrícula, eficiencia terminal, vinculación y otros indicadores institucionales.
+          </p>
+          <a href="#" class="text-sm font-medium text-primary hover:underline inline-flex items-center">
+            Ver indicadores
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="bg-secondary/50 rounded-lg p-8 md:p-12 mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-6">Solicitudes de Información</h2>
+        <p class="text-muted-foreground mb-8">
+          Cualquier persona puede solicitar información pública a través de los siguientes medios:
+        </p>
+        <div class="grid gap-6 md:grid-cols-2">
+          <div class="bg-card rounded-lg p-6 border">
+            <h3 class="font-headline text-xl font-semibold mb-4">Plataforma Nacional de Transparencia</h3>
+            <p class="text-sm text-muted-foreground mb-4">
+              Sistema electrónico oficial para presentar solicitudes de acceso a la información.
+            </p>
+            <a href="https://www.plataformadetransparencia.org.mx/" target="_blank" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-6 bg-primary text-primary-foreground hover:bg-primary/90">
+              Ir a la plataforma
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+            <a href="/admin" target="_blank" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-6 bg-primary text-primary-foreground hover:bg-primary/90">
+              Ir al panel de administracion
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+          </div>
+          <div class="bg-card rounded-lg p-6 border">
+            <h3 class="font-headline text-xl font-semibold mb-4">Unidad de Transparencia</h3>
+            <p class="text-sm text-muted-foreground mb-2">
+              <strong>Correo:</strong> <a href="mailto:transparencia@utnay.edu.mx" class="text-primary hover:underline">transparencia@utnay.edu.mx</a>
+            </p>
+            <p class="text-sm text-muted-foreground mb-2">
+              <strong>Teléfono:</strong> <a href="tel:+523112119800" class="text-primary hover:underline">+52 (311) 211 9800 ext. 120</a>
+            </p>
+            <p class="text-sm text-muted-foreground">
+              <strong>Horario:</strong> Lunes a Viernes de 9:00 a 17:00 hrs
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center bg-gradient-to-br from-primary to-accent rounded-lg p-8 md:p-12">
+        <h2 class="font-headline text-3xl font-bold tracking-tight text-primary-foreground mb-4">
+          Compromiso con la Transparencia
+        </h2>
+        <p class="text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          La rendición de cuentas y el acceso a la información son pilares fundamentales de nuestra gestión institucional.
+        </p>
+        <a href="mailto:transparencia@utnay.edu.mx" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 bg-background text-foreground hover:bg-background/90">
+          Contactar Unidad de Transparencia
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <%- include("./templates/footer.ejs", {title: title}) %>
+
+</body>
+</html>

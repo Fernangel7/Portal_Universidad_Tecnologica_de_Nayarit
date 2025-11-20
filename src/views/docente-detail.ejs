@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= teacher.nombre %> - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+</head>
+<body class="font-body antialiased bg-white">
+  <div class="flex min-h-screen flex-col">
+    <%- include('templates/header.ejs', navigationLinks); %>
+    <main class="flex-1">
+      <article class="mx-auto max-w-3xl px-4 py-12">
+        <div class="flex items-start gap-6 mb-8">
+          <img src="<%= teacher.imageUrl || 'https://picsum.photos/seed/docente-'+teacher.nombre+'/180/180' %>" class="w-40 h-40 rounded-xl object-cover" />
+          <div>
+            <h1 class="font-headline text-4xl font-bold mb-2"><%= teacher.nombre %></h1>
+            <% if (teacher.cargo) { %><p class="text-primary font-medium mb-1"><%= teacher.cargo %></p><% } %>
+            <% if (teacher.departamento) { %><p class="text-gray-600 text-sm">Departamento: <%= teacher.departamento %></p><% } %>
+          </div>
+        </div>
+        <div class="prose max-w-none">
+          <%- teacher.fullBio || '<p>Perfil en construcción.</p>' %>
+        </div>
+      </article>
+    </main>
+    <%- include('templates/footer.ejs'); %>
+  </div>
+</body>
+</html>

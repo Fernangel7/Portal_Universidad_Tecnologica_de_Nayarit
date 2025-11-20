@@ -74,7 +74,6 @@ Sigue estos pasos para levantar el proyecto:
 
 2.  **Instala dependencias del Servidor:**
     ```bash
-    cd src
     npm install
     ```
 
@@ -86,16 +85,16 @@ Sigue estos pasos para levantar el proyecto:
     # Ejemplo de backend/.env
     PORT=5000
     MONGODB_URI='mongodb://localhost:27017/universidad'
-    MONGODB_DATABASE_NAME:'databasename'
+    MONGO_DATABASE_NAME:'databasename'
     BCRYPT_SALT_ROUNDS=10
-    COOKIE_PARSER_SECRET_KEY=tu_secreto_muy_seguro
-    JWT_SECRET_KEY=tu_secreto_muy_seguro
+    JWT_SECRET_KEY="tu_secreto_muy_seguro"
+    COOKIE_PARSER_SECRET_KEY="tu_secreto_muy_seguro"
+    HOME_FEATURED_CAREERS_MAX=6
     ```
 
 4.  **Ejecuta el proyecto:**
     * Para iniciar el servidor:
         ```bash
-        cd src
         npm run start
         ```
 

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= program.name %> - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            headline: ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(165 60% 97%)',
+            foreground: 'hsl(171 80% 10%)',
+            card: 'hsl(165 60% 97%)',
+            'card-foreground': 'hsl(171 80% 10%)',
+            popover: 'hsl(165 60% 97%)',
+            'popover-foreground': 'hsl(171 80% 10%)',
+            primary: 'hsl(171 95% 27%)',
+            'primary-foreground': 'hsl(171 25% 95%)',
+            secondary: 'hsl(169 53% 90%)',
+            'secondary-foreground': 'hsl(171 95% 27%)',
+            muted: 'hsl(169 53% 94%)',
+            'muted-foreground': 'hsl(171 40% 30%)',
+            accent: 'hsl(169 53% 41%)',
+            'accent-foreground': 'hsl(171 25% 98%)',
+            destructive: 'hsl(0 84.2% 60.2%)',
+            'destructive-foreground': 'hsl(0 0% 98%)',
+            border: 'hsl(171 20% 88%)',
+            input: 'hsl(171 20% 88%)',
+            ring: 'hsl(171 95% 27%)',
+          },
+          borderRadius: {
+            lg: '0.5rem',
+            md: 'calc(0.5rem - 2px)',
+            sm: 'calc(0.5rem - 4px)',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-body antialiased bg-background text-foreground">
+  <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: title }) %>
+
+  <%- include("./templates/page_header.ejs", {
+    pageTitle: program.name,
+    pageDescription: program.shortDescription,
+    breadcrumbs: [
+      { title: "Inicio", href: "/" },
+      { title: "Carreras", href: "/carreras" },
+      { title: program.name, href: null }
+    ],
+    heroImage: programHeroImage
+  }) %>
+
+  <main class="py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-12 lg:grid-cols-3">
+        <div class="lg:col-span-2">
+          <div class="prose prose-lg max-w-none" id="acerca">
+            <h2 class="font-headline">Acerca del Programa</h2>
+            <div class="text-muted-foreground whitespace-pre-wrap">
+              <%= (program.programDetails && program.programDetails.trim().length > 0) ? program.programDetails : (program.shortDescription || '') %>
+            </div>
+          </div>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-2">
+            <div class="rounded-lg border bg-card p-6" id="campo-laboral">
+              <h3 class="font-headline text-lg font-semibold mb-2">Campo Laboral</h3>
+              <% const workLines = (program.workField || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean); %>
+              <% if (workLines.length > 0) { %>
+                <ul class="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                  <% workLines.forEach(function(line){ %>
+                    <li><%= line %></li>
+                  <% }) %>
+                </ul>
+              <% } else { %>
+                <p class="text-sm text-muted-foreground">Información no disponible.</p>
+              <% } %>
+            </div>
+            <div class="rounded-lg border bg-card p-6" id="perfil-egreso">
+              <h3 class="font-headline text-lg font-semibold mb-2">Perfil de Egreso</h3>
+              <% const egresoLines = (program.competencies || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean); %>
+              <% if (egresoLines.length > 0) { %>
+                <ul class="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                  <% egresoLines.forEach(function(line){ %>
+                    <li><%= line %></li>
+                  <% }) %>
+                </ul>
+              <% } else { %>
+                <p class="text-sm text-muted-foreground">Información no disponible.</p>
+              <% } %>
+            </div>
+          </div>
+
+          <div class="mt-10" id="plan-de-estudios">
+            <h3 class="font-headline text-xl font-semibold mb-4">Plan de Estudio</h3>
+            <% if (program.studyPlan && program.studyPlan.length > 0) { %>
+              <div class="grid gap-4 md:grid-cols-2">
+                <% program.studyPlan
+                  .slice()
+                  .sort((a,b) => (a.term||0)-(b.term||0))
+                  .forEach(function(term){ %>
+                  <details class="rounded-lg border bg-card p-5">
+                    <summary class="cursor-pointer select-none text-sm font-medium text-primary">Cuatrimestre <%= term.term %></summary>
+                    <div class="mt-3 text-sm text-muted-foreground">
+                      <% const termLines = (term.content || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean); %>
+                      <% if (termLines.length > 0) { %>
+                        <ul class="list-disc pl-5 space-y-1">
+                          <% termLines.forEach(function(line){ %>
+                            <li><%= line %></li>
+                          <% }) %>
+                        </ul>
+                      <% } else { %>
+                        <p>Sin contenido para este cuatrimestre.</p>
+                      <% } %>
+                    </div>
+                  </details>
+                <% }) %>
+              </div>
+            <% } else { %>
+              <p class="text-sm text-muted-foreground">Plan de estudio no disponible.</p>
+            <% } %>
+          </div>
+        </div>
+        <aside>
+          <div class="rounded-lg border bg-card p-6">
+            <h3 class="font-headline text-lg font-semibold">Información Rápida</h3>
+            <ul class="mt-4 space-y-2 text-sm text-muted-foreground">
+              <li>Duración: TSU + Ingeniería/Licenciatura</li>
+              <li>Modalidad: Escolarizada</li>
+              <li>Inicio: Próximo cuatrimestre</li>
+            </ul>
+            <a href="#" class="mt-6 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-5 bg-primary text-primary-foreground hover:bg-primary/90">
+              Solicitar Información
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <%- include("./templates/footer.ejs", { title: title }) %>
+</body>
+</html>

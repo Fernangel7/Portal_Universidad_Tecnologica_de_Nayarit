@@ -1,18 +1,30 @@
+//node modules
 require('dotenv').config()
+const cookieParser = require('cookie-parser')
 
+//native node modules
 const express = require('express')
 const path = require('node:path')
 
+//middlewares
 const { corsMiddleware } = require('./middlewares/cors.js')
 
-const main_routes = require('./routes')
+//routers
+const main_routes = require('./routes/index.js')
 const carreras_routes = require('./routes/carreras')
-const { admin_router } = require('./routes/admin/admin_main.router')
+const { aspirantes_router } = require('./routes/aspirantes.js')
+const { admin_router } = require('./routes/admin.js')
+const { admin_actions_router } = require('./routes/admin_actions/admin.main.redirection.js')
 
-const { PORT } = require('./config/config-globals.js')
+//configs
+const { PORT, COOKIE_PARSER_SECRET_KEY } = require('./config/config-globals.js')
+
+//mongoose
 const { connectDB, generateDB } = require('./models/mongodb/config.js')
 
 const app = express()
+
+app.disable('x-powered-by')
 
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
@@ -20,12 +32,43 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
 app.use(corsMiddleware())
+app.use(cookieParser(COOKIE_PARSER_SECRET_KEY))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.use(express.static('public', {
+    setHeaders: (req, res) => {
+        if (path.endsWith(['.html', '.htm', '.js', '.css', '.json', '.xml', '.txt', '.map', '.webmanifest', '.ico', '.svg', '.woff', '.woff2', '.ttf', '.eot', '.otf'])) {
+            res.setHeaders('Cache-Control', 'public, max-age=31536000')
+        } else {
+            res.setHeaders('Cache-Control', 'no-cache')
+        }
+    }
+}))
 
 // Conectar a MongoDB Atlas
 connectDB().then(() => generateDB())
 
 app.use('/', main_routes)
 app.use('/admin', admin_router)
+app.use('/admin/raw-data', admin_actions_router)
 app.use('/carreras', carreras_routes)
+app.use('/aspirantes', aspirantes_router)
+
+// Lightweight docs endpoint for routes.json
+app.get('/docs/routes', (req, res) => {
+    try {
+        const routes = require('./docs/routes.json')
+        res.setHeader('Content-Type', 'application/json')
+        res.status(200).send(routes)
+    } catch (e) {
+        res.status(500).json({ error: 'routes.json not available' })
+    }
+})
+
+//404 render
+app.use((req, res) => {
+    res.status(404).render('404', { title: "404 - Página no encontrada" })
+})
 
 app.listen(PORT, function () { console.log(`Server Running At PORT: ${PORT}`) })

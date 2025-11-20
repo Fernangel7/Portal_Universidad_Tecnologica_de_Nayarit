@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><%= title %> - Pre-registro</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					fontFamily: {
+						body: ['Inter', 'sans-serif'],
+						headline: ['PT Sans', 'sans-serif'],
+					},
+					colors: {
+						background: 'hsl(165 60% 97%)',
+						foreground: 'hsl(171 80% 10%)',
+						card: 'hsl(165 60% 97%)',
+						'card-foreground': 'hsl(171 80% 10%)',
+						popover: 'hsl(165 60% 97%)',
+						'popover-foreground': 'hsl(171 80% 10%)',
+						primary: 'hsl(171 95% 27%)',
+						'primary-foreground': 'hsl(171 25% 95%)',
+						secondary: 'hsl(169 53% 90%)',
+						'secondary-foreground': 'hsl(171 95% 27%)',
+						muted: 'hsl(169 53% 94%)',
+						'muted-foreground': 'hsl(171 40% 30%)',
+						accent: 'hsl(169 53% 41%)',
+						'accent-foreground': 'hsl(171 25% 98%)',
+						destructive: 'hsl(0 84.2% 60.2%)',
+						'destructive-foreground': 'hsl(0 0% 98%)',
+						border: 'hsl(171 20% 88%)',
+						input: 'hsl(171 20% 88%)',
+						ring: 'hsl(171 95% 27%)',
+					},
+					borderRadius: {
+						lg: '0.5rem',
+						md: 'calc(0.5rem - 2px)',
+						sm: 'calc(0.5rem - 4px)',
+					},
+				},
+			},
+		}
+	</script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-body antialiased bg-background text-foreground">
+	<%- include("./templates/header.ejs", { navigationLinks: [], title: title }) %>
+
+	<section class="py-12">
+		<div class="container mx-auto max-w-3xl px-4">
+			<h1 class="font-headline text-3xl font-bold tracking-tight mb-6"><%= (typeof editMode !== 'undefined' && editMode) ? 'Editar Pre-ficha' : 'Pre-registro de Aspirante' %></h1>
+
+			<% if (created && created.ok) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6 mb-8">
+					<h2 class="font-headline text-2xl font-semibold mb-2">¡Pre-registro exitoso!</h2>
+					<p class="text-muted-foreground mb-4">Guarda tus credenciales para acceder al portal del aspirante:</p>
+					<ul class="space-y-1">
+						<li><span class="font-medium">Preficha:</span> <%= created.preficha %></li>
+						<li><span class="font-medium">Usuario:</span> <%= created.username %></li>
+						<li><span class="font-medium">Contraseña:</span> <%= created.password %></li>
+					</ul>
+					<a href="/aspirantes/login" class="mt-4 inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground px-4 py-2 text-sm font-medium hover:bg-primary/90">Ir al acceso</a>
+				</div>
+			<% } %>
+
+			<% if (created && created.error) { %>
+				<div class="rounded-md border border-destructive/30 bg-red-50 text-red-700 p-4 mb-6"><%= created.error %></div>
+			<% } %>
+
+			<form method="post" action="<%= (typeof editMode !== 'undefined' && editMode) ? '/aspirantes/form/pre-register/edit' : '/aspirantes/form/pre-register' %>" class="space-y-8">
+				
+				<!-- DATOS PERSONALES -->
+				<div class="rounded-lg border border-input bg-card p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Datos Personales</h2>
+					<div class="space-y-4">
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Nombre(s) <span class="text-destructive">*</span></label>
+								<input name="Nombre" required class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.Nombre : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Apellidos <span class="text-destructive">*</span></label>
+								<input name="Apellidos" required class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.Apellidos : '' %>">
+							</div>
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-3">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Fecha de Nacimiento</label>
+								<input type="date" name="FechaNacimiento" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.FechaNacimiento ? new Date(aspirante.FechaNacimiento).toISOString().split('T')[0] : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Edad</label>
+								<input type="number" name="Edad" min="15" max="100" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.Edad || '' : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Género</label>
+								<select name="Genero" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+									<option value="">Seleccione</option>
+									<option value="Masculino" <%= aspirante && aspirante.Genero === 'Masculino' ? 'selected' : '' %>>Masculino</option>
+									<option value="Femenino" <%= aspirante && aspirante.Genero === 'Femenino' ? 'selected' : '' %>>Femenino</option>
+									<option value="Otro" <%= aspirante && aspirante.Genero === 'Otro' ? 'selected' : '' %>>Otro</option>
+									<option value="Prefiero no decirlo" <%= aspirante && aspirante.Genero === 'Prefiero no decirlo' ? 'selected' : '' %>>Prefiero no decirlo</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">CURP</label>
+								<input name="CURP" maxlength="18" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm uppercase" value="<%= aspirante ? aspirante.CURP : '' %>" placeholder="AAAA000000HBBBBBB0">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Lugar de Nacimiento</label>
+								<input name="LugarNacimiento" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.LugarNacimiento : '' %>">
+							</div>
+						</div>
+
+						<div class="space-y-2">
+							<label class="text-sm font-medium">Estado Civil</label>
+							<select name="EstadoCivil" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+								<option value="">Seleccione</option>
+								<option value="Soltero/a" <%= aspirante && aspirante.EstadoCivil === 'Soltero/a' ? 'selected' : '' %>>Soltero/a</option>
+								<option value="Casado/a" <%= aspirante && aspirante.EstadoCivil === 'Casado/a' ? 'selected' : '' %>>Casado/a</option>
+								<option value="Unión libre" <%= aspirante && aspirante.EstadoCivil === 'Unión libre' ? 'selected' : '' %>>Unión libre</option>
+								<option value="Divorciado/a" <%= aspirante && aspirante.EstadoCivil === 'Divorciado/a' ? 'selected' : '' %>>Divorciado/a</option>
+								<option value="Viudo/a" <%= aspirante && aspirante.EstadoCivil === 'Viudo/a' ? 'selected' : '' %>>Viudo/a</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<!-- INFORMACIÓN DE CONTACTO -->
+				<div class="rounded-lg border border-input bg-card p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Información de Contacto</h2>
+					<div class="space-y-4">
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Correo Electrónico <span class="text-destructive">*</span></label>
+								<input type="email" name="Correo" required class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.Correo : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Teléfono <span class="text-destructive">*</span></label>
+								<input type="tel" name="Telefono" required class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.Telefono : '' %>" placeholder="3111234567">
+							</div>
+						</div>
+						<div class="space-y-2">
+							<label class="text-sm font-medium">Teléfono de Emergencia</label>
+							<input type="tel" name="TelefonoEmergencia" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.TelefonoEmergencia : '' %>" placeholder="3111234567">
+						</div>
+					</div>
+				</div>
+
+				<!-- DOMICILIO -->
+				<div class="rounded-lg border border-input bg-card p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Domicilio</h2>
+					<div class="space-y-4">
+						<div class="grid gap-4 md:grid-cols-3">
+							<div class="space-y-2 md:col-span-2">
+								<label class="text-sm font-medium">Calle</label>
+								<input name="DomicilioCalle" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Domicilio ? aspirante.Domicilio.Calle : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Número Exterior</label>
+								<input name="DomicilioNumeroExterior" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Domicilio ? aspirante.Domicilio.NumeroExterior : '' %>">
+							</div>
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-3">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Número Interior</label>
+								<input name="DomicilioNumeroInterior" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Domicilio ? aspirante.Domicilio.NumeroInterior : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Código Postal</label>
+								<input name="DomicilioCodigoPostal" maxlength="5" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Domicilio ? aspirante.Domicilio.CodigoPostal : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Colonia</label>
+								<input name="DomicilioColonia" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Domicilio ? aspirante.Domicilio.Colonia : '' %>">
+							</div>
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Localidad</label>
+								<input name="DomicilioLocalidad" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Domicilio ? aspirante.Domicilio.Localidad : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Ciudad</label>
+								<input name="DomicilioCiudad" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Domicilio ? aspirante.Domicilio.Ciudad : '' %>">
+							</div>
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Municipio</label>
+								<input name="DomicilioMunicipio" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Domicilio ? aspirante.Domicilio.Municipio : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Estado</label>
+								<input name="DomicilioEstado" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Domicilio ? aspirante.Domicilio.Estado : '' %>">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- ESCUELA DE PROCEDENCIA -->
+				<div class="rounded-lg border border-input bg-card p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Escuela de Procedencia</h2>
+					<div class="space-y-4">
+						<div class="space-y-2">
+							<label class="text-sm font-medium">Nombre de la Escuela</label>
+							<input name="EscuelaNombre" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.EscuelaProcedencia ? aspirante.EscuelaProcedencia.Nombre : '' %>">
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-3">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Promedio</label>
+								<input type="number" name="EscuelaPromedio" step="0.01" min="0" max="10" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.EscuelaProcedencia ? aspirante.EscuelaProcedencia.Promedio || '' : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Tipo de Escuela</label>
+								<select name="EscuelaTipo" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+									<option value="">Seleccione</option>
+									<option value="Pública" <%= aspirante && aspirante.EscuelaProcedencia && aspirante.EscuelaProcedencia.TipoEscuela === 'Pública' ? 'selected' : '' %>>Pública</option>
+									<option value="Privada" <%= aspirante && aspirante.EscuelaProcedencia && aspirante.EscuelaProcedencia.TipoEscuela === 'Privada' ? 'selected' : '' %>>Privada</option>
+								</select>
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Año de Egreso</label>
+								<input type="number" name="EscuelaAnioEgreso" min="1990" max="2030" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.EscuelaProcedencia ? aspirante.EscuelaProcedencia.AnioEgreso || '' : '' %>">
+							</div>
+						</div>
+
+						<div class="space-y-2">
+							<label class="text-sm font-medium">Carrera Estudiada (Preparatoria/Bachillerato/Técnico)</label>
+							<input name="EscuelaCarrera" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.EscuelaProcedencia ? aspirante.EscuelaProcedencia.CarreraEstudiada : '' %>" placeholder="Ej: Físico-Matemático, Químico-Biólogo, etc.">
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Ciudad de la Escuela</label>
+								<input name="EscuelaCiudad" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.EscuelaProcedencia ? aspirante.EscuelaProcedencia.Ciudad : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Estado de la Escuela</label>
+								<input name="EscuelaEstado" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.EscuelaProcedencia ? aspirante.EscuelaProcedencia.Estado : '' %>">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- DATOS DEL PADRE -->
+				<div class="rounded-lg border border-input bg-card p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Datos del Padre o Tutor</h2>
+					<div class="space-y-4">
+						<div class="space-y-2">
+							<label class="text-sm font-medium">Nombre Completo</label>
+							<input name="PadreNombre" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Padre ? aspirante.Padre.Nombre : '' %>">
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Teléfono</label>
+								<input type="tel" name="PadreTelefono" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Padre ? aspirante.Padre.Telefono : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Correo Electrónico</label>
+								<input type="email" name="PadreCorreo" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Padre ? aspirante.Padre.Correo : '' %>">
+							</div>
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Ocupación</label>
+								<input name="PadreOcupacion" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Padre ? aspirante.Padre.Ocupacion : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Estado</label>
+								<select name="PadreVivoFinado" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+									<option value="">Seleccione</option>
+									<option value="Vivo" <%= aspirante && aspirante.Padre && aspirante.Padre.VivoFinado === 'Vivo' ? 'selected' : '' %>>Vivo</option>
+									<option value="Finado" <%= aspirante && aspirante.Padre && aspirante.Padre.VivoFinado === 'Finado' ? 'selected' : '' %>>Finado</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- DATOS DE LA MADRE -->
+				<div class="rounded-lg border border-input bg-card p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Datos de la Madre o Tutora</h2>
+					<div class="space-y-4">
+						<div class="space-y-2">
+							<label class="text-sm font-medium">Nombre Completo</label>
+							<input name="MadreNombre" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Madre ? aspirante.Madre.Nombre : '' %>">
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Teléfono</label>
+								<input type="tel" name="MadreTelefono" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Madre ? aspirante.Madre.Telefono : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Correo Electrónico</label>
+								<input type="email" name="MadreCorreo" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Madre ? aspirante.Madre.Correo : '' %>">
+							</div>
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Ocupación</label>
+								<input name="MadreOcupacion" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Madre ? aspirante.Madre.Ocupacion : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Estado</label>
+								<select name="MadreVivoFinado" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+									<option value="">Seleccione</option>
+									<option value="Vivo" <%= aspirante && aspirante.Madre && aspirante.Madre.VivoFinado === 'Vivo' ? 'selected' : '' %>>Vivo</option>
+									<option value="Finado" <%= aspirante && aspirante.Madre && aspirante.Madre.VivoFinado === 'Finado' ? 'selected' : '' %>>Finado</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- TUTOR (OPCIONAL) -->
+				<div class="rounded-lg border border-input bg-card p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Tutor Legal (Opcional)</h2>
+					<p class="text-sm text-muted-foreground mb-4">Solo llenar si no vives con tus padres o si tienes un tutor legal diferente</p>
+					<div class="space-y-4">
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Nombre Completo</label>
+								<input name="TutorNombre" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Tutor ? aspirante.Tutor.Nombre : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Parentesco</label>
+								<input name="TutorParentesco" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Tutor ? aspirante.Tutor.Parentesco : '' %>" placeholder="Ej: Abuelo, Tío, etc.">
+							</div>
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Teléfono</label>
+								<input type="tel" name="TutorTelefono" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Tutor ? aspirante.Tutor.Telefono : '' %>">
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Correo Electrónico</label>
+								<input type="email" name="TutorCorreo" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.Tutor ? aspirante.Tutor.Correo : '' %>">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- INFORMACIÓN SOCIOECONÓMICA -->
+				<div class="rounded-lg border border-input bg-card p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Información Socioeconómica</h2>
+					<div class="space-y-4">
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">¿Trabajas actualmente?</label>
+								<select name="TrabajaActualmente" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+									<option value="false" <%= aspirante && aspirante.InfoSocioeconomica && !aspirante.InfoSocioeconomica.TrabajaActualmente ? 'selected' : '' %>>No</option>
+									<option value="true" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.TrabajaActualmente ? 'selected' : '' %>>Sí</option>
+								</select>
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Lugar de Trabajo (si aplica)</label>
+								<input name="LugarTrabajo" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.InfoSocioeconomica ? aspirante.InfoSocioeconomica.LugarTrabajo : '' %>">
+							</div>
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Ingreso Mensual Familiar Aproximado</label>
+								<select name="IngresoMensual" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+									<option value="">Seleccione</option>
+									<option value="Menos de $5,000" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.IngresoMensual === 'Menos de $5,000' ? 'selected' : '' %>>Menos de $5,000</option>
+									<option value="$5,000 - $10,000" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.IngresoMensual === '$5,000 - $10,000' ? 'selected' : '' %>>$5,000 - $10,000</option>
+									<option value="$10,000 - $15,000" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.IngresoMensual === '$10,000 - $15,000' ? 'selected' : '' %>>$10,000 - $15,000</option>
+									<option value="$15,000 - $20,000" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.IngresoMensual === '$15,000 - $20,000' ? 'selected' : '' %>>$15,000 - $20,000</option>
+									<option value="Más de $20,000" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.IngresoMensual === 'Más de $20,000' ? 'selected' : '' %>>Más de $20,000</option>
+								</select>
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Personas que dependen económicamente de ti</label>
+								<input type="number" name="PersonasDependenEconomicamente" min="0" max="20" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante && aspirante.InfoSocioeconomica ? aspirante.InfoSocioeconomica.PersonasDependenEconomicamente || '' : '' %>">
+							</div>
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Tipo de Vivienda</label>
+								<select name="TipoVivienda" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+									<option value="">Seleccione</option>
+									<option value="Propia" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.TipoVivienda === 'Propia' ? 'selected' : '' %>>Propia</option>
+									<option value="Rentada" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.TipoVivienda === 'Rentada' ? 'selected' : '' %>>Rentada</option>
+									<option value="Prestada" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.TipoVivienda === 'Prestada' ? 'selected' : '' %>>Prestada</option>
+									<option value="Familiar" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.TipoVivienda === 'Familiar' ? 'selected' : '' %>>Familiar</option>
+								</select>
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Medio de Transporte Principal</label>
+								<select name="TransporteUtiliza" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+									<option value="">Seleccione</option>
+									<option value="Transporte público" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.TransporteUtiliza === 'Transporte público' ? 'selected' : '' %>>Transporte público</option>
+									<option value="Vehículo propio" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.TransporteUtiliza === 'Vehículo propio' ? 'selected' : '' %>>Vehículo propio</option>
+									<option value="Bicicleta" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.TransporteUtiliza === 'Bicicleta' ? 'selected' : '' %>>Bicicleta</option>
+									<option value="A pie" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.TransporteUtiliza === 'A pie' ? 'selected' : '' %>>A pie</option>
+									<option value="Otro" <%= aspirante && aspirante.InfoSocioeconomica && aspirante.InfoSocioeconomica.TransporteUtiliza === 'Otro' ? 'selected' : '' %>>Otro</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- INFORMACIÓN ADICIONAL -->
+				<div class="rounded-lg border border-input bg-card p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Información Adicional</h2>
+					<div class="space-y-4">
+						<div class="space-y-2">
+							<label class="text-sm font-medium">¿Tienes alguna discapacidad o condición especial?</label>
+							<input name="DiscapacidadOCondicion" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.DiscapacidadOCondicion : '' %>" placeholder="Especificar o dejar en blanco">
+						</div>
+
+						<div class="grid gap-4 md:grid-cols-2">
+							<div class="space-y-2">
+								<label class="text-sm font-medium">¿Requieres algún tipo de apoyo?</label>
+								<select name="RequiereApoyo" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+									<option value="false" <%= aspirante && !aspirante.RequiereApoyo ? 'selected' : '' %>>No</option>
+									<option value="true" <%= aspirante && aspirante.RequiereApoyo ? 'selected' : '' %>>Sí</option>
+								</select>
+							</div>
+							<div class="space-y-2">
+								<label class="text-sm font-medium">Tipo de apoyo (si aplica)</label>
+								<input name="TipoApoyo" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" value="<%= aspirante ? aspirante.TipoApoyo : '' %>" placeholder="Ej: Beca, transporte, etc.">
+							</div>
+						</div>
+
+						<div class="space-y-2">
+							<label class="text-sm font-medium">¿Cómo te enteraste de la universidad?</label>
+							<select name="ComoSeEntero" class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+								<option value="">Seleccione</option>
+								<option value="Redes sociales" <%= aspirante && aspirante.ComoSeEntero === 'Redes sociales' ? 'selected' : '' %>>Redes sociales</option>
+								<option value="Página web" <%= aspirante && aspirante.ComoSeEntero === 'Página web' ? 'selected' : '' %>>Página web</option>
+								<option value="Recomendación de amigo/familiar" <%= aspirante && aspirante.ComoSeEntero === 'Recomendación de amigo/familiar' ? 'selected' : '' %>>Recomendación de amigo/familiar</option>
+								<option value="Feria educativa" <%= aspirante && aspirante.ComoSeEntero === 'Feria educativa' ? 'selected' : '' %>>Feria educativa</option>
+								<option value="Visita a mi escuela" <%= aspirante && aspirante.ComoSeEntero === 'Visita a mi escuela' ? 'selected' : '' %>>Visita a mi escuela</option>
+								<option value="Anuncio/Publicidad" <%= aspirante && aspirante.ComoSeEntero === 'Anuncio/Publicidad' ? 'selected' : '' %>>Anuncio/Publicidad</option>
+								<option value="Otro" <%= aspirante && aspirante.ComoSeEntero === 'Otro' ? 'selected' : '' %>>Otro</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<!-- CARRERA DE INTERÉS -->
+				<div class="rounded-lg border border-input bg-card p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Carrera de Interés</h2>
+					<div class="space-y-2">
+						<label class="text-sm font-medium">Selecciona la carrera que deseas estudiar <span class="text-destructive">*</span></label>
+						<select name="CarreraSlug" required class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm">
+							<option value="">Selecciona una opción</option>
+							<% (careers || []).forEach(function(c){ %>
+								<option value="<%= c.Slug %>" <%= (aspirante && aspirante.CarreraSlug === c.Slug) ? 'selected' : '' %>><%= c.Nombre %></option>
+							<% }) %>
+						</select>
+					</div>
+				</div>
+
+				<!-- BOTONES DE ACCIÓN -->
+				<div class="flex items-center gap-3 pt-2">
+					<button type="submit" class="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground px-5 py-2 text-sm font-medium hover:bg-primary/90">
+						<%= (typeof editMode !== 'undefined' && editMode) ? 'Guardar cambios' : 'Enviar pre-registro' %>
+					</button>
+					<% if (!(typeof editMode !== 'undefined' && editMode)) { %>
+						<a href="/aspirantes/login" class="text-sm text-muted-foreground underline-offset-4 hover:underline">Ya tengo usuario</a>
+					<% } %>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<%- include("./templates/footer.ejs", { title: title }) %>
+</body>
+</html>

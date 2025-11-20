@@ -67,6 +67,42 @@ const images = {
       "imageHint": "professor classroom"
     },
     {
+      "id": "ceelex-hero",
+      "description": "CEELEX UTN campus",
+      "imageUrl": "/public/images/general/ut-nayarit.webp",
+      "imageHint": "UTN campus"
+    },
+    {
+      "id": "ececut-hero",
+      "description": "ECECUT UTN campus",
+      "imageUrl": "/public/images/general/ut-nayarit.webp",
+      "imageHint": "UTN campus"
+    },
+    {
+      "id": "privacy-hero",
+      "description": "Aviso de privacidad UTN",
+      "imageUrl": "/public/images/general/ut-nayarit.webp",
+      "imageHint": "UTN campus"
+    },
+    {
+      "id": "transparency-hero",
+      "description": "Transparencia UTN",
+      "imageUrl": "/public/images/general/ut-nayarit.webp",
+      "imageHint": "UTN campus"
+    },
+    {
+      "id": "financial-hero",
+      "description": "Informes financieros UTN",
+      "imageUrl": "/public/images/general/ut-nayarit.webp",
+      "imageHint": "UTN campus"
+    },
+    {
+      "id": "quality-hero",
+      "description": "Sistema de calidad UTN",
+      "imageUrl": "/public/images/general/ut-nayarit.webp",
+      "imageHint": "UTN campus"
+    },
+    {
       "id": "all-programs-hero",
       "description": "Diverse group of students walking on campus",
       "imageUrl": "https://images.unsplash.com/photo-1745558858213-c1bb66fc8fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzdHVkZW50cyUyMGNhbXB1c3xlbnwwfHx8fDE3NTk0MjY2MDF8MA&ixlib=rb-4.1.0&q=80&w=1080",

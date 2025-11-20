@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convocatorias y Concursos - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { body: ['Inter', 'sans-serif'], headline: ['PT Sans', 'sans-serif'] },
+          colors: {
+            background: 'hsl(165 60% 97%)', foreground: 'hsl(171 80% 10%)',
+            card: 'hsl(165 60% 97%)', 'card-foreground': 'hsl(171 80% 10%)',
+            primary: 'hsl(171 95% 27%)', 'primary-foreground': 'hsl(171 25% 95%)',
+            secondary: 'hsl(169 53% 90%)', 'secondary-foreground': 'hsl(171 95% 27%)',
+            muted: 'hsl(169 53% 94%)', 'muted-foreground': 'hsl(171 40% 30%)', accent: 'hsl(169 53% 41%)', border: 'hsl(171 20% 88%)'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-body antialiased bg-background text-foreground">
+  <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: title }) %>
+
+  <%- include("./templates/page_header.ejs", {
+    pageTitle: "Convocatorias y Concursos",
+    pageDescription: "Plazas, licitaciones y resultados",
+    breadcrumbs: [ { title: "Inicio", href: "/" }, { title: "Transparencia", href: "/transparencia" }, { title: "Convocatorias", href: null } ],
+    heroImage: null
+  }) %>
+
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-lg border bg-card p-6">
+        <p class="text-sm text-muted-foreground">Publicaremos aquí convocatorias vigentes y resultados.</p>
+      </div>
+    </div>
+  </section>
+
+  <%- include("./templates/footer.ejs", {title: title}) %>
+</body>
+</html>

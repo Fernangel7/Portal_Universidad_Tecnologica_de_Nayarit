@@ -1,5 +1,5 @@
-<header class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-sm container flex justify-center mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-  <div class="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 bg-background/100"
+<header class="sticky top-0 z-50 w-full border-b border-border/40 bg-background container flex justify-center mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 bg-background"
        style="width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);">
     <!-- Logo -->
     <a href="/" class="flex items-center space-x-2">
@@ -18,7 +18,7 @@
     </a>
 
     <!-- Right Aligned Section -->
-    <div class="flex items-center space-x-4 bg-background/95">
+    <div class="flex items-center space-x-4 bg-background">
       <!-- Desktop Navigation -->
       <div class="hidden md:flex">
         <nav id="desktop-nav" class="relative">
@@ -39,7 +39,7 @@
                     </svg>
                   </button>
                   <div
-                    class="submenu absolute top-full left-0 mt-1.5 hidden w-max min-w-[200px] rounded-md border bg-popover p-1 text-popover-foreground shadow-lg">
+                    class="submenu absolute top-full left-0 mt-1.5 hidden w-max min-w-[200px] rounded-md border bg-card p-1 text-card-foreground shadow-lg">
                     <!-- start as single-column grid; JS will switch to two columns only if it would overflow vertically -->
                     <ul class="submenu-list grid grid-cols-1 gap-1">
                       <% item.children.forEach(child=> { %>
@@ -70,7 +70,7 @@
       </div>
 
       <!-- Action Button -->
-      <% if (IscProcess) { %>
+      <% if (typeof IscProcess !== 'undefined' && IscProcess) { %>
       <div class="hidden md:block">
         <a href="#"
           class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">
@@ -99,8 +99,8 @@
   </div>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu"
-       class="hidden absolute left-0 top-full w-screen bg-background/95 backdrop-blur-sm border-t border-border/40"
+    <div id="mobile-menu"
+      class="hidden absolute left-0 top-full w-screen bg-background border-t border-border/40"
         style="margin-left:calc(50% - 50vw); max-height:calc(100vh - 4rem); overflow-y:auto; -webkit-overflow-scrolling:touch; z-index:9999;">
     <div class="space-y-1 px-4 pt-2 pb-3 max-w-7xl mx-auto">
       <% navigationLinks.forEach(item=> { %>

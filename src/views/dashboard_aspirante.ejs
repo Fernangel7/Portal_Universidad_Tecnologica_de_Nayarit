@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><%= title %> - Mi Preficha</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					fontFamily: {
+						body: ['Inter', 'sans-serif'],
+						headline: ['PT Sans', 'sans-serif'],
+					},
+					colors: {
+						background: 'hsl(165 60% 97%)',
+						foreground: 'hsl(171 80% 10%)',
+						card: 'hsl(165 60% 97%)',
+						'card-foreground': 'hsl(171 80% 10%)',
+						popover: 'hsl(165 60% 97%)',
+						'popover-foreground': 'hsl(171 80% 10%)',
+						primary: 'hsl(171 95% 27%)',
+						'primary-foreground': 'hsl(171 25% 95%)',
+						secondary: 'hsl(169 53% 90%)',
+						'secondary-foreground': 'hsl(171 95% 27%)',
+						muted: 'hsl(169 53% 94%)',
+						'muted-foreground': 'hsl(171 40% 30%)',
+						accent: 'hsl(169 53% 41%)',
+						'accent-foreground': 'hsl(171 25% 98%)',
+						destructive: 'hsl(0 84.2% 60.2%)',
+						'destructive-foreground': 'hsl(0 0% 98%)',
+						border: 'hsl(171 20% 88%)',
+						input: 'hsl(171 20% 88%)',
+						ring: 'hsl(171 95% 27%)',
+					},
+					borderRadius: {
+						lg: '0.5rem',
+						md: 'calc(0.5rem - 2px)',
+						sm: 'calc(0.5rem - 4px)',
+					},
+				},
+			},
+		}
+	</script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-body antialiased bg-background text-foreground">
+	<%- include("./templates/header.ejs", { navigationLinks: [], title: title }) %>
+
+	<section class="py-12">
+		<div class="container mx-auto max-w-4xl px-4">
+			<div class="flex items-center justify-between mb-6">
+				<h1 class="font-headline text-3xl font-bold tracking-tight">Mi Preficha</h1>
+				<div class="flex gap-2">
+					<a href="/aspirantes/form/pre-register/edit" class="inline-flex items-center justify-center rounded-md border border-input px-4 py-2 text-sm hover:bg-secondary/60">Editar</a>
+					<% if (aspirante.Preficha && !aspirante.Preficha.startsWith('__DELETED__')) { %>
+					<button id="deletePrefichaBtn" type="button" class="inline-flex items-center justify-center rounded-md border border-input bg-destructive text-destructive-foreground px-4 py-2 text-sm hover:bg-destructive/90" title="Eliminar Preficha">
+						Eliminar Preficha
+					</button>
+					<% } %>
+					<a href="/aspirantes/logout" class="inline-flex items-center justify-center rounded-md bg-destructive text-destructive-foreground px-4 py-2 text-sm hover:bg-destructive/90">Salir</a>
+				</div>
+			</div>
+
+			<div class="grid gap-6">
+				<!-- Datos Personales -->
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6" id="prefichaPanel">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Datos Personales</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<div><dt class="text-muted-foreground text-sm">Preficha</dt><dd class="font-medium" id="prefichaValue"><%= (aspirante.Preficha && !aspirante.Preficha.startsWith('__DELETED__')) ? aspirante.Preficha : '—' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Nombre Completo</dt><dd class="font-medium"><%= aspirante.Nombre %> <%= aspirante.Apellidos %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">CURP</dt><dd class="font-medium"><%= aspirante.CURP || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Fecha de Nacimiento</dt><dd class="font-medium"><%= aspirante.FechaNacimiento ? new Date(aspirante.FechaNacimiento).toLocaleDateString('es-MX') : '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Edad</dt><dd class="font-medium"><%= aspirante.Edad || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Género</dt><dd class="font-medium"><%= aspirante.Genero || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Estado Civil</dt><dd class="font-medium"><%= aspirante.EstadoCivil || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Lugar de Nacimiento</dt><dd class="font-medium"><%= aspirante.LugarNacimiento || '-' %></dd></div>
+					</dl>
+				</div>
+
+				<!-- Contacto -->
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Información de Contacto</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<div><dt class="text-muted-foreground text-sm">Correo</dt><dd class="font-medium"><%= aspirante.Correo || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Teléfono</dt><dd class="font-medium"><%= aspirante.Telefono || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Teléfono de Emergencia</dt><dd class="font-medium"><%= aspirante.TelefonoEmergencia || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Usuario</dt><dd class="font-medium"><%= aspirante.Username %></dd></div>
+					</dl>
+				</div>
+
+				<!-- Domicilio -->
+				<% if (aspirante.Domicilio) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Domicilio</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<div class="md:col-span-2"><dt class="text-muted-foreground text-sm">Dirección</dt><dd class="font-medium"><%= aspirante.Domicilio.Calle || '' %> <%= aspirante.Domicilio.NumeroExterior || '' %> <%= aspirante.Domicilio.NumeroInterior ? 'Int. ' + aspirante.Domicilio.NumeroInterior : '' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Colonia</dt><dd class="font-medium"><%= aspirante.Domicilio.Colonia || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Código Postal</dt><dd class="font-medium"><%= aspirante.Domicilio.CodigoPostal || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Ciudad/Localidad</dt><dd class="font-medium"><%= aspirante.Domicilio.Ciudad || aspirante.Domicilio.Localidad || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Municipio</dt><dd class="font-medium"><%= aspirante.Domicilio.Municipio || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Estado</dt><dd class="font-medium"><%= aspirante.Domicilio.Estado || '-' %></dd></div>
+					</dl>
+				</div>
+				<% } %>
+
+				<!-- Programa de Interés -->
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Programa de Interés</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<div><dt class="text-muted-foreground text-sm">Carrera</dt><dd class="font-medium"><%= aspirante.CarreraSlug || '-' %></dd></div>
+					</dl>
+				</div>
+
+				<!-- Escuela de Procedencia -->
+				<% if (aspirante.EscuelaProcedencia) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Escuela de Procedencia</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<div class="md:col-span-2"><dt class="text-muted-foreground text-sm">Nombre de la Escuela</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.Nombre || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Promedio</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.Promedio || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Tipo</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.TipoEscuela || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Carrera/Especialidad</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.CarreraEstudiada || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Año de Egreso</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.AnioEgreso || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Ciudad</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.Ciudad || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Estado</dt><dd class="font-medium"><%= aspirante.EscuelaProcedencia.Estado || '-' %></dd></div>
+					</dl>
+				</div>
+				<% } %>
+
+				<!-- Información Familiar -->
+				<% if (aspirante.Padre || aspirante.Madre || aspirante.Tutor) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Información Familiar</h2>
+					<div class="space-y-6">
+						<% if (aspirante.Padre && aspirante.Padre.Nombre) { %>
+						<div>
+							<h3 class="font-semibold mb-2 text-sm text-accent">Padre o Tutor</h3>
+							<dl class="grid gap-3 md:grid-cols-2">
+								<div><dt class="text-muted-foreground text-sm">Nombre</dt><dd class="font-medium text-sm"><%= aspirante.Padre.Nombre %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Teléfono</dt><dd class="font-medium text-sm"><%= aspirante.Padre.Telefono || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Correo</dt><dd class="font-medium text-sm"><%= aspirante.Padre.Correo || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Ocupación</dt><dd class="font-medium text-sm"><%= aspirante.Padre.Ocupacion || '-' %></dd></div>
+							</dl>
+						</div>
+						<% } %>
+						<% if (aspirante.Madre && aspirante.Madre.Nombre) { %>
+						<div>
+							<h3 class="font-semibold mb-2 text-sm text-accent">Madre o Tutora</h3>
+							<dl class="grid gap-3 md:grid-cols-2">
+								<div><dt class="text-muted-foreground text-sm">Nombre</dt><dd class="font-medium text-sm"><%= aspirante.Madre.Nombre %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Teléfono</dt><dd class="font-medium text-sm"><%= aspirante.Madre.Telefono || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Correo</dt><dd class="font-medium text-sm"><%= aspirante.Madre.Correo || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Ocupación</dt><dd class="font-medium text-sm"><%= aspirante.Madre.Ocupacion || '-' %></dd></div>
+							</dl>
+						</div>
+						<% } %>
+						<% if (aspirante.Tutor && aspirante.Tutor.Nombre) { %>
+						<div>
+							<h3 class="font-semibold mb-2 text-sm text-accent">Tutor Legal</h3>
+							<dl class="grid gap-3 md:grid-cols-2">
+								<div><dt class="text-muted-foreground text-sm">Nombre</dt><dd class="font-medium text-sm"><%= aspirante.Tutor.Nombre %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Parentesco</dt><dd class="font-medium text-sm"><%= aspirante.Tutor.Parentesco || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Teléfono</dt><dd class="font-medium text-sm"><%= aspirante.Tutor.Telefono || '-' %></dd></div>
+								<div><dt class="text-muted-foreground text-sm">Correo</dt><dd class="font-medium text-sm"><%= aspirante.Tutor.Correo || '-' %></dd></div>
+							</dl>
+						</div>
+						<% } %>
+					</div>
+				</div>
+				<% } %>
+
+				<!-- Información Socioeconómica -->
+				<% if (aspirante.InfoSocioeconomica) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Información Socioeconómica</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<div><dt class="text-muted-foreground text-sm">Trabaja actualmente</dt><dd class="font-medium"><%= aspirante.InfoSocioeconomica.TrabajaActualmente ? 'Sí' : 'No' %></dd></div>
+						<% if (aspirante.InfoSocioeconomica.TrabajaActualmente) { %>
+						<div><dt class="text-muted-foreground text-sm">Lugar de Trabajo</dt><dd class="font-medium"><%= aspirante.InfoSocioeconomica.LugarTrabajo || '-' %></dd></div>
+						<% } %>
+						<div><dt class="text-muted-foreground text-sm">Ingreso Mensual Familiar</dt><dd class="font-medium"><%= aspirante.InfoSocioeconomica.IngresoMensual || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Tipo de Vivienda</dt><dd class="font-medium"><%= aspirante.InfoSocioeconomica.TipoVivienda || '-' %></dd></div>
+						<div><dt class="text-muted-foreground text-sm">Transporte</dt><dd class="font-medium"><%= aspirante.InfoSocioeconomica.TransporteUtiliza || '-' %></dd></div>
+					</dl>
+				</div>
+				<% } %>
+
+				<!-- Información Adicional -->
+				<% if (aspirante.DiscapacidadOCondicion || aspirante.RequiereApoyo || aspirante.ComoSeEntero) { %>
+				<div class="rounded-lg border border-input bg-card text-card-foreground p-6">
+					<h2 class="font-headline text-xl font-semibold mb-4 text-primary">Información Adicional</h2>
+					<dl class="grid gap-4 md:grid-cols-2">
+						<% if (aspirante.DiscapacidadOCondicion) { %>
+						<div class="md:col-span-2"><dt class="text-muted-foreground text-sm">Discapacidad o Condición Especial</dt><dd class="font-medium"><%= aspirante.DiscapacidadOCondicion %></dd></div>
+						<% } %>
+						<% if (aspirante.RequiereApoyo) { %>
+						<div><dt class="text-muted-foreground text-sm">Requiere Apoyo</dt><dd class="font-medium">Sí</dd></div>
+						<div><dt class="text-muted-foreground text-sm">Tipo de Apoyo</dt><dd class="font-medium"><%= aspirante.TipoApoyo || '-' %></dd></div>
+						<% } %>
+						<% if (aspirante.ComoSeEntero) { %>
+						<div><dt class="text-muted-foreground text-sm">¿Cómo se enteró de la UTN?</dt><dd class="font-medium"><%= aspirante.ComoSeEntero %></dd></div>
+						<% } %>
+					</dl>
+				</div>
+				<% } %>
+			</div>
+		</div>
+	</section>
+
+	<script>
+		(function(){
+			const btn = document.getElementById('deletePrefichaBtn')
+			if (!btn) return
+			btn.addEventListener('click', async () => {
+				if (!confirm('¿Seguro que deseas eliminar tu Preficha?\nEsta acción no se puede deshacer.')) return
+				btn.disabled = true
+				btn.textContent = 'Eliminando...'
+				try {
+					const res = await fetch('/aspirantes/preficha', { method: 'DELETE', headers: { 'Accept': 'application/json' }, credentials: 'same-origin' })
+					const data = await res.json().catch(()=>({}))
+					if (res.ok && data.status === 200) {
+						// Cerrar sesión y redirigir al login
+						const redirectTo = (data && data.redirect) ? data.redirect : '/aspirantes/login'
+						window.location.assign(redirectTo)
+					} else {
+						const details = (data && (data.data?.error || data.data?.message)) ? `\nDetalle: ${data.data.error || data.data.message}` : ''
+						alert('No se pudo eliminar la Preficha: ' + (data.message || res.status) + details)
+						btn.disabled = false
+						btn.textContent = 'Eliminar Preficha'
+					}
+				} catch (e) {
+					alert('Error de conexión al eliminar la Preficha')
+					btn.disabled = false
+					btn.textContent = 'Eliminar Preficha'
+				}
+			})
+		})();
+	</script>
+
+	<%- include("./templates/footer.ejs", { title: title }) %>
+</body>
+</html>

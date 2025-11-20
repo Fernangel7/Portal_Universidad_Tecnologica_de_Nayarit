@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aviso de Privacidad - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            headline: ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(165 60% 97%)',
+            foreground: 'hsl(171 80% 10%)',
+            card: 'hsl(165 60% 97%)',
+            'card-foreground': 'hsl(171 80% 10%)',
+            primary: 'hsl(171 95% 27%)',
+            'primary-foreground': 'hsl(171 25% 95%)',
+            secondary: 'hsl(169 53% 90%)',
+            'secondary-foreground': 'hsl(171 95% 27%)',
+            muted: 'hsl(169 53% 94%)',
+            'muted-foreground': 'hsl(171 40% 30%)',
+            accent: 'hsl(169 53% 41%)',
+            border: 'hsl(171 20% 88%)',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="font-body antialiased bg-background text-foreground">
+  <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: title }) %>
+
+  <%- include("./templates/page_header.ejs", { 
+    pageTitle: "Aviso de Privacidad",
+    pageDescription: "Protección y tratamiento de datos personales",
+    breadcrumbs: [
+      { title: "Inicio", href: "/" },
+      { title: "Legal", href: "#" },
+      { title: "Aviso de Privacidad", href: null }
+    ],
+    heroImage: heroImage
+  }) %>
+
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      
+      <div class="prose prose-lg max-w-none">
+        
+        <div class="bg-card rounded-lg border p-6 mb-8">
+          <p class="text-sm text-muted-foreground mb-0">
+            <strong>Última actualización:</strong> <%= new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+          </p>
+        </div>
+
+        <div class="space-y-8">
+          
+          <div>
+            <h2 class="font-headline text-2xl font-bold mb-4">1. Responsable del Tratamiento de Datos</h2>
+            <p class="text-muted-foreground leading-relaxed">
+              La Universidad Tecnológica de Nayarit, con domicilio en Carretera Federal 200 Km. 9, 
+              Xalisco, Nayarit, C.P. 63780, es responsable del tratamiento de sus datos personales de 
+              conformidad con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares 
+              y su Reglamento.
+            </p>
+          </div>
+
+          <div>
+            <h2 class="font-headline text-2xl font-bold mb-4">2. Datos Personales Recabados</h2>
+            <p class="text-muted-foreground leading-relaxed mb-4">
+              Para las finalidades señaladas en este aviso de privacidad, podemos recabar sus datos personales de las siguientes formas:
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-muted-foreground">
+              <li>Solicitudes de admisión y fichas de inscripción</li>
+              <li>Formularios y documentos académicos</li>
+              <li>Correos electrónicos y formularios en línea</li>
+              <li>Registros en eventos y actividades institucionales</li>
+            </ul>
+            <p class="text-muted-foreground leading-relaxed mt-4">
+              Los datos personales que recabamos incluyen: nombre completo, fecha de nacimiento, CURP, RFC, 
+              domicilio, teléfono, correo electrónico, fotografía, documentos académicos, entre otros.
+            </p>
+          </div>
+
+          <div>
+            <h2 class="font-headline text-2xl font-bold mb-4">3. Finalidades del Tratamiento</h2>
+            <p class="text-muted-foreground leading-relaxed mb-4">
+              Sus datos personales serán utilizados para las siguientes finalidades necesarias:
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-muted-foreground">
+              <li>Proceso de admisión e inscripción</li>
+              <li>Gestión académica y administrativa</li>
+              <li>Expedición de documentos oficiales</li>
+              <li>Contacto para asuntos académicos y administrativos</li>
+              <li>Cumplimiento de obligaciones legales y reglamentarias</li>
+            </ul>
+            <p class="text-muted-foreground leading-relaxed mt-4">
+              De manera adicional, sus datos podrán ser utilizados para:
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-muted-foreground">
+              <li>Envío de información sobre eventos, cursos y actividades</li>
+              <li>Encuestas de satisfacción y estudios estadísticos</li>
+              <li>Promoción de servicios educativos</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 class="font-headline text-2xl font-bold mb-4">4. Transferencia de Datos</h2>
+            <p class="text-muted-foreground leading-relaxed">
+              Sus datos personales pueden ser transferidos y tratados dentro y fuera del país por personas 
+              distintas a esta institución, tales como: Secretaría de Educación Pública (SEP), Coordinación 
+              General de Universidades Tecnológicas y Politécnicas (CGUTyP), autoridades gubernamentales 
+              cuando sea requerido por ley, y organismos acreditadores.
+            </p>
+          </div>
+
+          <div>
+            <h2 class="font-headline text-2xl font-bold mb-4">5. Derechos ARCO</h2>
+            <p class="text-muted-foreground leading-relaxed mb-4">
+              Usted tiene derecho a:
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-muted-foreground">
+              <li><strong>Acceder</strong> a sus datos personales en nuestro poder</li>
+              <li><strong>Rectificar</strong> sus datos cuando sean inexactos o incompletos</li>
+              <li><strong>Cancelar</strong> sus datos cuando considere que no se requieren</li>
+              <li><strong>Oponerse</strong> al tratamiento de sus datos para fines específicos</li>
+            </ul>
+            <p class="text-muted-foreground leading-relaxed mt-4">
+              Para ejercer estos derechos, debe presentar una solicitud por escrito al Departamento de 
+              Datos Personales en el domicilio de la institución o enviando un correo electrónico a 
+              <a href="mailto:privacidad@utnay.edu.mx" class="text-primary hover:underline">privacidad@utnay.edu.mx</a>
+            </p>
+          </div>
+
+          <div>
+            <h2 class="font-headline text-2xl font-bold mb-4">6. Revocación del Consentimiento</h2>
+            <p class="text-muted-foreground leading-relaxed">
+              Usted puede revocar su consentimiento para el tratamiento de sus datos personales en cualquier momento, 
+              siguiendo el mismo procedimiento para ejercer sus derechos ARCO. Sin embargo, es importante que tenga 
+              en cuenta que no en todos los casos podremos atender su solicitud o concluir el uso de forma inmediata, 
+              ya que es posible que por alguna obligación legal requiramos seguir tratando sus datos personales.
+            </p>
+          </div>
+
+          <div>
+            <h2 class="font-headline text-2xl font-bold mb-4">7. Medidas de Seguridad</h2>
+            <p class="text-muted-foreground leading-relaxed">
+              La Universidad Tecnológica de Nayarit implementa medidas de seguridad administrativas, técnicas y 
+              físicas para proteger sus datos personales contra daño, pérdida, alteración, destrucción, uso, 
+              acceso o divulgación indebida.
+            </p>
+          </div>
+
+          <div>
+            <h2 class="font-headline text-2xl font-bold mb-4">8. Modificaciones al Aviso de Privacidad</h2>
+            <p class="text-muted-foreground leading-relaxed">
+              Nos reservamos el derecho de efectuar en cualquier momento modificaciones o actualizaciones al 
+              presente aviso de privacidad. Estas modificaciones estarán disponibles en nuestro sitio web 
+              y en las instalaciones de la institución.
+            </p>
+          </div>
+
+          <div>
+            <h2 class="font-headline text-2xl font-bold mb-4">9. Contacto</h2>
+            <p class="text-muted-foreground leading-relaxed">
+              Para cualquier duda o aclaración sobre este aviso de privacidad, puede contactarnos en:
+            </p>
+            <div class="bg-card rounded-lg border p-6 mt-4">
+              <p class="text-sm mb-2"><strong>Correo electrónico:</strong> <a href="mailto:privacidad@utnay.edu.mx" class="text-primary hover:underline">privacidad@utnay.edu.mx</a></p>
+              <p class="text-sm mb-2"><strong>Teléfono:</strong> <a href="tel:+523112119800" class="text-primary hover:underline">+52 (311) 211 9800</a></p>
+              <p class="text-sm mb-0"><strong>Domicilio:</strong> Carretera Federal 200 Km. 9, Xalisco, Nayarit, C.P. 63780</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <%- include("./templates/footer.ejs", {title: title}) %>
+
+</body>
+</html>

@@ -83,17 +83,60 @@
 
       <!-- Content Section -->
       <section class="py-16 md:py-24">
-        <div class="container mx-auto max-w-3xl text-center">
-          <h2 class="font-headline text-3xl font-bold tracking-tight">Conoce a Nuestros Docentes</h2>
-          <p class="mt-4 text-lg text-gray-600">
-            Contamos con un cuerpo docente de excelencia, con amplia experiencia profesional y académica, comprometido con la formación integral de nuestros estudiantes.
-          </p>
-          <p class="mt-4 text-lg text-gray-600">
-            Actualmente, el directorio de docentes se encuentra en mantenimiento. Vuelve pronto para explorar los perfiles de nuestros profesores.
-          </p>
-          <a href="#" class="mt-8 inline-flex items-center justify-center rounded-md text-sm font-medium h-11 px-8 border border-input bg-background hover:bg-accent hover:text-accent-foreground">
-            Portal Docente
-          </a>
+        <div class="container mx-auto max-w-7xl px-4">
+          <div class="text-center mb-12">
+            <h2 class="font-headline text-3xl font-bold tracking-tight">Conoce a Nuestros Docentes</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+              Contamos con un cuerpo docente de excelencia, con amplia experiencia profesional y académica, comprometido con la formación integral de nuestros estudiantes.
+            </p>
+          </div>
+
+          <% if (teachers && teachers.length > 0) { %>
+          <!-- Teachers Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <% teachers.forEach(teacher => { %>
+            <div class="bg-card rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-border">
+              <div class="aspect-w-3 aspect-h-2">
+                <img src="<%= teacher.imageUrl || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop' %>" alt="<%= teacher.nombre %>" class="w-full h-64 object-cover" />
+              </div>
+              <div class="p-6">
+                <h3 class="font-headline text-xl font-bold text-foreground">
+                  <%= teacher.nombre %>
+                </h3>
+                <p class="text-sm text-muted-foreground mt-1">
+                  <%= teacher.cargo || 'Docente' %>
+                </p>
+                <% if (teacher.departamento) { %>
+                <p class="text-sm text-primary font-medium mt-1">
+                  <%= teacher.departamento %>
+                </p>
+                <% } %>
+                <% if (teacher.shortBio) { %>
+                <p class="mt-3 text-sm text-gray-600 line-clamp-3">
+                  <%= teacher.shortBio %>
+                </p>
+                <% } %>
+                <a href="/docentes/<%= teacher.slug %>" class="mt-4 inline-flex items-center text-sm font-medium text-primary hover:text-accent transition-colors">
+                  Ver Perfil
+                  <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+          <% } else { %>
+          <!-- Empty State -->
+          <div class="text-center py-12">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-16 w-16 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <p class="mt-4 text-lg text-gray-600">
+              No hay docentes registrados en este momento.
+            </p>
+          </div>
+          <% } %>
         </div>
       </section>
     </main>

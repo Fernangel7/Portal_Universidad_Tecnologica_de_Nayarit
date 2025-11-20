@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informes Financieros - <%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            headline: ['PT Sans', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(165 60% 97%)',
+            foreground: 'hsl(171 80% 10%)',
+            card: 'hsl(165 60% 97%)',
+            'card-foreground': 'hsl(171 80% 10%)',
+            primary: 'hsl(171 95% 27%)',
+            'primary-foreground': 'hsl(171 25% 95%)',
+            secondary: 'hsl(169 53% 90%)',
+            'secondary-foreground': 'hsl(171 95% 27%)',
+            muted: 'hsl(169 53% 94%)',
+            'muted-foreground': 'hsl(171 40% 30%)',
+            accent: 'hsl(169 53% 41%)',
+            border: 'hsl(171 20% 88%)',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="font-body antialiased bg-background text-foreground">
+  <%- include("./templates/header.ejs", { navigationLinks: navigationLinks, title: title }) %>
+
+  <%- include("./templates/page_header.ejs", { 
+    pageTitle: "Informes Financieros",
+    pageDescription: "Transparencia en el ejercicio de recursos públicos",
+    breadcrumbs: [
+      { title: "Inicio", href: "/" },
+      { title: "Legal", href: "#" },
+      { title: "Informes Financieros", href: null }
+    ],
+    heroImage: heroImage
+  }) %>
+
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <div class="prose prose-lg max-w-none mb-12">
+        <p class="text-lg text-muted-foreground leading-relaxed">
+          En cumplimiento con las disposiciones legales de transparencia y rendición de cuentas, la Universidad 
+          Tecnológica de Nayarit pone a disposición de la comunidad universitaria y público en general sus 
+          informes financieros y estados presupuestales.
+        </p>
+      </div>
+
+      <!-- Annual Reports -->
+      <div class="mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8">Informes Anuales</h2>
+        <div class="space-y-4">
+          
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex-1">
+                  <div class="flex items-center gap-3 mb-2">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-headline text-xl font-semibold">Informe Financiero 2024</h3>
+                      <p class="text-sm text-muted-foreground">Estados financieros y presupuestales del ejercicio 2024</p>
+                    </div>
+                  </div>
+                </div>
+                <a href="https://utnay.edu.mx/informes-financieros.html" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 bg-primary text-primary-foreground hover:bg-primary/90">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 h-4 w-4">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" x2="12" y1="15" y2="3"/>
+                  </svg>
+                  Descargar PDF
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex-1">
+                  <div class="flex items-center gap-3 mb-2">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-headline text-xl font-semibold">Informe Financiero 2023</h3>
+                      <p class="text-sm text-muted-foreground">Estados financieros y presupuestales del ejercicio 2023</p>
+                    </div>
+                  </div>
+                </div>
+                <a href="https://utnay.edu.mx/informes-financieros.html" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 bg-primary text-primary-foreground hover:bg-primary/90">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 h-4 w-4">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" x2="12" y1="15" y2="3"/>
+                  </svg>
+                  Descargar PDF
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex-1">
+                  <div class="flex items-center gap-3 mb-2">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-headline text-xl font-semibold">Informe Financiero 2022</h3>
+                      <p class="text-sm text-muted-foreground">Estados financieros y presupuestales del ejercicio 2022</p>
+                    </div>
+                  </div>
+                </div>
+                <a href="https://utnay.edu.mx/informes-financieros.html" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 bg-primary text-primary-foreground hover:bg-primary/90">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 h-4 w-4">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" x2="12" y1="15" y2="3"/>
+                  </svg>
+                  Descargar PDF
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Financial Information Categories -->
+      <div class="mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-8">Información Financiera Disponible</h2>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Presupuesto Asignado</h3>
+            <p class="text-sm text-muted-foreground">
+              Presupuesto autorizado por fuentes de financiamiento
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <line x1="12" x2="12" y1="2" y2="22"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Ejercicio del Gasto</h3>
+            <p class="text-sm text-muted-foreground">
+              Detalle de erogaciones por capítulo y concepto
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <path d="M3 3v18h18"/>
+                <path d="m19 9-5 5-4-4-3 3"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Estados Financieros</h3>
+            <p class="text-sm text-muted-foreground">
+              Balance general, estado de resultados y flujo de efectivo
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Informes Trimestrales</h3>
+            <p class="text-sm text-muted-foreground">
+              Seguimiento periódico del ejercicio presupuestal
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+                <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+                <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Adquisiciones</h3>
+            <p class="text-sm text-muted-foreground">
+              Procesos de compra, licitaciones y adjudicaciones
+            </p>
+          </div>
+
+          <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
+                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+                <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+                <path d="M10 9H8"/>
+                <path d="M16 13H8"/>
+                <path d="M16 17H8"/>
+              </svg>
+            </div>
+            <h3 class="font-headline text-lg font-semibold mb-2">Auditorías</h3>
+            <p class="text-sm text-muted-foreground">
+              Resultados de auditorías internas y externas
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Budget Information -->
+      <div class="bg-secondary/50 rounded-lg p-8 md:p-12 mb-16">
+        <h2 class="font-headline text-3xl font-bold tracking-tight mb-6">Información Presupuestal Destacada</h2>
+        <div class="grid gap-8 md:grid-cols-3">
+          
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">$XXX.X MDP</div>
+            <p class="text-sm text-muted-foreground">Presupuesto Autorizado 2024</p>
+          </div>
+
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">XX%</div>
+            <p class="text-sm text-muted-foreground">Ejercicio Acumulado</p>
+          </div>
+
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">X,XXX</div>
+            <p class="text-sm text-muted-foreground">Estudiantes Beneficiados</p>
+          </div>
+
+        </div>
+        <div class="mt-8 p-4 bg-card rounded-lg border">
+          <p class="text-sm text-muted-foreground text-center">
+            <strong>Nota:</strong> Las cifras mostradas corresponden al último informe trimestral disponible. 
+            Para información detallada, consulte los documentos oficiales.
+          </p>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="text-center bg-gradient-to-br from-primary to-accent rounded-lg p-8 md:p-12">
+        <h2 class="font-headline text-3xl font-bold tracking-tight text-primary-foreground mb-4">
+          ¿Necesitas Más Información?
+        </h2>
+        <p class="text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          Para consultas específicas sobre información financiera, contacta al Departamento de Recursos Financieros.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="mailto:finanzas@utnay.edu.mx" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 bg-background text-foreground hover:bg-background/90">
+            Enviar Correo
+          </a>
+          <a href="/transparencia" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-11 px-8 border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+            Ver Transparencia
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <%- include("./templates/footer.ejs", {title: title}) %>
+
+</body>
+</html>
